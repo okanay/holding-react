@@ -6,7 +6,6 @@ interface Props
     Omit<LinkProps, "children" | "target"> {
   target?: React.ComponentPropsWithoutRef<"a">["target"];
   children?: React.ReactNode;
-  active?: string;
 }
 
 export const Link: React.FC<Props> = ({ to, children, ...rest }) => {
