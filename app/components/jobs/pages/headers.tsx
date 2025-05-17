@@ -11,11 +11,7 @@ export function JobHeader() {
           to={"/job"}
           className="text-primary-600 inline-block py-4 text-3xl font-bold"
         >
-          <span className="font-extrabold">HOI</span>
-          <span className="relative">
-            Holding
-            <span className="bg-primary-600 absolute -top-2 -right-2 h-2 w-2 rounded-full"></span>
-          </span>
+          <span className="relative">Holding</span>
         </Link>
       </div>
     </header>

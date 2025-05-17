@@ -1,30 +1,38 @@
-import { BellIcon, LogOut, Search, Sun } from "lucide-react";
+// app/components/dashboard/layout/headers.tsx
+import { LogOut, PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import { useDashboardLayout } from "./provider";
 import { useAuth } from "@/providers/auth";
 
-export const DashboardHeader = ({ className = "" }: { className?: string }) => {
-  const { isPanelExpanded } = useDashboardLayout();
+export const DashboardHeader = () => {
+  const { isPanelExpanded, togglePanel } = useDashboardLayout();
 
   return (
-    <header
-      className={`${className} sticky top-0 z-30 flex h-16 items-center justify-between border-b border-zinc-200 bg-white px-4`}
-    >
-      {/* Left: Logo & Title (only visible on mobile) */}
-      <div className="flex items-center">
+    <header className="border-cover fixed top-0 left-0 z-40 flex w-full items-center justify-between border-b bg-white px-4 py-4 sm:relative">
+      {/* Left: Logo ve Toggle Button */}
+      <div className="flex items-center gap-4">
+        {/* Logo */}
         <div className="flex items-center">
-          <div className="bg-primary-600 flex h-8 w-8 items-center justify-center rounded-lg font-bold text-white">
-            H
-          </div>
-          <span className="ml-2 font-semibold text-zinc-900">Holding</span>
+          <span className="ml-3 font-semibold text-zinc-900">Holding</span>
         </div>
-      </div>
-      {/* Right: Actions */}
-      <div className="flex w-full items-center justify-end gap-3">
-        {/* User Menu */}
-        <UserButton />
 
-        {/* Logout */}
+        {/* Toggle Button */}
+        <button
+          onClick={togglePanel}
+          className="border-cover flex h-9 w-9 items-center justify-center rounded-md border bg-zinc-100 text-zinc-800 hover:bg-zinc-50 hover:text-zinc-500"
+          aria-label={isPanelExpanded ? "Paneli kapat" : "Paneli aç"}
+        >
+          {isPanelExpanded ? (
+            <PanelLeftClose className="h-5 w-5" />
+          ) : (
+            <PanelLeftOpen className="h-5 w-5" />
+          )}
+        </button>
+      </div>
+
+      {/* Right: User Controls */}
+      <div className="flex items-center justify-end gap-3">
         <LogoutButton />
+        <UserButton />
       </div>
     </header>
   );
@@ -34,7 +42,7 @@ export const UserButton = () => {
   const { user } = useAuth();
 
   return (
-    <button className="flex items-center gap-2 rounded-full border border-zinc-200 p-1 pr-4 hover:bg-zinc-50">
+    <button className="border-cover flex items-center gap-2 rounded-full border bg-zinc-100 p-1 pr-4 hover:bg-zinc-50">
       <div className="h-7 w-7 overflow-hidden rounded-full bg-zinc-200">
         <img
           src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix"
@@ -42,7 +50,9 @@ export const UserButton = () => {
           className="h-full w-full object-cover"
         />
       </div>
-      <span className="text-sm font-medium text-zinc-700">{user.username}</span>
+      <span className="text-sm font-medium text-zinc-700 first-letter:uppercase">
+        {user.username}
+      </span>
     </button>
   );
 };
@@ -53,10 +63,10 @@ export const LogoutButton = () => {
   return (
     <button
       onClick={logout}
-      className="flex h-9 items-center justify-center gap-2 rounded-full border border-zinc-200 px-3 text-sm font-medium text-zinc-600 transition-colors hover:bg-zinc-100"
+      className="border-cover flex h-9 items-center justify-center gap-2 rounded-full border bg-zinc-100 px-3 text-sm font-medium text-zinc-600 transition-colors hover:bg-zinc-100"
     >
       <LogOut className="h-5 w-5" />
-      Logout
+      <span className="hidden sm:inline">Logout</span>
     </button>
   );
 };

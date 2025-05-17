@@ -1,3 +1,4 @@
+// app/components/dashboard/layout/provider.tsx
 import { useState, useEffect, createContext, useContext } from "react";
 
 // Context türünü tanımla
@@ -15,29 +16,16 @@ const DashboardLayoutContext = createContext<ContextType | undefined>(
 export const DashboardLayoutProvider: React.FC<{
   children: React.ReactNode;
 }> = ({ children }) => {
-  const [isPanelExpanded, setIsPanelExpanded] = useState(true);
-
-  // Sayfa yüklendiğinde localStorage'dan panel durumunu al
-  useEffect(() => {
-    const savedState = localStorage.getItem("dashboardPanelExpanded");
-    if (savedState !== null) {
-      setIsPanelExpanded(savedState === "true");
+  const [isPanelExpanded, setIsPanelExpanded] = useState(() => {
+    if (typeof window !== "undefined") {
+      return window.innerWidth >= 768;
     }
-  }, []);
+    return false;
+  });
 
   // Panel durumunu değiştiren fonksiyon
   const togglePanel = () => {
-    const newState = !isPanelExpanded;
-    setIsPanelExpanded(newState);
-
-    // Panel durumunu localStorage'a kaydet
-    localStorage.setItem("dashboardPanelExpanded", newState.toString());
-
-    // Özel event yayınla (diğer bileşenlerin dinleyebilmesi için)
-    const event = new CustomEvent("dashboard-panel-toggle", {
-      detail: { expanded: newState },
-    });
-    window.dispatchEvent(event);
+    setIsPanelExpanded(!isPanelExpanded);
   };
 
   return (

@@ -8,7 +8,7 @@ export const Route = createFileRoute("/$lang/_auth/dashboard/")({
 
 function RouteComponent() {
   return (
-    <div className="flex min-h-dvh flex-col items-center justify-center rounded-xl bg-gradient-to-br from-yellow-50 via-white to-blue-50 p-8 shadow-lg">
+    <div className="flex min-h-dvh flex-col items-center justify-center rounded-xl bg-gradient-to-br from-yellow-50 via-white to-blue-50 p-8">
       <div className="mb-6 flex items-center justify-center rounded-full bg-yellow-100 p-4 shadow-md">
         <Wrench className="h-14 w-14 text-yellow-500" />
       </div>
