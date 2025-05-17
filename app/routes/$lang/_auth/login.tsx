@@ -34,95 +34,116 @@ export const Route = createFileRoute("/$lang/_auth/login")({
   component: LoginPage,
 });
 
+type LoginState = {
+  isLoading: boolean;
+  showPassword: boolean;
+  errorMessage: string | null;
+  username: string;
+  password: string;
+};
+
 function LoginPage() {
   const { login } = useAuth();
-  const [isLoading, setIsLoading] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [formData, setFormData] = useState({
+
+  // Tüm state'ler tek bir objede
+  const [state, setState] = useState<LoginState>({
+    isLoading: false,
+    showPassword: false,
+    errorMessage: null,
     username: "",
     password: "",
   });
 
+  // Input değişikliklerini yönetir
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-    if (errorMessage) setErrorMessage(null);
+    setState((prev) => ({
+      ...prev,
+      [name]: value,
+      errorMessage: prev.errorMessage ? null : prev.errorMessage,
+    }));
   };
 
+  // Şifre göster/gizle
+  const toggleShowPassword = () => {
+    setState((prev) => ({
+      ...prev,
+      showPassword: !prev.showPassword,
+    }));
+  };
+
+  // Form submit işlemi
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Form doğrulama
-    if (!formData.username.trim() || !formData.password.trim()) {
-      setErrorMessage("Lütfen tüm alanları doldurun");
+    if (!state.username.trim() || !state.password.trim()) {
+      setState((prev) => ({
+        ...prev,
+        errorMessage: "Lütfen tüm alanları doldurun",
+      }));
       return;
     }
 
-    setIsLoading(true);
+    setState((prev) => ({ ...prev, isLoading: true }));
 
     try {
-      const response = await login(formData);
+      const response = await login({
+        username: state.username,
+        password: state.password,
+      });
 
       if (response.success) {
-        // Artık manuel olarak sayfayı yeniden yüklemek yerine yönlendirme yapabilirsiniz
         window.location.href = "/blog/dashboard";
       } else {
-        setErrorMessage(
-          "Giriş başarısız. Lütfen kullanıcı adı ve şifrenizi kontrol edin.",
-        );
+        setState((prev) => ({
+          ...prev,
+          errorMessage:
+            "Giriş başarısız. Lütfen kullanıcı adı ve şifrenizi kontrol edin.",
+        }));
       }
-    } catch (error) {
-      setErrorMessage(
-        "Giriş başarısız. Bir sorun oluştu, lütfen daha sonra tekrar deneyin.",
-      );
+    } catch {
+      setState((prev) => ({
+        ...prev,
+        errorMessage:
+          "Giriş başarısız. Bir sorun oluştu, lütfen daha sonra tekrar deneyin.",
+      }));
     } finally {
-      setIsLoading(false);
+      setState((prev) => ({ ...prev, isLoading: false }));
     }
   };
 
   return (
     <AlreadyLoginCheck>
-      <main className="flex min-h-screen flex-col bg-gradient-to-br from-sky-50 to-zinc-100">
-        {/* Üst Şerit - Daha zarif bir gradient */}
-        <div className="from-primary-700 via-primary-500 absolute top-0 right-0 left-0 h-1.5 bg-gradient-to-r to-teal-400 opacity-80 blur-[1px]"></div>
-
-        {/* Ana İçerik */}
-        <div className="flex flex-1 flex-col items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
-          <div className="w-full max-w-md">
-            {/* Logo ve Başlık */}
-            <div className="mb-12 flex flex-col items-center space-y-7">
-              <Link
-                to="/"
-                aria-label="Holding Sitesi - Anasayfaya dön"
-                className="transition-transform duration-300 hover:scale-105 focus:outline-none"
-              >
-                <img
-                  src="/images/brand.svg"
-                  alt="Holding Sitesi Logo"
-                  loading="eager"
-                  className="h-14 w-auto drop-shadow-md"
-                  width="140"
-                  height="48"
-                />
-              </Link>
-            </div>
-
-            {/* Form Kartı - Daha zarif ve sade */}
-            <div className="border-cover overflow-hidden rounded-lg border bg-white/80 ring-1 ring-zinc-100 backdrop-blur-md transition-all duration-300">
-              {/* Hata Mesajı - Daha zarif görünüm */}
-              {errorMessage && (
+      <main className="relative flex min-h-screen bg-gradient-to-br from-sky-50 to-zinc-100">
+        {/* Sol Form Alanı */}
+        <div
+          className={`z-20 order-1 flex min-h-screen w-full shrink-0 flex-col items-center justify-center gap-y-8 bg-gradient-to-br from-sky-50 via-zinc-50 to-rose-100 px-4 py-12 backdrop-blur-md transition-all duration-300 sm:px-6 md:mr-auto md:w-[512px] lg:px-4`}
+        >
+          <Link to="/">
+            <img
+              src="/images/brand.svg"
+              alt="Holding Sitesi Logo"
+              className="h-10 w-auto drop-shadow-lg"
+              width="120"
+              height="40"
+            />
+          </Link>
+          <div className="w-full max-w-md bg-white">
+            {/* Form Kartı */}
+            <div className="border-cover overflow-hidden rounded-sm border ring-1 ring-zinc-100">
+              {/* Hata Mesajı */}
+              {state.errorMessage && (
                 <div className="border-l-4 border-red-400 bg-red-50/80 px-5 py-3 text-sm text-red-700">
                   <div className="flex items-center gap-2">
                     <AlertCircle className="size-5 flex-shrink-0" />
-                    <p className="font-medium">{errorMessage}</p>
+                    <p className="font-medium">{state.errorMessage}</p>
                   </div>
                 </div>
               )}
 
               <div className="p-8">
                 <form onSubmit={handleSubmit} className="space-y-7">
-                  {/* Kullanıcı Adı Alanı */}
+                  {/* Kullanıcı Adı */}
                   <div className="space-y-1.5">
                     <label
                       htmlFor="username"
@@ -130,7 +151,7 @@ function LoginPage() {
                     >
                       Kullanıcı Adı
                     </label>
-                    <div className="group relative rounded-md shadow-sm">
+                    <div className="group relative rounded-sm">
                       <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
                         <Mail className="group-focus-within:text-primary-500 size-5 text-zinc-300 transition-colors duration-200" />
                       </div>
@@ -140,15 +161,15 @@ function LoginPage() {
                         type="text"
                         autoComplete="username"
                         required
-                        value={formData.username}
+                        value={state.username}
                         onChange={handleChange}
-                        className="focus:border-primary-400 focus:ring-primary-400/20 block w-full rounded-md border border-zinc-200 bg-zinc-50/80 px-11 py-3 font-medium text-zinc-900 transition-colors duration-200 placeholder:text-zinc-400 focus:bg-white focus:ring-2 focus:outline-none"
+                        className="focus:border-primary-400 focus:ring-primary-400/20 block w-full rounded-sm border border-zinc-200 bg-zinc-50/80 px-11 py-3 font-medium text-zinc-900 transition-colors duration-200 placeholder:text-zinc-400 focus:bg-white focus:ring-2 focus:outline-none"
                         placeholder="Kullanıcı adınızı girin"
                       />
                     </div>
                   </div>
 
-                  {/* Şifre Alanı */}
+                  {/* Şifre */}
                   <div className="space-y-1.5">
                     <div className="flex items-center justify-between">
                       <label
@@ -158,31 +179,33 @@ function LoginPage() {
                         Şifre
                       </label>
                     </div>
-                    <div className="group relative rounded-md shadow-sm">
+                    <div className="group relative rounded-sm">
                       <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
                         <Lock className="group-focus-within:text-primary-500 size-5 text-zinc-300 transition-colors duration-200" />
                       </div>
                       <input
                         id="password"
                         name="password"
-                        type={showPassword ? "text" : "password"}
+                        type={state.showPassword ? "text" : "password"}
                         autoComplete="current-password"
                         required
-                        value={formData.password}
+                        value={state.password}
                         onChange={handleChange}
-                        className="focus:border-primary-400 focus:ring-primary-400/20 block w-full rounded-md border border-zinc-200 bg-zinc-50/80 px-11 py-3 font-medium text-zinc-900 transition-colors duration-200 placeholder:text-zinc-400 focus:bg-white focus:ring-2 focus:outline-none"
+                        className="focus:border-primary-400 focus:ring-primary-400/20 block w-full rounded-sm border border-zinc-200 bg-zinc-50/80 px-11 py-3 font-medium text-zinc-900 transition-colors duration-200 placeholder:text-zinc-400 focus:bg-white focus:ring-2 focus:outline-none"
                         placeholder="••••••••"
                       />
                       <button
                         type="button"
-                        onClick={() => setShowPassword(!showPassword)}
+                        onClick={toggleShowPassword}
                         className="absolute inset-y-0 right-0 flex items-center pr-4"
                         aria-label={
-                          showPassword ? "Şifreyi gizle" : "Şifreyi göster"
+                          state.showPassword
+                            ? "Şifreyi gizle"
+                            : "Şifreyi göster"
                         }
                         tabIndex={-1}
                       >
-                        {showPassword ? (
+                        {state.showPassword ? (
                           <EyeOff className="size-5 text-zinc-400 transition-colors duration-200 hover:text-zinc-600" />
                         ) : (
                           <Eye className="size-5 text-zinc-400 transition-colors duration-200 hover:text-zinc-600" />
@@ -194,10 +217,10 @@ function LoginPage() {
                   {/* Giriş Butonu */}
                   <button
                     type="submit"
-                    disabled={isLoading}
-                    className="from-primary-700 to-primary-500 hover:from-primary-800 hover:to-primary-600 focus:ring-primary-400/50 disabled:from-primary-300 disabled:to-primary-200 mt-3 flex w-full items-center justify-center gap-2 rounded-md bg-gradient-to-r px-5 py-3.5 text-base font-semibold text-white shadow-md transition-all duration-300 focus:ring-2 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:shadow-none"
+                    disabled={state.isLoading}
+                    className="from-primary-700 to-primary-500 hover:from-primary-800 hover:to-primary-600 focus:ring-primary-400/50 disabled:from-primary-300 disabled:to-primary-200 mt-3 flex w-full items-center justify-center gap-2 rounded-sm bg-gradient-to-r px-5 py-3.5 text-base font-semibold text-white transition-all duration-300 focus:ring-2 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed"
                   >
-                    {isLoading ? (
+                    {state.isLoading ? (
                       <>
                         <LogInIcon className="size-5 animate-spin text-white" />
                         <span>İşleniyor...</span>
@@ -219,6 +242,20 @@ function LoginPage() {
               </div>
             </div>
           </div>
+        </div>
+        {/* Sağ Manzara Alanı (Sadece md ve üzeri ekranlarda görünür) */}
+        <div
+          className={`order-2 hidden bg-zinc-900/20 md:static md:flex md:w-full`}
+        >
+          <img
+            src="https://images.pexels.com/photos/3182773/pexels-photo-3182773.jpeg?cs=srgb&dl=pexels-fauxels-3182773.jpg&fm=jpg"
+            alt="Manzara"
+            className="h-full w-full object-cover object-center opacity-80"
+            loading="lazy"
+          />
+
+          {/* Manzara üstüne gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-br from-zinc-900/60 to-zinc-800/30" />
         </div>
       </main>
     </AlreadyLoginCheck>

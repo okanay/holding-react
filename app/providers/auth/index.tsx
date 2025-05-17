@@ -3,6 +3,9 @@ import { createContext, PropsWithChildren, useContext, useState } from "react";
 import { createStore, StoreApi, useStore } from "zustand";
 import { immer } from "zustand/middleware/immer";
 
+// API URL'lerini merkezi olarak tanımla
+const API_BASE_URL = import.meta.env.VITE_APP_BACKEND_URL;
+
 // Zustand tipi
 interface DataState {
   status: AuthStatus;
@@ -17,8 +20,8 @@ interface DataState {
 }
 
 // Auth Context
-const AuthContext = createContext<AuthContextType>(undefined);
 type AuthContextType = StoreApi<DataState> | undefined;
+const AuthContext = createContext<AuthContextType>(undefined);
 
 // Provider
 export function AuthProvider({
@@ -33,64 +36,66 @@ export function AuthProvider({
     createStore<DataState>()(
       immer((set) => ({
         status: initialStatus,
-        setAuthStatus: (status: AuthStatus) => set({ status }),
+        setAuthStatus: (status) => set({ status }),
         user: initialUser,
-        setUser: (user: User | null) => set({ user }),
+        setUser: (user) => set({ user }),
 
+        // Kullanıcı çıkış işlemi
         logout: async () => {
           try {
-            await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/auth/logout`, {
-              headers: { "Content-Type": "application/json" },
+            await fetch(`${API_BASE_URL}/auth/logout`, {
               method: "GET",
+              headers: { "Content-Type": "application/json" },
               credentials: "include",
             });
           } catch (error) {
-            // Hata olsa bile localde logout işlemi yapılmalı
-            console.warn("Failed to logout from backend:", error);
+            // Backend logout başarısız olsa bile local state güncellenmeli
+            console.warn("Backend logout failed:", error);
+          } finally {
+            set({ user: null, status: "unauthorize" });
+            window.location.reload();
           }
-          set({ user: null, status: "unauthorize" });
-          window.location.reload();
         },
 
-        login: async (credentials: LoginCredentials) => {
+        // Kullanıcı giriş işlemi
+        login: async (credentials) => {
           try {
-            const response = await fetch(
-              `${import.meta.env.VITE_APP_BACKEND_URL}/public/login`,
-              {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(credentials),
-                credentials: "include",
-              },
-            );
+            const response = await fetch(`${API_BASE_URL}/public/login`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(credentials),
+              credentials: "include",
+            });
             if (!response.ok) {
-              throw new Error("Login failed");
+              const errorMsg = await response.text();
+              throw new Error(errorMsg || "Login failed");
             }
             const user = await response.json();
             set({ user, status: "authorize" });
             return { success: true, message: "Login successful" };
           } catch (error) {
             set({ user: null, status: "unauthorize" });
-            return { success: false, message: "Login failed" };
+            return {
+              success: false,
+              message: error instanceof Error ? error.message : "Login failed",
+            };
           }
         },
 
+        // Oturum kontrolü (ilk yüklemede)
         initialSessionControl: async () => {
           try {
-            const response = await fetch(
-              `${import.meta.env.VITE_APP_BACKEND_URL}/auth/get-me`,
-              {
-                headers: { "Content-Type": "application/json" },
-                method: "GET",
-                credentials: "include",
-              },
-            );
+            const response = await fetch(`${API_BASE_URL}/auth/get-me`, {
+              method: "GET",
+              headers: { "Content-Type": "application/json" },
+              credentials: "include",
+            });
             if (!response.ok) {
-              throw new Error("User not found or not authenticated");
+              throw new Error("User not authenticated");
             }
             const userData = await response.json();
             set({ user: userData.user, status: "authorize" });
-          } catch (error) {
+          } catch {
             set({ user: null, status: "unauthorize" });
           }
         },
@@ -105,7 +110,7 @@ export function AuthProvider({
 export function useAuth() {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error("useAuth hook must be used within a AuthProvider");
+    throw new Error("useAuth hook must be used within an AuthProvider");
   }
   return useStore(context, (state) => state);
 }
