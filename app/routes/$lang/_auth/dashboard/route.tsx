@@ -1,9 +1,10 @@
-import { EditorProvider } from "@/components/editor/store";
+import { DashboardLayout } from "@/components/dashboard/layout/layout";
+import { DashboardProvider } from "@/components/dashboard/store";
 import { seoTranslations } from "@/i18n/languages";
 import { ProtectedRoute } from "@/providers/auth/session-control";
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/$lang/_auth/_dashboard")({
+export const Route = createFileRoute("/$lang/_auth/dashboard")({
   loader: async ({ params: { lang } }) => {
     return { lang };
   },
@@ -28,9 +29,9 @@ export const Route = createFileRoute("/$lang/_auth/_dashboard")({
 function RouteComponent() {
   return (
     <ProtectedRoute>
-      <EditorProvider>
-        <Outlet />
-      </EditorProvider>
+      <DashboardProvider>
+        <DashboardLayout />
+      </DashboardProvider>
     </ProtectedRoute>
   );
 }

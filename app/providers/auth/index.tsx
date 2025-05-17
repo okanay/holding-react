@@ -55,7 +55,7 @@ export function AuthProvider({
         login: async (credentials: LoginCredentials) => {
           try {
             const response = await fetch(
-              `${import.meta.env.VITE_APP_BACKEND_URL}/login`,
+              `${import.meta.env.VITE_APP_BACKEND_URL}/public/login`,
               {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },

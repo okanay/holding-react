@@ -4,7 +4,15 @@ import { Link } from "@/i18n/link";
 import { useAuth } from "@/providers/auth";
 import { AlreadyLoginCheck } from "@/providers/auth/session-control";
 import { createFileRoute } from "@tanstack/react-router";
-import { AlertCircle, Eye, EyeOff, Lock, LogIn, Mail } from "lucide-react";
+import {
+  AlertCircle,
+  Eye,
+  EyeOff,
+  Lock,
+  LogIn,
+  LogInIcon,
+  Mail,
+} from "lucide-react";
 import { useState } from "react";
 
 export const Route = createFileRoute("/$lang/_auth/login")({
@@ -58,7 +66,7 @@ function LoginPage() {
 
       if (response.success) {
         // Artık manuel olarak sayfayı yeniden yüklemek yerine yönlendirme yapabilirsiniz
-        window.location.href = "/blog/editor";
+        window.location.href = "/blog/dashboard";
       } else {
         setErrorMessage(
           "Giriş başarısız. Lütfen kullanıcı adı ve şifrenizi kontrol edin.",
@@ -98,16 +106,10 @@ function LoginPage() {
                   height="48"
                 />
               </Link>
-
-              <div className="text-center">
-                <h1 className="text-color-font-dark mb-1 text-4xl font-extrabold tracking-tight">
-                  Dashboard Paneli
-                </h1>
-              </div>
             </div>
 
             {/* Form Kartı - Daha zarif ve sade */}
-            <div className="border-cover overflow-hidden rounded-3xl border bg-white/80 ring-1 ring-zinc-100 backdrop-blur-md transition-all duration-300">
+            <div className="border-cover overflow-hidden rounded-lg border bg-white/80 ring-1 ring-zinc-100 backdrop-blur-md transition-all duration-300">
               {/* Hata Mesajı - Daha zarif görünüm */}
               {errorMessage && (
                 <div className="border-l-4 border-red-400 bg-red-50/80 px-5 py-3 text-sm text-red-700">
@@ -128,7 +130,7 @@ function LoginPage() {
                     >
                       Kullanıcı Adı
                     </label>
-                    <div className="group relative rounded-xl shadow-sm">
+                    <div className="group relative rounded-md shadow-sm">
                       <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
                         <Mail className="group-focus-within:text-primary-500 size-5 text-zinc-300 transition-colors duration-200" />
                       </div>
@@ -140,7 +142,7 @@ function LoginPage() {
                         required
                         value={formData.username}
                         onChange={handleChange}
-                        className="focus:border-primary-400 focus:ring-primary-400/20 block w-full rounded-xl border border-zinc-200 bg-zinc-50/80 px-11 py-3 font-medium text-zinc-900 transition-colors duration-200 placeholder:text-zinc-400 focus:bg-white focus:ring-2 focus:outline-none"
+                        className="focus:border-primary-400 focus:ring-primary-400/20 block w-full rounded-md border border-zinc-200 bg-zinc-50/80 px-11 py-3 font-medium text-zinc-900 transition-colors duration-200 placeholder:text-zinc-400 focus:bg-white focus:ring-2 focus:outline-none"
                         placeholder="Kullanıcı adınızı girin"
                       />
                     </div>
@@ -156,7 +158,7 @@ function LoginPage() {
                         Şifre
                       </label>
                     </div>
-                    <div className="group relative rounded-xl shadow-sm">
+                    <div className="group relative rounded-md shadow-sm">
                       <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
                         <Lock className="group-focus-within:text-primary-500 size-5 text-zinc-300 transition-colors duration-200" />
                       </div>
@@ -168,7 +170,7 @@ function LoginPage() {
                         required
                         value={formData.password}
                         onChange={handleChange}
-                        className="focus:border-primary-400 focus:ring-primary-400/20 block w-full rounded-xl border border-zinc-200 bg-zinc-50/80 px-11 py-3 font-medium text-zinc-900 transition-colors duration-200 placeholder:text-zinc-400 focus:bg-white focus:ring-2 focus:outline-none"
+                        className="focus:border-primary-400 focus:ring-primary-400/20 block w-full rounded-md border border-zinc-200 bg-zinc-50/80 px-11 py-3 font-medium text-zinc-900 transition-colors duration-200 placeholder:text-zinc-400 focus:bg-white focus:ring-2 focus:outline-none"
                         placeholder="••••••••"
                       />
                       <button
@@ -193,28 +195,11 @@ function LoginPage() {
                   <button
                     type="submit"
                     disabled={isLoading}
-                    className="from-primary-700 to-primary-500 hover:from-primary-800 hover:to-primary-600 focus:ring-primary-400/50 disabled:from-primary-300 disabled:to-primary-200 mt-3 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r px-5 py-3.5 text-base font-semibold text-white shadow-md transition-all duration-300 focus:ring-2 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:shadow-none"
+                    className="from-primary-700 to-primary-500 hover:from-primary-800 hover:to-primary-600 focus:ring-primary-400/50 disabled:from-primary-300 disabled:to-primary-200 mt-3 flex w-full items-center justify-center gap-2 rounded-md bg-gradient-to-r px-5 py-3.5 text-base font-semibold text-white shadow-md transition-all duration-300 focus:ring-2 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:shadow-none"
                   >
                     {isLoading ? (
                       <>
-                        <svg
-                          className="size-5 animate-spin text-white"
-                          viewBox="0 0 24 24"
-                        >
-                          <circle
-                            className="opacity-25"
-                            cx="12"
-                            cy="12"
-                            r="10"
-                            stroke="currentColor"
-                            strokeWidth="4"
-                          ></circle>
-                          <path
-                            className="opacity-75"
-                            fill="currentColor"
-                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                          ></path>
-                        </svg>
+                        <LogInIcon className="size-5 animate-spin text-white" />
                         <span>İşleniyor...</span>
                       </>
                     ) : (

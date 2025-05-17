@@ -3,7 +3,7 @@ export const dummyJobs: Job[] = [
     id: "5dae1c71-86d7-4b28-aa2f-b6ab68bca148",
     slug: "senior-frontend-developer",
     status: "published",
-    deadline: "2025-06-15T00:00:00Z",
+    deadline: "2025-02-15T00:00:00Z",
     createdAt: "2025-05-01T10:00:00Z",
     updatedAt: "2025-05-01T10:00:00Z",
     details: {
@@ -21,8 +21,8 @@ export const dummyJobs: Job[] = [
     },
     categories: [
       {
-        name: "frontend",
-        displayName: "Frontend Development",
+        name: "software",
+        displayName: "Software Development",
         createdAt: "2025-01-01T00:00:00Z",
       },
     ],
@@ -75,8 +75,8 @@ export const dummyJobs: Job[] = [
     },
     categories: [
       {
-        name: "backend",
-        displayName: "Backend Development",
+        name: "software",
+        displayName: "Software Development",
         createdAt: "2025-01-01T00:00:00Z",
       },
     ],

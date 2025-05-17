@@ -1,8 +1,7 @@
 import useClickOutside from "@/hooks/use-click-outside";
-import { Check, CheckCircle2, ChevronDown } from "lucide-react";
-import { useState } from "react";
+import { CheckCircle2, ChevronDown } from "lucide-react";
+import { useState, useEffect } from "react";
 
-// Custom Select Component
 type Props = {
   label: string;
   options: string[];
@@ -17,16 +16,27 @@ export const Select: React.FC<Props> = ({
   onChange,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState("");
+  const [selectedOption, setSelectedOption] = useState(value || "");
+
+  // Dışarıdan gelen value değeri değiştiğinde state'i güncelle
+  useEffect(() => {
+    if (value !== undefined) {
+      setSelectedOption(value);
+    }
+  }, [value]);
+
   const ref = useClickOutside<HTMLDivElement>(() => {
-    setIsOpen(!isOpen), isOpen;
+    setIsOpen(false);
   });
 
-  const handleSelect = (option) => {
+  const handleSelect = (option: string) => {
     setSelectedOption(option);
     setIsOpen(false);
     if (onChange) onChange(option);
   };
+
+  // Tüm seçenekleri içeren genişletilmiş dizi
+  const allOptions = [""].concat(options);
 
   return (
     <div className="relative">
@@ -39,52 +49,46 @@ export const Select: React.FC<Props> = ({
           {selectedOption === "" ? (
             <span className="ml-1 text-zinc-400">{label}</span>
           ) : (
-            <span className="ml-1 text-zinc-700">{selectedOption}</span>
+            <span className="ml-1 line-clamp-1 text-zinc-700">
+              {selectedOption}
+            </span>
           )}
         </div>
         <ChevronDown
           size={20}
-          className={`ml-2 text-zinc-400 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
+          className={`ml-2 text-zinc-400 transition-transform duration-200 ${
+            isOpen ? "rotate-180" : ""
+          }`}
         />
       </button>
 
       {isOpen && (
         <div
           ref={ref}
-          className="animate-fade-in absolute z-20 mt-2 w-full rounded-lg border border-zinc-200 bg-white shadow-xl"
+          className="animate-fade-in absolute z-20 mt-2 w-full rounded border border-zinc-200 bg-white shadow-xl"
         >
           <ul className="max-h-60 overflow-auto py-2">
-            <li
-              className={`cursor-pointer rounded-md px-4 py-2 text-sm transition-colors ${
-                selectedOption === ""
-                  ? "bg-primary-50 text-primary-600 flex items-center"
-                  : "text-zinc-500 hover:bg-zinc-100"
-              }`}
-              onClick={() => handleSelect("")}
-            >
-              {selectedOption === "" ? (
-                <>
-                  <Check size={16} className="text-primary-600 mr-2" />
-                  Tümü
-                </>
-              ) : (
-                "Tümü"
-              )}
-            </li>
-            {options.map((option, index) => (
+            {allOptions.map((option, index) => (
               <li
                 key={index}
-                className={`flex cursor-pointer items-center rounded-md px-4 py-2 text-sm transition-colors ${
+                className={`line-clamp-1 flex cursor-pointer items-center justify-between px-4 py-2 text-xs transition-colors ${
                   option === selectedOption
                     ? "bg-primary-50 text-primary-600 font-medium"
-                    : "text-zinc-700 hover:bg-zinc-100"
+                    : option === ""
+                      ? "text-zinc-500 hover:bg-zinc-100"
+                      : "text-zinc-700 hover:bg-zinc-100"
                 }`}
                 onClick={() => handleSelect(option)}
               >
+                <span className="line-clamp-1">
+                  {option === "" ? "All" : option}
+                </span>
                 {option === selectedOption && (
-                  <CheckCircle2 size={16} className="text-primary-600 mr-2" />
+                  <CheckCircle2
+                    size={16}
+                    className="text-primary-600 ml-2 shrink-0"
+                  />
                 )}
-                {option}
               </li>
             ))}
           </ul>

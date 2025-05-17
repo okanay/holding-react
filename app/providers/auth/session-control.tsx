@@ -21,7 +21,7 @@ export function AlreadyLoginCheck(props: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (status === "authorize") {
-      navigate({ to: "/editor" });
+      navigate({ to: "/dashboard" });
     }
   }, [status, navigate]);
 
