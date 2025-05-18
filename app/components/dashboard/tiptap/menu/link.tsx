@@ -3,13 +3,14 @@ import { Link as LinkIcon, ExternalLink, X } from "lucide-react";
 import RichButtonModal from "./ui/modal";
 import { useTiptapContext } from "../store";
 import MenuButton from "./ui/button";
+import { twMerge } from "tailwind-merge";
 
 const LinkButton = () => {
   const { editor } = useTiptapContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [linkUrl, setLinkUrl] = useState("");
   const [linkText, setLinkText] = useState("");
-  const [openInNewTab, setOpenInNewTab] = useState(false);
+  const [openInNewTab, setOpenInNewTab] = useState(true);
   const [validationError, setValidationError] = useState("");
 
   // Bu fonksiyon URL'in güvenli olup olmadığını kontrol eder
@@ -209,23 +210,23 @@ const LinkButton = () => {
             <h3 className="mb-1.5 text-sm font-medium text-zinc-700">
               Seçenekler
             </h3>
-            <div className="flex items-center gap-2">
-              <div className="flex items-center">
-                <input
-                  id="open-new-tab"
-                  type="checkbox"
-                  checked={openInNewTab}
-                  onChange={(e) => setOpenInNewTab(e.target.checked)}
-                  className="text-primary-500 focus:ring-primary-500 h-4 w-4 rounded border-zinc-300"
-                />
-                <label
-                  htmlFor="open-new-tab"
-                  className="ml-2 flex items-center gap-1 text-sm text-zinc-700"
-                >
-                  Yeni sekmede aç
-                  <ExternalLink size={14} className="text-zinc-500" />
-                </label>
-              </div>
+            <div className="flex items-center gap-0">
+              <input
+                id="open-new-tab"
+                type="checkbox"
+                checked={openInNewTab}
+                onChange={(e) => setOpenInNewTab(e.target.checked)}
+                className={twMerge(
+                  "text-primary-500 checked:bg-primary border-cover size-4 appearance-auto rounded border",
+                )}
+              />
+              <label
+                htmlFor="open-new-tab"
+                className="ml-2 flex items-center gap-1 text-sm text-zinc-700"
+              >
+                Yeni sekmede aç
+                <ExternalLink size={14} className="text-zinc-500" />
+              </label>
             </div>
           </div>
 

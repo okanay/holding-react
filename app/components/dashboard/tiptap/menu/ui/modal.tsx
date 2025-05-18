@@ -1,5 +1,6 @@
 import { X } from "lucide-react";
 import { twMerge } from "tailwind-merge";
+import { createPortal } from "react-dom";
 import useClickOutside from "@/hooks/use-click-outside";
 
 type Props = {
@@ -22,8 +23,8 @@ const RichButtonModal = ({
   const ref = useClickOutside<HTMLDivElement>(() => onClose());
   if (!isOpen) return null;
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-black/50 p-4">
+  const modalContent = (
+    <div className="fixed inset-0 z-1000 flex items-center justify-center overflow-y-auto bg-black/50 p-4">
       <div
         ref={ref}
         className={twMerge(
@@ -55,6 +56,8 @@ const RichButtonModal = ({
       </div>
     </div>
   );
+
+  return createPortal(modalContent, document.body);
 };
 
 export default RichButtonModal;

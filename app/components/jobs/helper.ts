@@ -1,43 +1,64 @@
 import {
   WORK_MODE_OPTIONS,
   EMPLOYMENT_TYPE_OPTIONS,
+  CATEGORY_OPTIONS,
 } from "@/components/dashboard/form/config";
 
-export function locationOptions(jobs: Job[]): string[] {
-  // Sadece mevcut işlerdeki lokasyonları benzersiz olarak döndür
-  const locations = jobs.map((job) => job.details.location);
-  return Array.from(new Set(locations));
+// Helper: İngilizce label'ı döndürür
+export function getLabelEnFromDictionary(
+  options: JobFormSelectOption[],
+  value: string | undefined | null,
+): string {
+  if (!value) return "";
+  const found = options.find((opt) => opt.name === value);
+  return found?.labelEn ?? "";
 }
 
+// Work Mode (İngilizce label) - "Any" hariç
 export function workModeOptions(jobs: Job[]): string[] {
-  // Sadece mevcut işlerdeki workMode değerlerini WORK_MODE_OPTIONS ile filtreleyip labelEn değerini döndür
-  const workModes = jobs
-    .map((job) => job.details.workMode)
-    .filter((mode, idx, arr) => arr.indexOf(mode) === idx); // benzersiz
+  const workModes = Array.from(
+    new Set(
+      jobs
+        .map((job) => job.details.workMode)
+        .filter((mode) => !!mode && mode !== "Any"),
+    ),
+  );
   return workModes
-    .map((mode) => {
-      const opt = WORK_MODE_OPTIONS.find((opt) => opt.value === mode);
-      return opt?.labelEn;
-    })
+    .map((mode) => getLabelEnFromDictionary(WORK_MODE_OPTIONS, mode))
     .filter((labelEn): labelEn is string => !!labelEn);
 }
 
+// Employment Type (İngilizce label) - "Any" hariç
 export function employmentTypeOptions(jobs: Job[]): string[] {
-  // Sadece mevcut işlerdeki employmentType değerlerini EMPLOYMENT_TYPE_OPTIONS ile filtreleyip labelEn değerini döndür
-  const employmentTypes = jobs
-    .map((job) => job.details.employmentType)
-    .filter((type, idx, arr) => arr.indexOf(type) === idx); // benzersiz
+  const employmentTypes = Array.from(
+    new Set(
+      jobs
+        .map((job) => job.details.employmentType)
+        .filter((type) => !!type && type !== "Any"),
+    ),
+  );
   return employmentTypes
-    .map((type) => {
-      const opt = EMPLOYMENT_TYPE_OPTIONS.find((opt) => opt.value === type);
-      return opt?.labelEn;
-    })
+    .map((type) => getLabelEnFromDictionary(EMPLOYMENT_TYPE_OPTIONS, type))
     .filter((labelEn): labelEn is string => !!labelEn);
 }
 
+// Kategoriler (İngilizce label) - "Any" gibi bir durum yok, mevcut haliyle doğru
 export function categoryOptions(jobs: Job[]): string[] {
   const categories = jobs.flatMap((job) =>
-    job.categories.map((cat) => cat.displayName),
+    job.categories.map((cat) =>
+      getLabelEnFromDictionary(CATEGORY_OPTIONS, cat.name),
+    ),
   );
-  return Array.from(new Set(categories));
+  return Array.from(new Set(categories)).filter(
+    (labelEn): labelEn is string => !!labelEn,
+  );
+}
+
+// Lokasyonlar (İngilizce) - undefined veya "" hariç
+export function locationOptions(jobs: Job[]): string[] {
+  const locations = jobs
+    .map((job) => job.details.location)
+    .filter((loc) => loc !== undefined && loc !== "");
+  const uniqueLocations = Array.from(new Set(locations));
+  return uniqueLocations;
 }

@@ -3,12 +3,6 @@ import { createPortal } from "react-dom";
 import { twMerge } from "tailwind-merge";
 import { Check, ChevronDown, X, Plus } from "lucide-react";
 import useClickOutside from "@/hooks/use-click-outside";
-import { boolean } from "zod";
-
-interface SelectOption {
-  value: string;
-  label: string;
-}
 
 interface Props extends React.ComponentProps<"select"> {
   label?: string;
@@ -16,10 +10,10 @@ interface Props extends React.ComponentProps<"select"> {
   error?: string;
   isRequired?: boolean;
   containerClassName?: string;
-  options: SelectOption[];
+  options: JobFormSelectOption[];
   selectedValues: string[];
   placeholder?: string;
-  onCreateOption?: (input: string) => Promise<SelectOption>;
+  onCreateOption?: (input: string) => Promise<JobFormSelectOption>;
   onCreateActive?: boolean;
 }
 
@@ -42,7 +36,8 @@ export const FormMultiSelect = ({
     setOpen(false);
   }, open);
   const [tempSelected, setTempSelected] = useState<string[]>(selectedValues);
-  const [localOptions, setLocalOptions] = useState<SelectOption[]>(options);
+  const [localOptions, setLocalOptions] =
+    useState<JobFormSelectOption[]>(options);
   const [newOptionInput, setNewOptionInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [createError, setCreateError] = useState<string | null>(null);
@@ -70,7 +65,7 @@ export const FormMultiSelect = ({
     try {
       const created = await onCreateOption(newOptionInput.trim());
       setLocalOptions((prev) => [...prev, created]);
-      setTempSelected((prev) => [...prev, created.value]);
+      setTempSelected((prev) => [...prev, created.name]);
       setNewOptionInput("");
     } catch (err: any) {
       setCreateError(
@@ -101,12 +96,12 @@ export const FormMultiSelect = ({
         <div className="mb-4 text-lg font-semibold">{label || placeholder}</div>
         <div className="mb-4 flex max-h-68 flex-col gap-2 overflow-y-auto">
           {localOptions.map((option) => {
-            const isSelected = tempSelected.includes(option.value);
+            const isSelected = tempSelected.includes(option.name);
             return (
               <button
-                key={option.value}
+                key={option.name}
                 type="button"
-                onClick={() => handleToggle(option.value)}
+                onClick={() => handleToggle(option.name)}
                 className={twMerge(
                   "flex items-center gap-2 rounded px-3 py-2 text-sm transition-colors",
                   isSelected
@@ -197,8 +192,7 @@ export const FormMultiSelect = ({
           {selectedValues.length > 0 ? (
             selectedValues
               .map(
-                (val) =>
-                  localOptions.find((o) => o.value === val)?.label || val,
+                (val) => localOptions.find((o) => o.name === val)?.label || val,
               )
               .join(", ")
           ) : (

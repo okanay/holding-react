@@ -4,21 +4,16 @@ import { twMerge } from "tailwind-merge";
 import { ChevronDown, X, Plus } from "lucide-react";
 import useClickOutside from "@/hooks/use-click-outside";
 
-interface SelectOption {
-  value: string;
-  label: string;
-}
-
 interface Props extends React.ComponentProps<"select"> {
   label?: string;
   helperText?: string;
   error?: string;
   isRequired?: boolean;
   containerClassName?: string;
-  options: SelectOption[];
+  options: JobFormSelectOption[];
   selectedValues: string[];
   placeholder?: string;
-  onCreateOption?: (input: string) => Promise<SelectOption>;
+  onCreateOption?: (input: string) => Promise<JobFormSelectOption>;
   onCreateActive?: boolean;
 }
 
@@ -41,7 +36,7 @@ export const FormSingleSelect = ({
     setOpen(false);
   }, open);
   const [selected, setSelected] = useState<string | undefined>(value as any);
-  const [localOptions, setLocalOptions] = useState<SelectOption[]>(
+  const [localOptions, setLocalOptions] = useState<JobFormSelectOption[]>(
     options as any,
   );
   const [newOptionInput, setNewOptionInput] = useState("");
@@ -92,14 +87,14 @@ export const FormSingleSelect = ({
         <div className="mb-4 flex max-h-68 flex-col gap-2 overflow-y-auto">
           {localOptions.map((option) => (
             <button
-              key={option.value}
+              key={option.name}
               className={twMerge(
                 "flex items-center gap-2 rounded px-3 py-2 text-sm transition-colors",
-                selected === option.value
+                selected === option.name
                   ? "bg-primary-100 text-primary-700 border-primary-200 border"
                   : "border border-zinc-200 bg-zinc-100 text-zinc-700 hover:bg-zinc-200",
               )}
-              onClick={() => handleSelect(option.value)}
+              onClick={() => handleSelect(option.name)}
             >
               {option.label}
             </button>
@@ -164,7 +159,7 @@ export const FormSingleSelect = ({
       >
         <span>
           {selected ? (
-            localOptions.find((o) => o.value === selected)?.label
+            localOptions.find((o) => o.name === selected)?.label
           ) : (
             <span className="text-zinc-400">{placeholder}</span>
           )}

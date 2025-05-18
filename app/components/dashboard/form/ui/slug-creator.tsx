@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { Lock, Unlock, RotateCcw } from "lucide-react";
-import { slugify } from "../helper";
+import { slugify } from "../../helper";
 
 interface Props
   extends Omit<React.ComponentProps<"input">, "onChange" | "value"> {

@@ -10,7 +10,7 @@ import RichButtonModal from "./ui/modal";
 import { useTiptapContext } from "../store";
 import MenuButton from "./ui/button";
 import ImageModal from "@/components/image";
-import { ImagePreview } from "../../ui";
+import { FormImageUploader } from "../../form/ui/image-upload";
 
 // Görsel boyut ve hizalama tipleri
 type ImageSize = "small" | "medium" | "large" | "fullscreen";
@@ -227,14 +227,7 @@ const EnhancedImageButton = () => {
         <div className="flex flex-col gap-4">
           {/* Görsel URL'i - ImagePreview bileşeni ile değiştirildi */}
           <div>
-            <ImagePreview
-              label="Görsel URL'i"
-              value={imageUrl}
-              onChange={handleImageUrlChange}
-              placeholder="https://example.com/image.jpg"
-              errorMessage={validationError}
-              autoFocus
-            />
+            <FormImageUploader label="Görsel URL'i" value={imageUrl} />
 
             {/* Galeri butonuna gerek yok çünkü ImagePreview bileşeni zaten bu butonu içeriyor */}
           </div>

@@ -1,6 +1,6 @@
 import { useNavigate } from "@/i18n/navigate";
 import { useTiptapContext } from "../../tiptap/store";
-import { LoadingBlocker } from "../../ui/loading-blocker";
+import { LoadingBlocker } from "../../form/ui/loading-blocker";
 import { JobForm } from "../../form";
 import { toast } from "sonner";
 

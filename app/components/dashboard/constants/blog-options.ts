@@ -2,7 +2,7 @@ declare global {
   type BlogStatus = "published" | "draft" | "archived" | "deleted";
 }
 
-export const BLOG_OPTIONS = [
+export const STATUS_OPTIONS = [
   {
     value: "published",
     actionLabel: "Yayınla",

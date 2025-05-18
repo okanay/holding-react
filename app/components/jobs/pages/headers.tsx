@@ -1,7 +1,13 @@
+import {
+  CATEGORY_OPTIONS,
+  EMPLOYMENT_TYPE_OPTIONS,
+  WORK_MODE_OPTIONS,
+} from "@/components/dashboard/form/config";
 import { Link } from "@/i18n/link";
 import { Route } from "@/routes/$lang/_main/job/$slug/route";
 import { useMatches } from "@tanstack/react-router";
 import { MapPin } from "lucide-react";
+import { getLabelEnFromDictionary } from "../helper";
 
 export function JobHeader() {
   return (
@@ -25,6 +31,28 @@ export const JobSlugHeader = () => {
     lang: Language;
   };
 
+  // Helper fonksiyonları ile İngilizce label'ları çekiyoruz
+  const categoryLabelEn =
+    data.categories && data.categories.length > 0
+      ? getLabelEnFromDictionary(CATEGORY_OPTIONS, data.categories[0].name)
+      : "";
+
+  const employmentTypeLabelEn = getLabelEnFromDictionary(
+    EMPLOYMENT_TYPE_OPTIONS,
+    data.details.employmentType,
+  );
+
+  const workModeLabelEn = getLabelEnFromDictionary(
+    WORK_MODE_OPTIONS,
+    data.details.workMode,
+  );
+
+  // Location için İngilizce karşılık (ör: "Any" ise "All locations")
+  const location =
+    data.details.location === "" || data.details.location === undefined
+      ? "All locations"
+      : data.details.location;
+
   return (
     <header className="mx-auto flex max-w-3xl items-start justify-between gap-8 py-8">
       <div className="flex flex-col gap-6">
@@ -33,36 +61,24 @@ export const JobSlugHeader = () => {
         </h1>
 
         <div className="flex flex-wrap gap-4 text-sm text-zinc-500">
-          {data.details.location && (
+          {location && (
             <div className="flex items-center gap-2 rounded-sm bg-zinc-100 px-3 py-1">
               <MapPin size={18} />
-              <span className="font-medium">{data.details.location}</span>
+              <span className="font-medium">{location}</span>
             </div>
           )}
           <div className="flex items-center gap-2 rounded-sm bg-zinc-100 px-3 py-1">
-            {data.categories && data.categories.length > 0 && (
-              <>
-                <span className="font-medium">
-                  {data.categories[0].displayName}
+            {/* Combine the labels into an array, filter out falsy values (including void), and join with slashes */}
+            {[categoryLabelEn, employmentTypeLabelEn, workModeLabelEn]
+              .filter((label): label is string => Boolean(label))
+              .map((label, idx, arr) => (
+                <span key={label} className="font-medium">
+                  {label}
+                  {idx < arr.length - 1 && (
+                    <span className="mx-1 text-zinc-400">/</span>
+                  )}
                 </span>
-                {(data.details.employmentType || data.details.workMode) && (
-                  <span className="mx-1 text-zinc-400">/</span>
-                )}
-              </>
-            )}
-            {data.details.employmentType && (
-              <>
-                <span className="font-medium">
-                  {data.details.employmentType}
-                </span>
-                {data.details.workMode && (
-                  <span className="mx-1 text-zinc-400">/</span>
-                )}
-              </>
-            )}
-            {data.details.workMode && (
-              <span className="font-medium">{data.details.workMode}</span>
-            )}
+              ))}
           </div>
         </div>
       </div>

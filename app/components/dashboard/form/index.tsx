@@ -1,23 +1,23 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Controller, useForm } from "react-hook-form";
 import {
   FormInput,
   FormMultiSelect,
   FormSingleSelect,
   FormTextarea,
   SlugCreator,
-} from "../ui";
+} from "./ui";
 import {
   CATEGORY_OPTIONS,
   EMPLOYMENT_TYPE_OPTIONS,
   EXPERIENCE_LEVEL_OPTIONS,
   FORM_TYPE_OPTIONS,
-  JobFormSchema,
   WORK_MODE_OPTIONS,
 } from "./config";
-import { ModalDatePicker } from "../ui/date-picker";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Controller, useForm } from "react-hook-form";
+import { ModalDatePicker } from "./ui/date-picker";
 import { toast } from "sonner";
 import { extractErrorMessages } from "./helper";
+import { JobFormSchema } from "./validation";
 
 interface JobFormProps {
   initialData?: Partial<JobFormValues>;
@@ -40,7 +40,7 @@ export function JobForm({
     slug: "senior-software-developer",
     status: "published",
     image: "",
-    location: "Ankara",
+    location: "",
     workMode: "Any",
     employmentType: "Any",
     experienceLevel: "Any",
@@ -173,6 +173,7 @@ export function JobForm({
                   id="location"
                   label="Lokasyon"
                   placeholder="Örn: İstanbul, Türkiye"
+                  helperText="Lokasyon belirtmek istemiyorsanız bu alanı boş bırakabilirsiniz."
                   error={errors.location?.message}
                   {...field}
                 />
@@ -250,10 +251,6 @@ export function JobForm({
                   selectedValues={field.value || []}
                   onChange={field.onChange}
                   error={errors.categories?.message}
-                  onCreateActive={false}
-                  onCreateOption={async (input: string) => {
-                    return { label: input, value: input };
-                  }}
                   helperText="İlanın hangi iş kategorilerine ait olduğunu seçin. Birden fazla kategori seçebilirsiniz."
                 />
               )}
