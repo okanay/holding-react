@@ -2,6 +2,7 @@ import { X } from "lucide-react";
 import { twMerge } from "tailwind-merge";
 import { createPortal } from "react-dom";
 import useClickOutside from "@/hooks/use-click-outside";
+import { RefObject, useEffect } from "react";
 
 type Props = {
   isOpen: boolean;
@@ -10,6 +11,7 @@ type Props = {
   children: React.ReactNode;
   maxWidth?: string;
   maxHeight?: string;
+  excludeRefs?: RefObject<HTMLElement>[];
 };
 
 const RichButtonModal = ({
@@ -19,8 +21,13 @@ const RichButtonModal = ({
   children,
   maxWidth = "max-w-md",
   maxHeight = "max-h-[80vh]",
+  excludeRefs = [],
 }: Props) => {
-  const ref = useClickOutside<HTMLDivElement>(() => onClose());
+  const ref = useClickOutside<HTMLDivElement>(
+    () => onClose(),
+    isOpen,
+    excludeRefs,
+  );
   if (!isOpen) return null;
 
   const modalContent = (

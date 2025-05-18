@@ -2,6 +2,7 @@ import { Link } from "@/i18n/link";
 import { ArrowLeft, FileText, PencilRuler } from "lucide-react";
 import { EditorRichMenu } from "../../tiptap/menu";
 import { useDashboard } from "../../store";
+import { twMerge } from "tailwind-merge";
 
 export function CreateBlogHeader() {
   const { view, setView } = useDashboard();
@@ -17,7 +18,12 @@ export function CreateBlogHeader() {
   };
 
   return (
-    <header className="custom-sticky-header sticky top-6 z-40 mt-14 border border-zinc-200 bg-zinc-50 sm:mt-auto">
+    <header
+      className={twMerge(
+        "top-0 z-40 mt-14 border border-zinc-200 bg-zinc-50 sm:mt-auto",
+        view.job.create === "editor" ? "sticky" : "relative",
+      )}
+    >
       {/* Ana header kısmı - her zaman görünür */}
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-1">
         {/* Sol kısım: Geri butonu ve başlık */}

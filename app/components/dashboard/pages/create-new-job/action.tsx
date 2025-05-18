@@ -41,7 +41,8 @@ export const CreateNewJobAction = () => {
         return;
       }
 
-      // navigate({ to: "/dashboard/" });
+      toast.success("İlan başarıyla oluşturuldu!");
+      navigate({ to: "/dashboard/" });
     } catch (error) {
       toast.error("Bir hata oluştu. Lütfen tekrar deneyin.");
     }

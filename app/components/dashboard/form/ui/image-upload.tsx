@@ -15,6 +15,9 @@ interface ImageUploaderProps {
   onChange?: (value: string) => void;
   id?: string;
   previewSize?: "small" | "medium" | "large";
+  onImageSelect?: (image: ImageType) => void;
+  onImageClear?: () => void;
+  portalId?: string;
 }
 
 export const FormImageUploader: React.FC<ImageUploaderProps> = ({
@@ -28,6 +31,9 @@ export const FormImageUploader: React.FC<ImageUploaderProps> = ({
   onChange,
   id,
   previewSize = "medium",
+  onImageSelect,
+  onImageClear,
+  portalId,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -43,6 +49,10 @@ export const FormImageUploader: React.FC<ImageUploaderProps> = ({
     if (onChange) {
       onChange("");
     }
+
+    if (onImageClear) {
+      onImageClear();
+    }
   };
 
   // Modaldan görsel seçildiğinde
@@ -50,6 +60,11 @@ export const FormImageUploader: React.FC<ImageUploaderProps> = ({
     if (onChange && image?.url) {
       onChange(image.url);
     }
+
+    if (onImageSelect) {
+      onImageSelect(image);
+    }
+
     setIsModalOpen(false);
   };
 
@@ -77,7 +92,7 @@ export const FormImageUploader: React.FC<ImageUploaderProps> = ({
         {value && (
           <div className="relative rounded-md border border-zinc-200 bg-zinc-50 p-2">
             <div
-              className={`relative overflow-hidden rounded bg-zinc-100 ${previewSizeClass}`}
+              className={`relative mx-auto flex items-center justify-center overflow-hidden rounded bg-zinc-100 ${previewSizeClass}`}
             >
               <img
                 src={value}
@@ -146,6 +161,7 @@ export const FormImageUploader: React.FC<ImageUploaderProps> = ({
         onImageSelect={handleImageSelect}
         singleSelect={true}
         title="Görsel Seç"
+        portalId={portalId}
       />
     </div>
   );

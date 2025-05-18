@@ -10,6 +10,7 @@ import {
   EMPLOYMENT_TYPE_OPTIONS,
   EXPERIENCE_LEVEL_OPTIONS,
   FORM_TYPE_OPTIONS,
+  STATUS_OPTIONS,
   WORK_MODE_OPTIONS,
 } from "./config";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -21,6 +22,8 @@ import { JobFormSchema } from "./validation";
 import { ImageUploader } from "@/components/ui/image-upload";
 import { useState } from "react";
 import FormImageUploader from "./ui/image-upload";
+import { FormStatusPicker } from "./ui/status-picker";
+import { Loader } from "lucide-react";
 
 interface JobFormProps {
   initialData?: Partial<JobFormValues>;
@@ -41,7 +44,7 @@ export function JobForm({
     description:
       "We are looking for an experienced software developer to join innovative projects at one of Turkey's leading technology companies.",
     slug: "senior-software-developer",
-    status: "published",
+    status: "draft",
     image: "",
     location: "",
     workMode: "Any",
@@ -158,24 +161,45 @@ export function JobForm({
                 />
               )}
             />
+          </div>
 
-            <div className="col-span-2">
-              <Controller
-                control={control}
-                name="image"
-                render={({ field }) => (
-                  <FormImageUploader
-                    id="image"
-                    label="İlan Görseli"
-                    value={field.value}
-                    onChange={field.onChange}
-                    error={errors.image?.message}
-                    helperText="İş ilanınız için kapak görseli. PNG, JPG, WEBP formatında, ideal boyut: 1200x630px."
-                    previewSize="medium"
-                  />
-                )}
-              />
-            </div>
+          {/* Görsel */}
+          <div className="col-span-2">
+            <Controller
+              control={control}
+              name="image"
+              render={({ field }) => (
+                <FormImageUploader
+                  id="image"
+                  label="İlan Görseli"
+                  value={field.value}
+                  onChange={field.onChange}
+                  error={errors.image?.message}
+                  helperText="İş ilanınız için kapak görseli. PNG, JPG, WEBP formatında, boş bırakılabilir."
+                  previewSize="medium"
+                />
+              )}
+            />
+          </div>
+
+          {/* Status */}
+          <div className="col-span-2">
+            <Controller
+              control={control}
+              name="status"
+              render={({ field }) => (
+                <FormStatusPicker
+                  id="status"
+                  label="İlan Durumu"
+                  value={field.value}
+                  onChange={field.onChange}
+                  error={errors.status?.message}
+                  helperText="İlanın yayında olup olmadığını seçin."
+                  options={STATUS_OPTIONS}
+                  isRequired={true}
+                />
+              )}
+            />
           </div>
         </div>
       </div>
@@ -323,31 +347,11 @@ export function JobForm({
       <div className="fixed right-8 bottom-8 flex flex-col items-center justify-center">
         <button
           type="submit"
-          disabled={isSubmitting || !isDirty}
           className="bg-primary disabled:bg-primary-300 flex items-center gap-2 rounded px-8 py-2 text-lg font-semibold text-white shadow-xl transition-transform duration-300 hover:scale-105 disabled:cursor-not-allowed disabled:hover:scale-100"
         >
           {isSubmitting ? (
             <>
-              <svg
-                className="h-5 w-5 animate-spin"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <circle
-                  className="opacity-25"
-                  cx="12"
-                  cy="12"
-                  r="10"
-                  stroke="currentColor"
-                  strokeWidth="4"
-                ></circle>
-                <path
-                  className="opacity-75"
-                  fill="currentColor"
-                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                ></path>
-              </svg>
+              <Loader className="h-5 w-5 animate-spin" />
               <span>İşleniyor...</span>
             </>
           ) : (

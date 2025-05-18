@@ -11,6 +11,7 @@ import { useTiptapContext } from "../store";
 import MenuButton from "./ui/button";
 import ImageModal from "@/components/image";
 import { FormImageUploader } from "../../form/ui/image-upload";
+import { ImageType } from "@/components/image/types";
 
 // Görsel boyut ve hizalama tipleri
 type ImageSize = "small" | "medium" | "large" | "fullscreen";
@@ -54,7 +55,7 @@ const OBJECT_FIT_OPTIONS = [
 
 const EnhancedImageButton = () => {
   const { editor } = useTiptapContext();
-
+  const [isActive, setIsActive] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
   const [altText, setAltText] = useState("");
@@ -65,11 +66,9 @@ const EnhancedImageButton = () => {
   const [caption, setCaption] = useState("");
   const [validationError, setValidationError] = useState("");
 
-  // Galeri modalı için state
-  const [isGalleryModalOpen, setIsGalleryModalOpen] = useState(false);
-
   // URL güvenlik kontrolü
   const isValidUrl = (url: string): boolean => {
+    return;
     try {
       const parsedUrl = new URL(url);
 
@@ -105,7 +104,6 @@ const EnhancedImageButton = () => {
     }
   };
 
-  // Modal açılınca eğer zaten bir enhancedImage içindeysek, mevcut bilgileri al
   const handleOpenModal = () => {
     if (isActive) {
       const attrs = editor.getAttributes("enhancedImage");
@@ -121,26 +119,6 @@ const EnhancedImageButton = () => {
     }
 
     setIsModalOpen(true);
-  };
-
-  // Galeri modalından görsel seçildiğinde
-  const handleImageSelect = (image: ImageType | null) => {
-    if (image) {
-      setImageUrl(image.url);
-      setValidationError("");
-
-      // Alt metni de varsa kullan
-      if (image.altText) {
-        setAltText(image.altText);
-      }
-
-      // Galeri modalını kapatıp tekrar tiptap modalını açıyoruz
-      setTimeout(() => {
-        setIsModalOpen(true);
-      }, 100);
-    }
-
-    setIsGalleryModalOpen(false);
   };
 
   // Gelişmiş görsel ekle
@@ -183,8 +161,6 @@ const EnhancedImageButton = () => {
     setValidationError("");
   };
 
-  const [isActive, setIsActive] = useState(false);
-
   useEffect(() => {
     const updateIsActive = () => {
       setIsActive(editor.isActive("enhancedImage"));
@@ -197,16 +173,6 @@ const EnhancedImageButton = () => {
       editor.off("transaction", updateIsActive);
     };
   }, [editor]);
-
-  // Image URL için onChange handler
-  const handleImageUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setImageUrl(e.target.value);
-    if (validationError) {
-      // Yeni bir URL girildiğinde validasyon hatasını sıfırla
-      // isValidUrl URL geçerli mi kontrol edecek zaten
-      setValidationError("");
-    }
-  };
 
   return (
     <>
@@ -224,11 +190,16 @@ const EnhancedImageButton = () => {
         title="Gelişmiş Görsel"
         maxWidth="max-w-xl"
       >
-        <div className="flex flex-col gap-4">
+        <div id="editor-image-modal" className="flex flex-col gap-4">
           {/* Görsel URL'i - ImagePreview bileşeni ile değiştirildi */}
           <div>
-            <FormImageUploader label="Görsel URL'i" value={imageUrl} />
-
+            <FormImageUploader
+              label="Görsel URL'i"
+              value={imageUrl}
+              onImageSelect={(image) => setImageUrl(image.url)}
+              onImageClear={() => setImageUrl("")}
+              portalId="#editor-image-modal"
+            />
             {/* Galeri butonuna gerek yok çünkü ImagePreview bileşeni zaten bu butonu içeriyor */}
           </div>
 
@@ -373,20 +344,6 @@ const EnhancedImageButton = () => {
           </div>
         </div>
       </RichButtonModal>
-
-      {/* Galeri Modalı - Bu ModalButtonRich dışında oluşturulmalı */}
-      <ImageModal
-        isOpen={isGalleryModalOpen}
-        onClose={() => {
-          setIsGalleryModalOpen(false);
-          // Galeri kapandığında tekrar tiptap modalını aç
-          setTimeout(() => {
-            setIsModalOpen(true);
-          }, 100);
-        }}
-        onSelect={handleImageSelect}
-        singleSelect={true}
-      />
     </>
   );
 };

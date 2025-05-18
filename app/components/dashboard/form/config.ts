@@ -1,4 +1,4 @@
-import { STATUS_OPTIONS as STATUS } from "../constants/blog-options";
+import { STATUS_OPTIONS as STATUS } from "../constants/status-options";
 
 // Form için tip tanımlaması
 declare global {
@@ -92,7 +92,7 @@ export const CATEGORY_OPTIONS: JobFormSelectOption[] = [
 
 export const STATUS_OPTIONS = STATUS.map((option) => ({
   value: option.value,
-  label: option.statusLabel,
+  label: option.buttonLabel,
   color: option.config.color,
 }));
 

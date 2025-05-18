@@ -2,9 +2,17 @@ import { useEffect, useRef, RefObject } from "react";
 
 type Handler = (event: MouseEvent | TouchEvent) => void;
 
+/**
+ * Bir element dışında tıklama algılamak için hook
+ * @param handler Dış tıklama olayında çağrılacak fonksiyon
+ * @param active Hook'un aktif olup olmadığı
+ * @param excludeRefs Dikkate alınmayacak referanslar (bu elemanlar dışarıda sayılmaz)
+ * @returns Element referansı
+ */
 function useClickOutside<T extends HTMLElement = HTMLElement>(
   handler: Handler,
   active: boolean = true,
+  excludeRefs: RefObject<HTMLElement>[] = [],
 ): RefObject<T | null> {
   const ref = useRef<T>(null);
 
@@ -13,7 +21,20 @@ function useClickOutside<T extends HTMLElement = HTMLElement>(
 
     const listener = (event: MouseEvent | TouchEvent) => {
       const el = ref.current;
+
+      // Ana element tıklamayı içeriyorsa dışarıda değil demektir
       if (!el || el.contains(event.target as Node)) {
+        return;
+      }
+
+      // Eğer hariç tutulan elementlerden birine tıklandıysa, dışarıda değil demektir
+      const clickInExcludedRefs = excludeRefs.some(
+        (excludeRef) =>
+          excludeRef.current &&
+          excludeRef.current.contains(event.target as Node),
+      );
+
+      if (clickInExcludedRefs) {
         return;
       }
 
@@ -27,7 +48,7 @@ function useClickOutside<T extends HTMLElement = HTMLElement>(
       document.removeEventListener("mousedown", listener);
       document.removeEventListener("touchstart", listener);
     };
-  }, [handler, active]);
+  }, [handler, active, excludeRefs]);
 
   return ref;
 }

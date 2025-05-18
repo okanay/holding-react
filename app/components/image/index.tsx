@@ -2,7 +2,6 @@ import useClickOutside from "@/hooks/use-click-outside";
 import {
   Check,
   Clock,
-  Edit,
   EyeIcon,
   Image as ImageIcon,
   RefreshCw,
@@ -10,12 +9,12 @@ import {
   Trash2,
   Upload,
   X,
-  FileText,
-  FileImage,
-  FilePlus,
-  FileArchive,
   Filter,
   ChevronDown,
+  Briefcase,
+  Newspaper,
+  PenSquare,
+  Image,
 } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
@@ -25,10 +24,10 @@ import { ImageType } from "./types";
 
 // Kategori seçenekleri
 const CATEGORY_OPTIONS = [
-  { value: "images", label: "Görseller", icon: FileImage },
-  { value: "cv", label: "CV'ler", icon: FileText },
-  { value: "certificates", label: "Sertifikalar", icon: FileArchive },
-  { value: "other", label: "Diğer Dosyalar", icon: FilePlus },
+  { value: "general", label: "Genel", icon: Image },
+  { value: "job_posts", label: "İş İlanları", icon: Briefcase },
+  { value: "press", label: "Basın", icon: Newspaper },
+  { value: "blog", label: "Blog", icon: PenSquare },
 ];
 
 interface ImageModalProps {
@@ -48,6 +47,8 @@ interface ImageModalProps {
   defaultCategory?: string;
   // İzin verilen kategoriler (boş ise tümü gösterilir)
   allowedCategories?: string[];
+  //
+  portalId?: string;
 }
 
 // Ana Modal Bileşeni
@@ -61,6 +62,7 @@ const ImageModal: React.FC<ImageModalProps> = ({
   title = "Resim Yöneticisi",
   defaultCategory = "images",
   allowedCategories = [],
+  portalId,
 }) => {
   const {
     images,
@@ -101,27 +103,11 @@ const ImageModal: React.FC<ImageModalProps> = ({
 
   // Modal açıldığında resimleri yükle
   useEffect(() => {
-    if (isOpen) {
-      if (currentCategory !== defaultCategory) {
-        setCategory(defaultCategory);
-      } else {
-        fetchImages(defaultCategory);
-      }
-
-      // Başlangıçta seçili görsel varsa seç
-      if (initialSelectedId) {
-        selectImage(initialSelectedId);
-      }
-    }
-  }, [
-    isOpen,
-    currentCategory,
-    fetchImages,
-    initialSelectedId,
-    selectImage,
-    defaultCategory,
-    setCategory,
-  ]);
+    if (!isOpen) return;
+    setCategory(defaultCategory);
+    fetchImages(defaultCategory);
+    selectImage(initialSelectedId);
+  }, [isOpen]);
 
   // Modal kapatıldığında temizlik yap
   const handleClose = () => {
@@ -137,12 +123,11 @@ const ImageModal: React.FC<ImageModalProps> = ({
   // Görsel seçme işlemi
   const handleSelectImage = (image: ImageType) => {
     selectImage(image.id);
-
     // Callback fonksiyonu varsa çağır
     if (onImageSelect) {
+      console.log("run");
       onImageSelect(image);
     }
-
     // Tek seçim modunda modal otomatik kapanır
     if (singleSelect) {
       handleClose();
@@ -153,16 +138,9 @@ const ImageModal: React.FC<ImageModalProps> = ({
   const handleConfirmSelection = () => {
     if (selectedImage?.imageData && onImageSelect) {
       onImageSelect(selectedImage.imageData);
-      handleClose();
     } else {
       toast.error("Lütfen bir görsel seçin");
     }
-  };
-
-  // Kategori değiştir
-  const handleCategoryChange = (category: string) => {
-    setCategory(category);
-    setCategoryMenuOpen(false);
   };
 
   // Dosya seçimi
@@ -177,40 +155,6 @@ const ImageModal: React.FC<ImageModalProps> = ({
   // Dosya seçme dialogunu açma
   const handleClickUpload = () => {
     fileInputRef.current?.click();
-  };
-
-  // Yükleme işlemini başlat
-  const handleStartUpload = async () => {
-    if (!selectedFile) return;
-
-    setIsUploading(true);
-    try {
-      const uploadedImage = await uploadImage(
-        selectedFile,
-        currentCategory,
-        altText,
-      );
-
-      if (uploadedImage && onImageSelect) {
-        // Yeni yüklenen görseli seç ve callback fonksiyonunu çağır
-        selectImage(uploadedImage.id);
-        onImageSelect(uploadedImage);
-
-        // Tek seçim modunda modal otomatik kapanır
-        if (singleSelect) {
-          handleClose();
-          return;
-        }
-      }
-
-      // Yükleme sonrası temizlik
-      setSelectedFile(null);
-      setAltText("");
-      // Galeri sekmesine geç
-      setTab("gallery");
-    } finally {
-      setIsUploading(false);
-    }
   };
 
   // Drag & Drop olayları
@@ -237,6 +181,55 @@ const ImageModal: React.FC<ImageModalProps> = ({
       } else {
         toast.error("Lütfen bir görsel dosyası seçin");
       }
+    }
+  };
+
+  const handleCategoryChange = (category: string) => {
+    console.log("Kategori değiştiriliyor:", category);
+    setCategory(category);
+    setCategoryMenuOpen(false);
+
+    // Kategori değiştiğinde mevcut seçimi temizle
+    if (selectedImage?.imageData) {
+      selectImage(null);
+    }
+  };
+
+  // Dosya yükleme işlevi - ImageModal.tsx içinde
+  const handleStartUpload = async () => {
+    if (!selectedFile) return;
+
+    setIsUploading(true);
+    try {
+      console.log(`Dosya yükleniyor, kategori: ${currentCategory}`);
+
+      const uploadedImage = await uploadImage(
+        selectedFile,
+        currentCategory, // Mevcut kategoriyi kullan
+        altText,
+      );
+
+      if (uploadedImage && onImageSelect) {
+        // Yeni yüklenen görseli seç ve callback fonksiyonunu çağır
+        selectImage(uploadedImage.id);
+        onImageSelect(uploadedImage);
+
+        // Tek seçim modunda modal otomatik kapanır
+        if (singleSelect) {
+          return;
+        }
+      }
+
+      // Yükleme sonrası temizlik
+      setSelectedFile(null);
+      setAltText("");
+      // Galeri sekmesine geç
+      setTab("gallery");
+    } catch (error) {
+      console.error("Yükleme hatası:", error);
+      toast.error("Dosya yüklenirken bir hata oluştu");
+    } finally {
+      setIsUploading(false);
     }
   };
 
@@ -679,7 +672,12 @@ const ImageModal: React.FC<ImageModalProps> = ({
     </div>
   );
 
-  return createPortal(modalContent, document.body);
+  return createPortal(
+    modalContent,
+    typeof document !== "undefined" && document.body
+      ? document.querySelector(portalId) || document.body
+      : undefined,
+  );
 };
 
 export default ImageModal;

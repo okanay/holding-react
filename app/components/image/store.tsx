@@ -17,7 +17,7 @@ import {
 const API_URL = import.meta.env.VITE_APP_BACKEND_URL || "http://localhost:8080";
 
 // Varsayılan kategori
-const DEFAULT_IMAGE_CATEGORY = "images";
+const DEFAULT_IMAGE_CATEGORY = "general";
 
 // Axios instance - cookie tabanlı JWT auth için withCredentials: true
 const api = axios.create({
@@ -43,6 +43,7 @@ export function ImageProvider({ children }: PropsWithChildren) {
 
         // Kategori değiştir
         setCategory: (category: string) => {
+          console.log("Kategori değiştiriliyor:", category);
           set((state) => {
             state.currentCategory = category;
           });
@@ -56,16 +57,12 @@ export function ImageProvider({ children }: PropsWithChildren) {
             set((state) => {
               state.isLoading = true;
               state.error = null;
-
-              // Eğer kategori belirtildiyse, currentCategory'yi güncelle
-              if (category) {
-                state.currentCategory = category;
-              }
             });
 
             // Kullanılacak kategoriyi belirle
             const categoryToUse =
               category || get().currentCategory || DEFAULT_IMAGE_CATEGORY;
+            console.log("Dosyalar getiriliyor, kategori:", categoryToUse);
 
             // Kategori parametresi ile auth API isteği yap
             const response = await api.get<ApiResponse<ImageType[]>>(
@@ -77,6 +74,7 @@ export function ImageProvider({ children }: PropsWithChildren) {
               set((state) => {
                 state.images = response.data.data || [];
                 state.isLoading = false;
+                state.currentCategory = categoryToUse; // Kategoriyi güncelle
               });
             } else {
               throw new Error(response.data.message || "Dosyalar getirilemedi");
@@ -115,6 +113,7 @@ export function ImageProvider({ children }: PropsWithChildren) {
             // Kullanılacak kategoriyi belirle
             const categoryToUse =
               category || get().currentCategory || DEFAULT_IMAGE_CATEGORY;
+            console.log("Dosya yükleniyor, kategori:", categoryToUse);
 
             // 1. Presigned URL al
             const presignData: PresignURLInput = {
@@ -123,6 +122,8 @@ export function ImageProvider({ children }: PropsWithChildren) {
               sizeInBytes: file.size,
               fileCategory: categoryToUse,
             };
+
+            console.log("Presigned URL isteği:", presignData);
 
             // Auth API ile presigned URL al
             const presignResponse = await api.post<
@@ -141,6 +142,8 @@ export function ImageProvider({ children }: PropsWithChildren) {
               uploadUrl,
             } = presignResponse.data.data;
 
+            console.log("Presigned URL alındı:", { signatureId, uploadUrl });
+
             // 2. Dosyayı Cloudflare R2'ye yükle
             const uploadResponse = await axios.put(presignedUrl, file, {
               headers: {
@@ -151,6 +154,8 @@ export function ImageProvider({ children }: PropsWithChildren) {
             if (uploadResponse.status !== 200) {
               throw new Error("Dosya yüklenemedi");
             }
+
+            console.log("Dosya Cloudflare R2'ye yüklendi");
 
             // 3. Görsel boyutlarını al
             const previewUrl = URL.createObjectURL(file);
@@ -164,8 +169,10 @@ export function ImageProvider({ children }: PropsWithChildren) {
               height: dimensions.height,
               sizeInBytes: file.size,
               altText: altText,
-              fileCategory: categoryToUse,
+              fileCategory: categoryToUse, // Kategori bilgisini gönder
             };
+
+            console.log("Yükleme onayı isteği:", confirmData);
 
             // Auth API ile yüklemeyi onayla
             const confirmResponse = await api.post<
@@ -179,6 +186,7 @@ export function ImageProvider({ children }: PropsWithChildren) {
             }
 
             const { id, url } = confirmResponse.data.data;
+            console.log("Yükleme onaylandı:", { id, url });
 
             // 5. Yeni görseli ekle
             const newImage: ImageType = {
