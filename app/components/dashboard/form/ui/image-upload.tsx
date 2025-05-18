@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { twMerge } from "tailwind-merge";
-import { ImagePlus, X } from "lucide-react";
+import { ImagePlus, X, Upload } from "lucide-react";
+import { ImageType } from "@/components/image/types";
+import ImageModal from "@/components/image";
 
 interface ImageUploaderProps {
   label?: string;
@@ -11,11 +13,11 @@ interface ImageUploaderProps {
   className?: string;
   value?: string;
   onChange?: (value: string) => void;
-  onSelectImage?: () => void;
   id?: string;
+  previewSize?: "small" | "medium" | "large";
 }
 
-export const FormImageUploader = ({
+export const FormImageUploader: React.FC<ImageUploaderProps> = ({
   label,
   helperText,
   error,
@@ -24,9 +26,11 @@ export const FormImageUploader = ({
   className,
   value,
   onChange,
-  onSelectImage,
   id,
-}: ImageUploaderProps) => {
+  previewSize = "medium",
+}) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   // URL değişikliğini ele al
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (onChange) {
@@ -40,6 +44,21 @@ export const FormImageUploader = ({
       onChange("");
     }
   };
+
+  // Modaldan görsel seçildiğinde
+  const handleImageSelect = (image: ImageType) => {
+    if (onChange && image?.url) {
+      onChange(image.url);
+    }
+    setIsModalOpen(false);
+  };
+
+  // Önizleme boyutu ayarları
+  const previewSizeClass = {
+    small: "aspect-video max-h-32",
+    medium: "aspect-video max-h-48",
+    large: "aspect-video max-h-64",
+  }[previewSize];
 
   return (
     <div className={twMerge("flex flex-col gap-1.5", containerClassName)}>
@@ -57,11 +76,18 @@ export const FormImageUploader = ({
         {/* Görsel Önizleme */}
         {value && (
           <div className="relative rounded-md border border-zinc-200 bg-zinc-50 p-2">
-            <div className="relative aspect-video w-full overflow-hidden rounded bg-zinc-100">
+            <div
+              className={`relative overflow-hidden rounded bg-zinc-100 ${previewSizeClass}`}
+            >
               <img
                 src={value}
-                alt="Görsel"
-                className="h-full w-full object-cover"
+                alt="Görsel Önizleme"
+                className="h-full w-full object-contain"
+                onError={(e) => {
+                  // Hatalı görsel için placeholder
+                  e.currentTarget.src =
+                    "https://placehold.co/600x400?text=Önizleme+Yüklenemedi";
+                }}
               />
             </div>
             <button
@@ -90,16 +116,16 @@ export const FormImageUploader = ({
               )}
             />
           </div>
-          {onSelectImage && (
+          <div className="flex gap-2">
             <button
               type="button"
               className="border-cover flex items-center gap-1 rounded-md border bg-zinc-50 px-3 text-sm font-medium text-zinc-700 hover:bg-zinc-100"
-              onClick={onSelectImage}
+              onClick={() => setIsModalOpen(true)}
             >
               <ImagePlus className="h-4 w-4" />
-              <span className="hidden sm:inline">Medya</span>
+              <span className="hidden sm:inline">Galeri</span>
             </button>
-          )}
+          </div>
         </div>
 
         {(error || helperText) && (
@@ -112,8 +138,17 @@ export const FormImageUploader = ({
           </div>
         )}
       </div>
+
+      {/* Görsel Seçme Modalı */}
+      <ImageModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onImageSelect={handleImageSelect}
+        singleSelect={true}
+        title="Görsel Seç"
+      />
     </div>
   );
 };
 
-FormImageUploader.displayName = "Form-ImageUploader";
+export default FormImageUploader;

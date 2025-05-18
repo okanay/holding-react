@@ -18,6 +18,9 @@ import { ModalDatePicker } from "./ui/date-picker";
 import { toast } from "sonner";
 import { extractErrorMessages } from "./helper";
 import { JobFormSchema } from "./validation";
+import { ImageUploader } from "@/components/ui/image-upload";
+import { useState } from "react";
+import FormImageUploader from "./ui/image-upload";
 
 interface JobFormProps {
   initialData?: Partial<JobFormValues>;
@@ -155,6 +158,24 @@ export function JobForm({
                 />
               )}
             />
+
+            <div className="col-span-2">
+              <Controller
+                control={control}
+                name="image"
+                render={({ field }) => (
+                  <FormImageUploader
+                    id="image"
+                    label="İlan Görseli"
+                    value={field.value}
+                    onChange={field.onChange}
+                    error={errors.image?.message}
+                    helperText="İş ilanınız için kapak görseli. PNG, JPG, WEBP formatında, ideal boyut: 1200x630px."
+                    previewSize="medium"
+                  />
+                )}
+              />
+            </div>
           </div>
         </div>
       </div>
