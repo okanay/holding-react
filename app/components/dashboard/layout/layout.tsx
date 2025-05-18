@@ -13,7 +13,7 @@ const DashboardLayoutContent = () => {
       <DashboardHeader />
       <div className="flex h-fit min-h-screen items-start justify-start gap-x-4">
         <DashboardAside />
-        <main className="w-full px-4 py-4 sm:pr-4">
+        <main className="w-full py-4 sm:pr-4">
           <Outlet />
         </main>
       </div>

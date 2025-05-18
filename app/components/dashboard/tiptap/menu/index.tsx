@@ -21,7 +21,7 @@ export const EditorRichMenu = () => {
   const [hidden, setHidden] = useState(false);
 
   return (
-    <div className="sticky top-0 right-0 z-40">
+    <div className="sticky top-0 right-0 z-40 shadow-sm">
       <div className="sticky w-full">
         <div className="mx-auto w-full">
           <div

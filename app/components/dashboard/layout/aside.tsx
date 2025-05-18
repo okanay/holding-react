@@ -1,20 +1,25 @@
 // app/components/dashboard/layout/aside.tsx
 import { Link } from "@/i18n/link";
-import { Home, NotepadText } from "lucide-react";
+import { ClipboardPen, Home, NotepadText } from "lucide-react";
 import { useDashboardLayout } from "./provider";
 
 export const DashboardAside = () => {
   const { isPanelExpanded, togglePanel } = useDashboardLayout();
 
   const menuItems = [
-    { name: "Panel", href: "/dashboard", icon: Home },
+    { name: "Editör Paneli", href: "/dashboard", icon: Home },
+    {
+      name: "Yeni İş Oluştur",
+      href: "/dashboard/create-new-job",
+      icon: ClipboardPen,
+    },
     { name: "İş İlanları", href: "/job", icon: NotepadText },
   ];
 
   return (
     <aside
       data-expended={!isPanelExpanded}
-      className="border-cover fixed top-0 h-full w-40 overflow-hidden border-r bg-white px-4 py-4 pt-20 transition-all duration-300 data-[expended=true]:w-0 data-[expended=true]:px-0 sm:relative sm:border-0 sm:pt-4"
+      className="border-cover fixed top-0 z-100 h-full w-50 overflow-hidden border-r bg-white px-4 py-4 pt-20 transition-all duration-300 data-[expended=true]:w-0 data-[expended=true]:px-0 sm:sticky sm:border-0 sm:pt-4"
     >
       <div className="flex flex-col items-start justify-center">
         <div className="mt-2 px-2">

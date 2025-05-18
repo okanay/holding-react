@@ -7,7 +7,7 @@ export const DashboardHeader = () => {
   const { isPanelExpanded, togglePanel } = useDashboardLayout();
 
   return (
-    <header className="border-cover fixed top-0 left-0 z-40 flex w-full items-center justify-between border-b bg-white px-4 py-4 sm:relative">
+    <header className="border-cover fixed top-0 left-0 z-101 flex w-full items-center justify-between border-b bg-white px-4 py-4 sm:relative">
       {/* Left: Logo ve Toggle Button */}
       <div className="flex items-center gap-4">
         {/* Logo */}
@@ -42,7 +42,7 @@ export const UserButton = () => {
   const { user } = useAuth();
 
   return (
-    <button className="border-cover flex items-center gap-2 rounded-full border bg-zinc-100 p-1 pr-4 hover:bg-zinc-50">
+    <button className="border-cover flex h-10 items-center gap-2 rounded border bg-zinc-100 p-1 pr-4 hover:bg-zinc-50">
       <div className="h-7 w-7 overflow-hidden rounded-full bg-zinc-200">
         <img
           src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix"
@@ -63,7 +63,7 @@ export const LogoutButton = () => {
   return (
     <button
       onClick={logout}
-      className="border-cover flex h-9 items-center justify-center gap-2 rounded-full border bg-zinc-100 px-3 text-sm font-medium text-zinc-600 transition-colors hover:bg-zinc-100"
+      className="border-cover flex h-10 items-center justify-center gap-2 rounded border bg-zinc-100 px-3 text-sm font-medium text-zinc-600 transition-colors hover:bg-zinc-100"
     >
       <LogOut className="h-5 w-5" />
       <span className="hidden sm:inline">Logout</span>

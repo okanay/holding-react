@@ -2,11 +2,30 @@ import { createContext, PropsWithChildren, useContext, useState } from "react";
 import { createStore, StoreApi, useStore } from "zustand";
 import { immer } from "zustand/middleware/immer";
 
-interface DataState {}
+interface DataState {
+  view: {
+    job: {
+      create: "editor" | "form";
+    };
+  };
+  setView: (view: DataState["view"]) => void;
+}
 
 export function DashboardProvider({ children }: PropsWithChildren) {
   const [store] = useState(() =>
-    createStore<DataState>()(immer((set, get) => ({}))),
+    createStore<DataState>()(
+      immer((set) => ({
+        view: {
+          job: {
+            create: "form",
+          },
+        },
+        setView: (view) =>
+          set((state) => {
+            state.view = view;
+          }),
+      })),
+    ),
   );
 
   return (

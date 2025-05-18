@@ -8,7 +8,7 @@ export const Editor = () => {
 
   return (
     <>
-      <div className="mx-auto mt-4 flex max-w-5xl flex-col gap-8 px-4">
+      <div className="mx-auto mt-4 flex max-w-3xl flex-col gap-8 px-4">
         <div className="flex flex-col gap-4">
           <ViewModeToggle currentMode={mode} setMode={setMode} />
         </div>

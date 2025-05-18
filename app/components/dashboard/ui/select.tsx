@@ -1,12 +1,12 @@
 interface Props extends React.ComponentProps<"select"> {}
 
-export const MultiSelect = ({ children, ...props }: Props) => {
+export const Select = ({ children, ...props }: Props) => {
   return (
-    <select multiple {...props}>
+    <select {...props}>
       <option>Options 1</option>
       <option>Options 2</option>
     </select>
   );
 };
 
-MultiSelect.displayName = "Form-MultiSelect";
+Select.displayName = "Form-Select";

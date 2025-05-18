@@ -5,7 +5,6 @@ import { z } from "zod";
 
 type Props = {
   initialData: any;
-  initialAutoMode: boolean;
   onSubmit: (data: any) => void;
   submitLabel: string;
 };
@@ -15,7 +14,7 @@ const FormSchema = z.object({
   description: z.string().min(1, "Açıklama alanı zorunludur"),
 });
 
-export function CreateBlogForm({ initialData, submitLabel, onSubmit }: Props) {
+export function CreateJobForm({ initialData, submitLabel, onSubmit }: Props) {
   const { editor } = useTiptapContext();
   const {} = useForm<any>({
     resolver: zodResolver(FormSchema),
@@ -27,7 +26,7 @@ export function CreateBlogForm({ initialData, submitLabel, onSubmit }: Props) {
   return (
     <form
       onSubmit={() => {}}
-      className="mx-auto flex max-w-3xl flex-col gap-y-6 py-6"
+      className="relative z-10 mx-auto flex max-w-7xl flex-col gap-y-6 py-6"
     >
       <div className="mb-4">
         <h1 className="mb-1 text-2xl font-bold text-zinc-900">

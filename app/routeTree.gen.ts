@@ -22,6 +22,7 @@ import { Route as LangMainJobRouteImport } from './routes/$lang/_main/job/route'
 import { Route as LangAuthDashboardRouteImport } from './routes/$lang/_auth/dashboard/route'
 import { Route as LangMainJobIndexImport } from './routes/$lang/_main/job/index'
 import { Route as LangAuthDashboardIndexImport } from './routes/$lang/_auth/dashboard/index'
+import { Route as LangAuthDashboardCreateNewJobImport } from './routes/$lang/_auth/dashboard/create-new-job'
 import { Route as LangMainJobSlugRouteImport } from './routes/$lang/_main/job/$slug/route'
 import { Route as LangMainJobSlugIndexImport } from './routes/$lang/_main/job/$slug/index'
 import { Route as LangMainJobSlugApplyIndexImport } from './routes/$lang/_main/job/$slug/apply.index'
@@ -89,6 +90,13 @@ const LangAuthDashboardIndexRoute = LangAuthDashboardIndexImport.update({
   path: '/',
   getParentRoute: () => LangAuthDashboardRouteRoute,
 } as any)
+
+const LangAuthDashboardCreateNewJobRoute =
+  LangAuthDashboardCreateNewJobImport.update({
+    id: '/create-new-job',
+    path: '/create-new-job',
+    getParentRoute: () => LangAuthDashboardRouteRoute,
+  } as any)
 
 const LangMainJobSlugRouteRoute = LangMainJobSlugRouteImport.update({
   id: '/$slug',
@@ -175,6 +183,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LangMainJobSlugRouteImport
       parentRoute: typeof LangMainJobRouteImport
     }
+    '/$lang/_auth/dashboard/create-new-job': {
+      id: '/$lang/_auth/dashboard/create-new-job'
+      path: '/create-new-job'
+      fullPath: '/$lang/dashboard/create-new-job'
+      preLoaderRoute: typeof LangAuthDashboardCreateNewJobImport
+      parentRoute: typeof LangAuthDashboardRouteImport
+    }
     '/$lang/_auth/dashboard/': {
       id: '/$lang/_auth/dashboard/'
       path: '/'
@@ -209,11 +224,13 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 interface LangAuthDashboardRouteRouteChildren {
+  LangAuthDashboardCreateNewJobRoute: typeof LangAuthDashboardCreateNewJobRoute
   LangAuthDashboardIndexRoute: typeof LangAuthDashboardIndexRoute
 }
 
 const LangAuthDashboardRouteRouteChildren: LangAuthDashboardRouteRouteChildren =
   {
+    LangAuthDashboardCreateNewJobRoute: LangAuthDashboardCreateNewJobRoute,
     LangAuthDashboardIndexRoute: LangAuthDashboardIndexRoute,
   }
 
@@ -298,6 +315,7 @@ export interface FileRoutesByFullPath {
   '/$lang/login': typeof LangAuthLoginRoute
   '/$lang/': typeof LangMainIndexRoute
   '/$lang/job/$slug': typeof LangMainJobSlugRouteRouteWithChildren
+  '/$lang/dashboard/create-new-job': typeof LangAuthDashboardCreateNewJobRoute
   '/$lang/dashboard/': typeof LangAuthDashboardIndexRoute
   '/$lang/job/': typeof LangMainJobIndexRoute
   '/$lang/job/$slug/': typeof LangMainJobSlugIndexRoute
@@ -308,6 +326,7 @@ export interface FileRoutesByTo {
   '/$lang': typeof LangMainIndexRoute
   '/$lang/not-found': typeof LangNotFoundRoute
   '/$lang/login': typeof LangAuthLoginRoute
+  '/$lang/dashboard/create-new-job': typeof LangAuthDashboardCreateNewJobRoute
   '/$lang/dashboard': typeof LangAuthDashboardIndexRoute
   '/$lang/job': typeof LangMainJobIndexRoute
   '/$lang/job/$slug': typeof LangMainJobSlugIndexRoute
@@ -325,6 +344,7 @@ export interface FileRoutesById {
   '/$lang/_auth/login': typeof LangAuthLoginRoute
   '/$lang/_main/': typeof LangMainIndexRoute
   '/$lang/_main/job/$slug': typeof LangMainJobSlugRouteRouteWithChildren
+  '/$lang/_auth/dashboard/create-new-job': typeof LangAuthDashboardCreateNewJobRoute
   '/$lang/_auth/dashboard/': typeof LangAuthDashboardIndexRoute
   '/$lang/_main/job/': typeof LangMainJobIndexRoute
   '/$lang/_main/job/$slug/': typeof LangMainJobSlugIndexRoute
@@ -341,6 +361,7 @@ export interface FileRouteTypes {
     | '/$lang/login'
     | '/$lang/'
     | '/$lang/job/$slug'
+    | '/$lang/dashboard/create-new-job'
     | '/$lang/dashboard/'
     | '/$lang/job/'
     | '/$lang/job/$slug/'
@@ -350,6 +371,7 @@ export interface FileRouteTypes {
     | '/$lang'
     | '/$lang/not-found'
     | '/$lang/login'
+    | '/$lang/dashboard/create-new-job'
     | '/$lang/dashboard'
     | '/$lang/job'
     | '/$lang/job/$slug'
@@ -365,6 +387,7 @@ export interface FileRouteTypes {
     | '/$lang/_auth/login'
     | '/$lang/_main/'
     | '/$lang/_main/job/$slug'
+    | '/$lang/_auth/dashboard/create-new-job'
     | '/$lang/_auth/dashboard/'
     | '/$lang/_main/job/'
     | '/$lang/_main/job/$slug/'
@@ -425,6 +448,7 @@ export const routeTree = rootRoute
       "filePath": "$lang/_auth/dashboard/route.tsx",
       "parent": "/$lang/_auth",
       "children": [
+        "/$lang/_auth/dashboard/create-new-job",
         "/$lang/_auth/dashboard/"
       ]
     },
@@ -451,6 +475,10 @@ export const routeTree = rootRoute
         "/$lang/_main/job/$slug/",
         "/$lang/_main/job/$slug/apply/"
       ]
+    },
+    "/$lang/_auth/dashboard/create-new-job": {
+      "filePath": "$lang/_auth/dashboard/create-new-job.tsx",
+      "parent": "/$lang/_auth/dashboard"
     },
     "/$lang/_auth/dashboard/": {
       "filePath": "$lang/_auth/dashboard/index.tsx",
