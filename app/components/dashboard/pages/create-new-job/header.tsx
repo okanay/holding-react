@@ -17,7 +17,7 @@ export function CreateBlogHeader() {
   };
 
   return (
-    <header className="border-cover sticky top-0 z-40 mt-14 border bg-zinc-100 sm:mt-auto">
+    <header className="custom-sticky-header sticky top-6 z-40 mt-14 border border-zinc-200 bg-zinc-50 sm:mt-auto">
       {/* Ana header kısmı - her zaman görünür */}
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-1">
         {/* Sol kısım: Geri butonu ve başlık */}

@@ -2,7 +2,6 @@ import { Editor } from "../../tiptap";
 import { TiptapProvider } from "../../tiptap/store";
 import { DashboardProvider, useDashboard } from "../../store";
 import { CreateBlogHeader } from "./header";
-import { ImageProvider } from "@/components/image/store";
 import DummyText from "../../tiptap/dummy";
 import { CreateNewJobAction } from "./action";
 
@@ -10,10 +9,8 @@ export const DashboardCreateNewJobPage = () => {
   return (
     <DashboardProvider>
       <TiptapProvider initialContent={DummyText}>
-        <ImageProvider>
-          <CreateBlogHeader />
-          <InnerElements />
-        </ImageProvider>
+        <CreateBlogHeader />
+        <InnerElements />
       </TiptapProvider>
     </DashboardProvider>
   );

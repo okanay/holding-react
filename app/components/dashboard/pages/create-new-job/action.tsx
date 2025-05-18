@@ -1,29 +1,60 @@
 import { useNavigate } from "@/i18n/navigate";
 import { useTiptapContext } from "../../tiptap/store";
-import { useDashboard } from "../../store";
 import { LoadingBlocker } from "../../ui/loading-blocker";
-import { CreateJobForm } from "../../form";
+import { JobForm } from "../../form";
+import { toast } from "sonner";
 
 export const CreateNewJobAction = () => {
   const { editor } = useTiptapContext();
-  const {} = useDashboard();
   const navigate = useNavigate();
 
-  const handleCreateForm = async (values: any) => {
-    // const status = await createBlog();
-    // if (!status) return;
+  const handleCreateForm = async (values: JobFormValues) => {
+    const html = editor.getHTML();
+    const json = JSON.stringify(editor.getJSON());
 
-    navigate({ to: "/editor/list" });
+    const fixedData: JobFormValues = {
+      ...values,
+      html,
+      json,
+    };
+
+    console.log(fixedData);
+
+    const APL_URL_BASE = import.meta.env.VITE_APP_BACKEND_URL;
+    const FETCH_URL = APL_URL_BASE + "/auth/create-new-job";
+
+    try {
+      const response = await fetch(FETCH_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(fixedData),
+      });
+
+      const data = await response.json();
+      console.log(data);
+
+      if (!data.success) {
+        toast.error(data.message || "Bir hata oluştu. Lütfen tekrar deneyin.");
+        return;
+      }
+
+      // navigate({ to: "/dashboard/" });
+    } catch (error) {
+      toast.error("Bir hata oluştu. Lütfen tekrar deneyin.");
+    }
   };
 
   return (
     <>
       <LoadingBlocker loading={false} label="İlan Oluşturuluyor..." />
 
-      <CreateJobForm
+      <JobForm
         initialData={undefined}
         submitLabel="İlanı Oluştur"
-        onSubmit={(values: any) => handleCreateForm(values)}
+        onSubmit={(values: JobFormValues) => handleCreateForm(values)}
       />
     </>
   );

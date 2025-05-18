@@ -3,13 +3,15 @@ import { DashboardFooter } from "./footers";
 import { DashboardAside } from "./aside";
 import { DashboardHeader } from "./headers";
 import { DashboardLayoutProvider, useDashboardLayout } from "./provider";
+import { ImageProvider } from "@/components/image/store";
+import ImageModal from "@/components/image";
 
 // Dashboard Ana Layout bileşeni
 const DashboardLayoutContent = () => {
   const { isPanelExpanded } = useDashboardLayout();
 
   return (
-    <div>
+    <ImageProvider>
       <DashboardHeader />
       <div className="flex h-fit min-h-screen items-start justify-start gap-x-4">
         <DashboardAside />
@@ -19,7 +21,7 @@ const DashboardLayoutContent = () => {
       </div>
 
       <DashboardFooter />
-    </div>
+    </ImageProvider>
   );
 };
 

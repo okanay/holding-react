@@ -1,19 +1,20 @@
+import useClickOutside from "@/hooks/use-click-outside";
 import {
-  X,
-  Upload,
+  Check,
+  Clock,
+  Edit,
+  EyeIcon,
   Image as ImageIcon,
   RefreshCw,
-  Trash2,
-  Check,
   Search,
-  Clock,
-  EyeIcon,
+  Trash2,
+  Upload,
+  X,
   XCircle,
-  Edit,
 } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { useImage } from "./store";
-import useClickOutside from "@/hooks/use-click-outside";
 
 interface ImageModalProps {
   isOpen: boolean;
@@ -101,8 +102,8 @@ const ImageModal: React.FC<ImageModalProps> = ({
 
   if (!isOpen) return null;
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-zinc-950/60 p-4">
+  const modalContent = (
+    <div className="fixed inset-0 z-1000 flex items-center justify-center bg-zinc-950/60 p-4">
       <div
         ref={ref}
         className="relative flex max-h-[90vh] w-full max-w-3xl flex-col rounded-lg bg-white shadow-xl"
@@ -110,9 +111,8 @@ const ImageModal: React.FC<ImageModalProps> = ({
         {/* Modal Header */}
         <ModalHeader tab={tab} setTab={setTab} handleClose={handleClose} />
 
-        {/* Modal Content - Sticky Header yükleme alanı için */}
+        {/* Modal Content */}
         <div className="relative flex-1 overflow-auto">
-          {/* Sekmeler */}
           {tab === "upload" ? (
             <UploadTab
               uploadQueue={uploadQueue}
@@ -148,6 +148,8 @@ const ImageModal: React.FC<ImageModalProps> = ({
       </div>
     </div>
   );
+
+  return createPortal(modalContent, document.body);
 };
 
 // Modal Header Bileşeni

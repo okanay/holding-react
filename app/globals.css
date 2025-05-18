@@ -68,6 +68,17 @@
     @apply font-custom-sans appearance-none focus:outline-none;
   }
 
+  .custom-sticky-header::before {
+    content: "";
+    position: absolute;
+    top: -1.5rem; /* top-6 = 1.5rem */
+    left: 0;
+    right: 0;
+    height: 1.4rem;
+    background: #fff;
+    z-index: -1;
+  }
+
   .custom-scrollbar {
     &::-webkit-scrollbar {
       width: 4px;
