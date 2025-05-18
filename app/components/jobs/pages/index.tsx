@@ -1,12 +1,12 @@
+import { Route } from "@/routes/$lang/_main/job/route";
 import { Briefcase, Filter, MapPin, Search, X } from "lucide-react";
 import { useMemo, useState } from "react";
 import {
   categoryOptions,
-  dummyJobs,
   employmentTypeOptions,
   locationOptions,
   workModeOptions,
-} from "../dummy";
+} from "../helper";
 import { JobCard } from "../ui/card";
 import { Select } from "../ui/select";
 
@@ -36,6 +36,8 @@ function groupJobsByCategory(jobs: Job[]): Record<string, Job[]> {
 }
 
 export const JobPage = () => {
+  const { jobs } = Route.useLoaderData();
+
   const [filters, setFilters] = useState({
     search: "",
     location: "",
@@ -48,7 +50,7 @@ export const JobPage = () => {
 
   // Filter jobs based on criteria
   const filteredJobs = useMemo(() => {
-    return dummyJobs.filter((job) => {
+    return jobs.filter((job) => {
       // Search filter (title and description)
       if (
         filters.search &&
@@ -194,7 +196,7 @@ export const JobPage = () => {
               </div>
               <Select
                 label="Location"
-                options={locationOptions(dummyJobs)}
+                options={locationOptions(jobs)}
                 value={filters.location}
                 onChange={(value) => updateFilter("location", value)}
               />
@@ -222,7 +224,7 @@ export const JobPage = () => {
               </div>
               <Select
                 label="Work Mode"
-                options={workModeOptions(dummyJobs)}
+                options={workModeOptions(jobs)}
                 value={filters.workMode}
                 onChange={(value) => updateFilter("workMode", value)}
               />
@@ -258,7 +260,7 @@ export const JobPage = () => {
               </div>
               <Select
                 label="Category"
-                options={categoryOptions(dummyJobs)}
+                options={categoryOptions(jobs)}
                 value={filters.category}
                 onChange={(value) => updateFilter("category", value)}
               />
@@ -271,7 +273,7 @@ export const JobPage = () => {
               </div>
               <Select
                 label="Job Type"
-                options={employmentTypeOptions(dummyJobs)}
+                options={employmentTypeOptions(jobs)}
                 value={filters.employmentType}
                 onChange={(value) => updateFilter("employmentType", value)}
               />

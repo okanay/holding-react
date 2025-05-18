@@ -48,6 +48,7 @@ declare global {
   interface SelectOption {
     value: string;
     label: string;
+    labelEn?: string;
   }
 }
 
@@ -58,40 +59,56 @@ export const FORM_TYPE_OPTIONS: SelectOption[] = [
 
 // Çalışma Şekli seçenekleri
 export const WORK_MODE_OPTIONS: SelectOption[] = [
-  { value: "Any", label: "Tüm Çalışma Şekilleri" },
-  { value: "Remote", label: "Uzaktan" },
-  { value: "Hybrid", label: "Hibrit" },
-  { value: "On-Site", label: "Ofiste" },
+  { value: "Any", label: "Tüm Çalışma Şekilleri", labelEn: "All Work Modes" },
+  { value: "Remote", label: "Uzaktan", labelEn: "Remote" },
+  { value: "Hybrid", label: "Hibrit", labelEn: "Hybrid" },
+  { value: "On-Site", label: "Ofiste", labelEn: "On-Site" },
 ];
 
 // İstihdam Türü seçenekleri
 export const EMPLOYMENT_TYPE_OPTIONS: SelectOption[] = [
-  { value: "Any", label: "Tüm İstihdam Türleri" },
-  { value: "Full-Time", label: "Tam Zamanlı" },
-  { value: "Part-Time", label: "Yarı Zamanlı" },
+  {
+    value: "Any",
+    label: "Tüm İstihdam Türleri",
+    labelEn: "All Employment Types",
+  },
+  { value: "Full-Time", label: "Tam Zamanlı", labelEn: "Full-Time" },
+  { value: "Part-Time", label: "Yarı Zamanlı", labelEn: "Part-Time" },
 ];
 
 // Deneyim seviyesi seçenekleri
 export const EXPERIENCE_LEVEL_OPTIONS: SelectOption[] = [
-  { value: "Any", label: "Tüm Deneyim Seviyeleri" },
-  { value: "Intern", label: "Stajyer" },
-  { value: "Entry", label: "Giriş Seviyesi" },
-  { value: "Mid-level", label: "Orta Seviye" },
-  { value: "Senior", label: "Senior" },
+  {
+    value: "Any",
+    label: "Tüm Deneyim Seviyeleri",
+    labelEn: "All Experience Levels",
+  },
+  { value: "Intern", label: "Stajyer", labelEn: "Intern" },
+  { value: "Entry", label: "Giriş Seviyesi", labelEn: "Entry Level" },
+  { value: "Mid-level", label: "Orta Seviye", labelEn: "Mid-level" },
+  { value: "Senior", label: "Senior", labelEn: "Senior" },
 ];
 
 // Kategori seçenekleri (örnek)
 export const CATEGORY_OPTIONS: SelectOption[] = [
-  { value: "software", label: "Yazılım Geliştirme" },
-  { value: "design", label: "Tasarım" },
-  { value: "marketing", label: "Pazarlama" },
-  { value: "sales", label: "Satış" },
-  { value: "customer-service", label: "Müşteri Hizmetleri" },
-  { value: "finance", label: "Finans" },
-  { value: "hr", label: "İnsan Kaynakları" },
-  { value: "operations", label: "Operasyon" },
-  { value: "product", label: "Ürün" },
-  { value: "other", label: "Diğer" },
+  {
+    value: "software",
+    label: "Yazılım Geliştirme",
+    labelEn: "Software Development",
+  },
+  { value: "design", label: "Tasarım", labelEn: "Design" },
+  { value: "marketing", label: "Pazarlama", labelEn: "Marketing" },
+  { value: "sales", label: "Satış", labelEn: "Sales" },
+  {
+    value: "customer-service",
+    label: "Müşteri Hizmetleri",
+    labelEn: "Customer Service",
+  },
+  { value: "finance", label: "Finans", labelEn: "Finance" },
+  { value: "hr", label: "İnsan Kaynakları", labelEn: "Human Resources" },
+  { value: "operations", label: "Operasyon", labelEn: "Operations" },
+  { value: "product", label: "Ürün", labelEn: "Product" },
+  { value: "other", label: "Diğer", labelEn: "Other" },
 ];
 
 export const STATUS_OPTIONS = BLOG_OPTIONS.map((option) => ({
