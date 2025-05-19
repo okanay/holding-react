@@ -129,7 +129,7 @@ export const DefaultApplicationForm = ({ job }: { job: Job }) => {
     const errorCount = allErrorMessages.length;
 
     if (errorCount > 0) {
-      toast.error("Form Doğrulama Hataları", {
+      toast.error("Form Validation Errors", {
         description: (
           <ul className="mt-2 ml-4 list-disc text-sm">
             {allErrorMessages.map((msg, i) => (
