@@ -3,6 +3,9 @@ import { createContext, PropsWithChildren, useContext, useState } from "react";
 import { createStore, StoreApi, useStore } from "zustand";
 import { immer } from "zustand/middleware/immer";
 
+// Başvuranlar için durum
+export type Status = "idle" | "loading" | "success" | "error";
+
 // Başvuran tipini tanımlayalım
 export interface Applicant {
   id: string;
@@ -31,9 +34,6 @@ export interface ApplicantsResponse {
   pagination: Pagination;
 }
 
-// Başvuranlar için durum
-export type Status = "idle" | "loading" | "success" | "error";
-
 // Store için durum tipi
 interface DataState {
   view: {
@@ -45,18 +45,17 @@ interface DataState {
 
   // Başvuranlar için state
   applicants: Applicant[];
+  applicantsPagination: Pagination;
   applicantsStatus: Status;
   applicantsError: string | null;
-  applicantsPagination: Pagination | null;
   applicantsFilters: {
     page: number;
     limit: number;
-    search?: string;
-    status?: string;
-    jobId?: string;
   };
 
-  // Başvuranlar için eylemler
+  setApplicantsFilters: (
+    filters: Partial<DataState["applicantsFilters"]>,
+  ) => void;
   getApplicants: (
     options?: Partial<DataState["applicantsFilters"]>,
   ) => Promise<void>;
@@ -65,9 +64,6 @@ interface DataState {
     id: string,
     status: Applicant["status"],
   ) => Promise<boolean>;
-  setApplicantsFilters: (
-    filters: Partial<DataState["applicantsFilters"]>,
-  ) => void;
 }
 
 export function DashboardProvider({ children }: PropsWithChildren) {
@@ -116,18 +112,6 @@ export function DashboardProvider({ children }: PropsWithChildren) {
             const params = new URLSearchParams();
             params.append("page", applicantsFilters.page.toString());
             params.append("limit", applicantsFilters.limit.toString());
-
-            if (applicantsFilters.search) {
-              params.append("search", applicantsFilters.search);
-            }
-
-            if (applicantsFilters.status) {
-              params.append("status", applicantsFilters.status);
-            }
-
-            if (applicantsFilters.jobId) {
-              params.append("jobId", applicantsFilters.jobId);
-            }
 
             const API_URL_BASE =
               import.meta.env.VITE_APP_BACKEND_URL || "http://localhost:8080";

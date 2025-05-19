@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import { DashboardProvider, useDashboard } from "../../store";
 import { ApplicantsTable } from "./table";
+import { Pagination } from "./pagination";
+import { Filter } from "./filter";
 
 export const DashboardApplicantsPage = () => {
   return (
@@ -21,11 +23,9 @@ const ApplicantsPageContent = () => {
 
   return (
     <div className="container mx-auto px-4 py-6">
-      {/* İçerik */}
-      <div className="grid grid-cols-1 gap-6">
-        {/* Başvuran Listesi */}
-        <ApplicantsTable applicants={applicants} />
-      </div>
+      <Filter />
+      <ApplicantsTable applicants={applicants} />
+      <Pagination />
     </div>
   );
 };
