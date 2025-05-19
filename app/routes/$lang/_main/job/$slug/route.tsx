@@ -30,9 +30,9 @@ export const Route = createFileRoute("/$lang/_main/job/$slug")({
 
 function RouteComponent() {
   return (
-    <>
+    <div className="min-h-dvh">
       <JobSlugHeader />
       <Outlet />
-    </>
+    </div>
   );
 }

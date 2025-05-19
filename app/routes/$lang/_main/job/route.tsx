@@ -34,7 +34,7 @@ export const Route = createFileRoute("/$lang/_main/job")({
 
 function RouteComponent() {
   return (
-    <div className="px-4">
+    <div>
       <JobHeader />
       <Outlet />
       <JobFooter />

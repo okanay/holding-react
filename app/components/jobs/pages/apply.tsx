@@ -18,9 +18,5 @@ export function JobApplyPage() {
   const FormComponent =
     FORM_TYPE_COMPONENTS[formType] || FORM_TYPE_COMPONENTS.default;
 
-  return (
-    <div className="mx-auto max-w-3xl">
-      <FormComponent job={data} />
-    </div>
-  );
+  return <FormComponent job={data} />;
 }

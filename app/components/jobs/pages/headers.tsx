@@ -11,7 +11,7 @@ import { getLabelEnFromDictionary } from "../helper";
 
 export function JobHeader() {
   return (
-    <header className="">
+    <header className="bg-zinc-100 px-4">
       <div className="mx-auto max-w-3xl">
         <Link
           to={"/job"}
@@ -54,37 +54,39 @@ export const JobSlugHeader = () => {
       : data.details.location;
 
   return (
-    <header className="mx-auto flex max-w-3xl items-start justify-between gap-8 py-8">
-      <div className="flex flex-col gap-6">
-        <h1 className="text-3xl font-semibold tracking-tight text-zinc-700">
-          {data.details.title}
-        </h1>
+    <nav className="bg-zinc-100 px-4">
+      <div className="mx-auto flex max-w-3xl items-start justify-between gap-8 py-8">
+        <div className="flex flex-col gap-6">
+          <h1 className="text-3xl font-semibold tracking-tight text-zinc-700">
+            {data.details.title}
+          </h1>
 
-        <div className="flex flex-wrap gap-4 text-sm text-zinc-500">
-          {location && (
+          <div className="flex flex-wrap gap-4 text-sm text-zinc-500">
+            {location && (
+              <div className="flex items-center gap-2 rounded-sm bg-zinc-100 py-1">
+                <MapPin size={18} />
+                <span className="font-medium">{location}</span>
+              </div>
+            )}
             <div className="flex items-center gap-2 rounded-sm bg-zinc-100 px-3 py-1">
-              <MapPin size={18} />
-              <span className="font-medium">{location}</span>
+              {/* Combine the labels into an array, filter out falsy values (including void), and join with slashes */}
+              {[categoryLabelEn, employmentTypeLabelEn, workModeLabelEn]
+                .filter((label): label is string => Boolean(label))
+                .map((label, idx, arr) => (
+                  <span key={label} className="font-medium">
+                    {label}
+                    {idx < arr.length - 1 && (
+                      <span className="mx-1 text-zinc-400">/</span>
+                    )}
+                  </span>
+                ))}
             </div>
-          )}
-          <div className="flex items-center gap-2 rounded-sm bg-zinc-100 px-3 py-1">
-            {/* Combine the labels into an array, filter out falsy values (including void), and join with slashes */}
-            {[categoryLabelEn, employmentTypeLabelEn, workModeLabelEn]
-              .filter((label): label is string => Boolean(label))
-              .map((label, idx, arr) => (
-                <span key={label} className="font-medium">
-                  {label}
-                  {idx < arr.length - 1 && (
-                    <span className="mx-1 text-zinc-400">/</span>
-                  )}
-                </span>
-              ))}
           </div>
         </div>
-      </div>
 
-      <JobActionButton data={data} />
-    </header>
+        <JobActionButton data={data} />
+      </div>
+    </nav>
   );
 };
 

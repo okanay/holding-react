@@ -26,12 +26,14 @@ export const FormInput = ({
   return (
     <div className={twMerge("flex flex-col gap-1.5", containerClassName)}>
       {label && (
-        <div className="flex items-center justify-between">
-          <label htmlFor={id} className="text-sm font-medium text-zinc-700">
+        <div className="flex flex-wrap items-center justify-between">
+          <label
+            htmlFor={id}
+            className="text-sm font-medium text-nowrap text-zinc-700"
+          >
             {label}
             {isRequired && <span className="ml-1 text-red-500">*</span>}
           </label>
-          {error && <span className="text-xs text-red-500">{error}</span>}
         </div>
       )}
 
