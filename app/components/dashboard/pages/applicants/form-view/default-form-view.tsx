@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   CalendarDays,
   Mail,
@@ -10,18 +10,40 @@ import {
   MessageSquare,
   User,
 } from "lucide-react";
+import { FormSingleSelect } from "@/components/dashboard/form/ui";
+import { Applicant, useDashboard } from "@/components/dashboard/store";
 
 interface DefaultFormViewProps {
-  json: unknown;
+  applicant: Applicant;
 }
 
-export const DefaultFormView: React.FC<DefaultFormViewProps> = ({ json }) => {
-  const formData = typeof json === "string" ? JSON.parse(json) : json;
+const statusOptions: JobFormSelectOption[] = [
+  { name: "received", label: "Yeni Başvuru", labelEn: "Received" },
+  { name: "screening", label: "İnceleniyor", labelEn: "Screening" },
+  {
+    name: "interviewing",
+    label: "Mülakat Aşamasında",
+    labelEn: "Interviewing",
+  },
+  { name: "hired", label: "İşe Alındı", labelEn: "Hired" },
+  { name: "rejected", label: "Reddedildi", labelEn: "Rejected" },
+];
+
+export const DefaultFormView: React.FC<DefaultFormViewProps> = ({
+  applicant,
+}) => {
+  const formData = JSON.parse(applicant.formJson);
+  const { updateApplicantStatus } = useDashboard();
+
+  const handleStatusUpdate = async (newStatus: Applicant["status"]) => {
+    if (newStatus === applicant.status) return;
+    await updateApplicantStatus(applicant.id, newStatus);
+  };
 
   return (
     <div className="border-cover border-t bg-white p-6">
       {/* Kişisel Bilgiler */}
-      <div className="mb-6">
+      <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-2">
           {formData.fullName && (
             <>
@@ -45,6 +67,20 @@ export const DefaultFormView: React.FC<DefaultFormViewProps> = ({ json }) => {
             </>
           )}
         </div>
+
+        <FormSingleSelect
+          helperText="Başvuru durumunu düzenle."
+          className="min-w-64 appearance-none text-sm text-nowrap"
+          options={statusOptions}
+          value={applicant.status}
+          selectedValues={statusOptions
+            .filter((s) => s.name === applicant.status)
+            .map((s) => s.name)}
+          onChange={async (val) => {
+            await handleStatusUpdate(val as any);
+          }}
+          onCreateActive={false}
+        />
       </div>
 
       {/* İletişim Bilgileri */}

@@ -199,7 +199,7 @@ export function DashboardProvider({ children }: PropsWithChildren) {
             const API_URL_BASE =
               import.meta.env.VITE_APP_BACKEND_URL || "http://localhost:8080";
             const response = await fetch(
-              `${API_URL_BASE}/auth/applicants/${id}/status`,
+              `${API_URL_BASE}/auth/applicant/status/${id}`,
               {
                 method: "PATCH",
                 headers: {
@@ -222,8 +222,14 @@ export function DashboardProvider({ children }: PropsWithChildren) {
               );
             }
 
-            // Başarılı güncellemeden sonra başvuruları yenile
-            await get().refreshApplicants();
+            // Eğer başarılıysa local olarak applicants dizisinde ilgili başvuranın status'unu güncelle
+            set((state) => {
+              const applicant = state.applicants.find((a) => a.id === id);
+              if (applicant) {
+                applicant.status = status;
+              }
+            });
+
             return true;
           } catch (error) {
             return false;

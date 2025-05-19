@@ -1,8 +1,9 @@
 import React from "react";
 import { DefaultFormView } from "./default-form-view";
+import { Applicant } from "@/components/dashboard/store";
 
 type FormComponentProps = {
-  json: unknown;
+  applicant: Applicant;
 };
 
 const FORM_TYPE_COMPONENTS: Record<string, React.FC<FormComponentProps>> = {
@@ -10,13 +11,12 @@ const FORM_TYPE_COMPONENTS: Record<string, React.FC<FormComponentProps>> = {
 };
 
 interface ApplicantFormViewProps {
-  json: unknown;
-  formType: string;
+  applicant: Applicant;
 }
 
-export function ApplicantFormView({ json, formType }: ApplicantFormViewProps) {
+export function ApplicantFormView({ applicant }: ApplicantFormViewProps) {
   const FormComponent =
-    FORM_TYPE_COMPONENTS[formType] ?? FORM_TYPE_COMPONENTS.default;
+    FORM_TYPE_COMPONENTS[applicant.formType] ?? FORM_TYPE_COMPONENTS.default;
 
-  return <FormComponent json={json} />;
+  return <FormComponent applicant={applicant} />;
 }

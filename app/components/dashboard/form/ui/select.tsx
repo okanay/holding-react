@@ -72,12 +72,13 @@ export const FormSingleSelect = ({
 
   // Modal içeriği
   const modalContent = (
-    <div className="fixed inset-0 z-1000 flex items-center justify-center bg-black/30">
+    <div className="fixed inset-0 z-1010 flex items-center justify-center bg-black/30">
       <div
         ref={ref}
         className="relative w-full max-w-sm rounded-lg bg-white p-6 shadow-lg"
       >
         <button
+          type="button"
           className="absolute top-3 right-3 text-zinc-400 hover:text-zinc-600"
           onClick={() => setOpen(false)}
         >
@@ -87,6 +88,7 @@ export const FormSingleSelect = ({
         <div className="mb-4 flex max-h-68 flex-col gap-2 overflow-y-auto">
           {localOptions.map((option) => (
             <button
+              type="button"
               key={option.name}
               className={twMerge(
                 "flex items-center gap-2 rounded px-3 py-2 text-sm transition-colors",
@@ -137,46 +139,47 @@ export const FormSingleSelect = ({
   );
 
   return (
-    <div className={twMerge("flex flex-col gap-1.5", containerClassName)}>
-      {label && (
-        <div className="flex items-center justify-between">
-          <label className="text-sm font-medium text-zinc-700">
-            {label}
-            {isRequired && <span className="ml-1 text-red-500">*</span>}
-          </label>
-          {error && <span className="text-xs text-red-500">{error}</span>}
-        </div>
-      )}
-
-      <button
-        type="button"
-        className={twMerge(
-          "flex h-10 w-full items-center justify-between rounded-md border border-zinc-300 bg-white px-3 py-2 text-left text-sm transition-all focus:outline-none",
-          error && "border-red-300 bg-red-50/30",
-          className,
-        )}
-        onClick={() => setOpen(true)}
-      >
-        <span>
-          {selected ? (
-            localOptions.find((o) => o.name === selected)?.label
-          ) : (
-            <span className="text-zinc-400">{placeholder}</span>
-          )}
-        </span>
-        <ChevronDown size={18} className="text-zinc-400" />
-      </button>
-
-      {(error || helperText) && (
-        <div className="flex items-center gap-1.5">
-          <p className={`text-xs ${error ? "text-red-500" : "text-zinc-500"}`}>
-            {error || helperText}
-          </p>
-        </div>
-      )}
-
-      {/* Modal Portal ile render ediliyor */}
+    <>
       {open && createPortal(modalContent, document.body)}
-    </div>
+
+      <div className={twMerge("flex flex-col gap-1.5", containerClassName)}>
+        {label && (
+          <div className="flex items-center justify-between">
+            <label className="text-sm font-medium text-zinc-700">
+              {label}
+              {isRequired && <span className="ml-1 text-red-500">*</span>}
+            </label>
+            {error && <span className="text-xs text-red-500">{error}</span>}
+          </div>
+        )}
+        <button
+          type="button"
+          className={twMerge(
+            "flex h-10 w-full items-center justify-between rounded-md border border-zinc-300 bg-white px-3 py-2 text-left text-sm transition-all focus:outline-none",
+            error && "border-red-300 bg-red-50/30",
+            className,
+          )}
+          onClick={() => setOpen(true)}
+        >
+          <span>
+            {selected ? (
+              localOptions.find((o) => o.name === selected)?.label
+            ) : (
+              <span className="text-zinc-400">{placeholder}</span>
+            )}
+          </span>
+          <ChevronDown size={18} className="text-zinc-400" />
+        </button>
+        {(error || helperText) && (
+          <div className="flex items-center gap-1.5">
+            <p
+              className={`text-xs ${error ? "text-red-500" : "text-zinc-500"}`}
+            >
+              {error || helperText}
+            </p>
+          </div>
+        )}
+      </div>
+    </>
   );
 };

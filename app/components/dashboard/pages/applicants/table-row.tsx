@@ -1,20 +1,19 @@
-import React, { useState } from "react";
+import { formatDate } from "@/utils/format-date";
 import {
-  User,
+  AlertCircle,
+  Briefcase,
   Calendar,
-  Mail,
-  Phone,
-  MapPin,
+  CheckCircle,
   ChevronDown,
   ChevronUp,
-  Briefcase,
-  CheckCircle,
   Clock,
-  AlertCircle,
+  Mail,
+  Phone,
+  User,
   XCircle,
 } from "lucide-react";
+import React, { useState } from "react";
 import { Applicant } from "../../store";
-import { formatDate } from "@/utils/format-date";
 import { ApplicantFormView } from "./form-view";
 
 interface ApplicantRowProps {
@@ -119,7 +118,7 @@ export const ApplicantRow: React.FC<ApplicantRowProps> = ({ applicant }) => {
               </div>
             </div>
 
-            <div className="flex items-center gap-3 text-xs text-zinc-500">
+            <div className="flex flex-wrap items-center gap-3 text-xs text-zinc-500">
               <span className="inline-flex items-center gap-1.5">
                 <Mail className="h-3.5 w-3.5 text-zinc-400" />
                 {applicant.email}
@@ -154,10 +153,7 @@ export const ApplicantRow: React.FC<ApplicantRowProps> = ({ applicant }) => {
         className={`grid grid-rows-[1fr] transition-[grid-template-rows] duration-300 ease-out aria-expanded:grid-rows-[0fr]`}
       >
         <div className="overflow-hidden transition-[grid-template-rows] duration-300 ease-out">
-          <ApplicantFormView
-            json={applicant.formJson}
-            formType={applicant.formType}
-          />
+          <ApplicantFormView applicant={applicant} />
         </div>
       </div>
     </li>

@@ -89,7 +89,7 @@ export const Filter: React.FC<Props> = ({}) => {
   ).length;
 
   return (
-    <div className="mb-6">
+    <div className="mt-10 mb-6 sm:mt-0">
       {/* Hızlı Arama ve Filtre Açma Butonu */}
       <div className="mb-4 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex w-full flex-col gap-2 sm:flex-row sm:items-center">
