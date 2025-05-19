@@ -1,5 +1,5 @@
 import React from "react";
-import { Route } from "@/routes/$lang/_main/job/$slug/route";
+import { Route } from "@/routes/$lang/_main/jobs/$slug/route";
 import { DefaultApplicationForm } from "./forms/default-form";
 
 const FORM_TYPE_COMPONENTS: Record<string, React.FC<{ job: Job }>> = {

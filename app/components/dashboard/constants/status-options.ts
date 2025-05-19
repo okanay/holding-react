@@ -1,5 +1,5 @@
 declare global {
-  type BlogStatus = "published" | "draft" | "archived" | "deleted";
+  type JobStatus = "published" | "draft" | "archived" | "deleted";
 }
 
 export const STATUS_OPTIONS = [

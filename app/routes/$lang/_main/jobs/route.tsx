@@ -2,7 +2,7 @@ import { JobFooter } from "@/components/jobs/pages/footers";
 import { JobHeader } from "@/components/jobs/pages/headers";
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/$lang/_main/job")({
+export const Route = createFileRoute("/$lang/_main/jobs")({
   loader: async ({ params: { lang } }) => {
     const APL_URL_BASE = import.meta.env.VITE_APP_BACKEND_URL;
     const FETCH_URL = APL_URL_BASE + "/public/jobs";

@@ -1,4 +1,4 @@
-import { Route } from "@/routes/$lang/_main/job/route";
+import { Route } from "@/routes/$lang/_main/jobs/route";
 import { Briefcase, Filter, MapPin, Search, X } from "lucide-react";
 import { useMemo, useState } from "react";
 import {

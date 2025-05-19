@@ -4,7 +4,7 @@ import {
   WORK_MODE_OPTIONS,
 } from "@/components/dashboard/form/config";
 import { Link } from "@/i18n/link";
-import { Route } from "@/routes/$lang/_main/job/$slug/route";
+import { Route } from "@/routes/$lang/_main/jobs/$slug/route";
 import { useMatches } from "@tanstack/react-router";
 import { MapPin } from "lucide-react";
 import { getLabelEnFromDictionary } from "../helper";
@@ -14,7 +14,7 @@ export function JobHeader() {
     <header className="bg-zinc-100 px-4">
       <div className="mx-auto max-w-3xl">
         <Link
-          to={"/job"}
+          to={"/jobs"}
           className="text-primary-600 inline-block py-4 text-3xl font-bold"
         >
           <span className="relative">Holding</span>
@@ -93,12 +93,12 @@ export const JobSlugHeader = () => {
 const JobActionButton: React.FC<{ data: Job }> = ({ data }) => {
   const matches = useMatches();
   const isOnApplyPage = matches.some(
-    (m: any) => m.routeId === "/$lang/_main/job/$slug/apply/",
+    (m: any) => m.routeId === "/$lang/_main/jobs/$slug/apply/",
   );
   if (isOnApplyPage) {
     return (
       <Link
-        to={`/job/${data.slug}`}
+        to={`/jobs/${data.slug}`}
         className="flex h-11 items-center justify-center rounded bg-zinc-200 px-4 text-sm font-semibold text-zinc-700 uppercase"
       >
         Job Details
@@ -108,7 +108,7 @@ const JobActionButton: React.FC<{ data: Job }> = ({ data }) => {
 
   return (
     <Link
-      to={`/job/${data.slug}/apply`}
+      to={`/jobs/${data.slug}/apply`}
       className="bg-primary flex h-11 items-center justify-center rounded px-4 text-sm font-semibold text-white uppercase"
     >
       Apply Now

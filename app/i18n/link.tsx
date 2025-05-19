@@ -13,7 +13,13 @@ export const Link: React.FC<Props> = ({ to, children, ...rest }) => {
   const langTo = "/" + language + to;
 
   return (
-    <RouterLink {...rest} to={langTo} resetScroll={true}>
+    <RouterLink
+      {...rest}
+      to={langTo}
+      resetScroll={true}
+      preload={"intent"}
+      preloadDelay={500}
+    >
       {children}
     </RouterLink>
   );

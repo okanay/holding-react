@@ -28,6 +28,19 @@ export interface Pagination {
   totalPages: number;
 }
 
+interface ApplicantsFilters {
+  page: number;
+  limit: number;
+  fullName?: string;
+  email?: string;
+  status?: string;
+  startDate?: string;
+  endDate?: string;
+  jobId?: string;
+  sortBy?: string;
+  sortOrder?: "asc" | "desc";
+}
+
 // Başvuranlar yanıtı için tip
 export interface ApplicantsResponse {
   applications: Applicant[];
@@ -46,12 +59,9 @@ interface DataState {
   // Başvuranlar için state
   applicants: Applicant[];
   applicantsPagination: Pagination;
+  applicantsFilters: ApplicantsFilters;
   applicantsStatus: Status;
   applicantsError: string | null;
-  applicantsFilters: {
-    page: number;
-    limit: number;
-  };
 
   setApplicantsFilters: (
     filters: Partial<DataState["applicantsFilters"]>,
@@ -110,8 +120,30 @@ export function DashboardProvider({ children }: PropsWithChildren) {
 
             // URL parametrelerini oluştur
             const params = new URLSearchParams();
+
+            // Sayfalama parametreleri
             params.append("page", applicantsFilters.page.toString());
             params.append("limit", applicantsFilters.limit.toString());
+
+            // Filtreleme parametreleri
+            if (applicantsFilters.fullName)
+              params.append("fullName", applicantsFilters.fullName);
+            if (applicantsFilters.email)
+              params.append("email", applicantsFilters.email);
+            if (applicantsFilters.status)
+              params.append("status", applicantsFilters.status);
+            if (applicantsFilters.startDate)
+              params.append("startDate", applicantsFilters.startDate);
+            if (applicantsFilters.endDate)
+              params.append("endDate", applicantsFilters.endDate);
+            if (applicantsFilters.jobId)
+              params.append("jobId", applicantsFilters.jobId);
+
+            // Sıralama parametreleri
+            if (applicantsFilters.sortBy)
+              params.append("sortBy", applicantsFilters.sortBy);
+            if (applicantsFilters.sortOrder)
+              params.append("sortOrder", applicantsFilters.sortOrder);
 
             const API_URL_BASE =
               import.meta.env.VITE_APP_BACKEND_URL || "http://localhost:8080";
@@ -137,7 +169,8 @@ export function DashboardProvider({ children }: PropsWithChildren) {
             }
 
             set((state) => {
-              state.applicants = data.data.applications;
+              // null kontrolü ekleyerek boş dizi ile değiştiriyoruz
+              state.applicants = data.data.applications || [];
               state.applicantsPagination = data.data.pagination;
               state.applicantsStatus = "success";
             });
@@ -148,6 +181,8 @@ export function DashboardProvider({ children }: PropsWithChildren) {
                 error instanceof Error
                   ? error.message
                   : "An unknown error occurred";
+              // Hata durumunda da boş dizi atayalım
+              state.applicants = [];
             });
           }
         },

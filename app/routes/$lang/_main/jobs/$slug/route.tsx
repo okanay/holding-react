@@ -1,7 +1,7 @@
 import { JobSlugHeader } from "@/components/jobs/pages/headers";
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/$lang/_main/job/$slug")({
+export const Route = createFileRoute("/$lang/_main/jobs/$slug")({
   loader: async ({ params: { lang, slug } }) => {
     const APL_URL_BASE = import.meta.env.VITE_APP_BACKEND_URL;
     const FETCH_URL = `${APL_URL_BASE}/public/jobs/${slug}`;

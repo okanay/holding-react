@@ -77,7 +77,7 @@ export function DefaultNotFound() {
 
               {/* Ana Sayfa Butonu */}
               <Link
-                to="/job"
+                to="/jobs"
                 className="group from-primary-600 to-primary-500 hover:shadow-primary-500/30 relative inline-flex items-center justify-center overflow-hidden rounded-full bg-gradient-to-r p-0.5 text-lg font-medium text-white transition-opacity duration-300 hover:opacity-75 focus:outline-none"
               >
                 <span className="bg-primary-600 group-hover:bg-opacity-0 relative flex items-center gap-2 rounded-full px-8 py-3.5 transition-all duration-300 ease-out">

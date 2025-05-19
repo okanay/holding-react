@@ -21,7 +21,7 @@ function RouteComponent() {
         Please check back soon!
       </p>
       <Link
-        to="/job"
+        to="/jobs"
         className="bg-primary text-color-primary rounded-md px-6 py-2 font-semibold shadow"
       >
         Go to Job page
