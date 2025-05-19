@@ -13,7 +13,7 @@ export const DashboardAside = () => {
       href: "/dashboard/create-new-job",
       icon: ClipboardPen,
     },
-    { name: "İş İlanları", href: "/job", icon: NotepadText },
+    { name: "Başvurular", href: "/dashboard/applicants", icon: NotepadText },
   ];
 
   return (
