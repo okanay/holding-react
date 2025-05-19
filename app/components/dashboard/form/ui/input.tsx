@@ -37,7 +37,7 @@ export const FormInput = ({
 
       <div
         className={twMerge(
-          "focus-within:border-primary-400 focus-within:ring-primary-400/20 relative flex items-center rounded-md border border-zinc-300 transition-all focus-within:ring-2",
+          "focus-within:border-primary-400 focus-within:ring-primary-400/20 relative flex h-10 items-center rounded-md border border-zinc-300 text-sm transition-all focus-within:ring-2",
           error && "border-red-300 bg-red-50/30",
         )}
       >
@@ -51,7 +51,7 @@ export const FormInput = ({
           id={id}
           {...props}
           className={twMerge(
-            "h-10 w-full rounded-md bg-transparent py-2 outline-none",
+            "w-full rounded-md bg-transparent py-2 outline-none",
             leftIcon ? "pl-10" : "pl-3",
             rightIcon ? "pr-10" : "pr-3",
             className,

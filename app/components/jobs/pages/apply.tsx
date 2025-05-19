@@ -1,22 +1,9 @@
 import React from "react";
 import { Route } from "@/routes/$lang/_main/job/$slug/route";
-
-const DefaultApplicationForm = ({ job }: { job: Job }) => {
-  return <div>Default Application Form for {job.details.title}</div>;
-};
-
-const DeveloperApplicationForm = ({ job }: { job: Job }) => {
-  return <div>Developer Application Form for {job.details.title}</div>;
-};
-
-const DesignerApplicationForm = ({ job }: { job: Job }) => {
-  return <div>Designer Application Form for {job.details.title}</div>;
-};
+import { DefaultApplicationForm } from "./forms/default-form";
 
 const FORM_TYPE_COMPONENTS: Record<string, React.FC<{ job: Job }>> = {
   default: DefaultApplicationForm,
-  developer: DeveloperApplicationForm,
-  designer: DesignerApplicationForm,
 };
 
 export function JobApplyPage() {
