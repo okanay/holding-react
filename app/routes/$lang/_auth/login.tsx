@@ -8,16 +8,15 @@ import {
   AlertCircle,
   Eye,
   EyeOff,
+  Loader,
   Lock,
   LogIn,
-  LogInIcon,
   Mail,
 } from "lucide-react";
 import { useState } from "react";
 
 export const Route = createFileRoute("/$lang/_auth/login")({
-  loader: async ({ location: { search } }) => {
-    const lang = getLanguageFromSearch(search);
+  loader: async ({ params: { lang } }) => {
     return { lang };
   },
 
@@ -222,7 +221,7 @@ function LoginPage() {
                   >
                     {state.isLoading ? (
                       <>
-                        <LogInIcon className="size-5 animate-spin text-white" />
+                        <Loader className="size-5 animate-spin text-white" />
                         <span>İşleniyor...</span>
                       </>
                     ) : (
