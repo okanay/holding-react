@@ -31,7 +31,7 @@ export const DashboardAside = () => {
   return (
     <aside
       data-expended={!isPanelExpanded}
-      className="border-cover fixed top-0 z-100 h-full w-50 overflow-hidden border-r bg-white px-4 py-4 pt-20 transition-all duration-300 data-[expended=true]:w-0 data-[expended=true]:px-0 sm:sticky sm:border-0 sm:pt-4"
+      className="border-cover fixed top-0 z-100 h-full w-50 shrink-0 overflow-hidden border-r bg-white px-4 py-4 pt-20 transition-all duration-300 data-[expended=true]:w-0 data-[expended=true]:px-0 sm:sticky sm:border-0 sm:pt-4"
     >
       <div className="flex flex-col items-start justify-center">
         <div className="mt-2 px-2">
