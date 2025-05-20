@@ -18,8 +18,6 @@ export const CreateNewJobAction = () => {
       json,
     };
 
-    console.log(fixedData);
-
     const APL_URL_BASE = import.meta.env.VITE_APP_BACKEND_URL;
     const FETCH_URL = APL_URL_BASE + "/auth/create-new-job";
 

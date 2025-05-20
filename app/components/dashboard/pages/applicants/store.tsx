@@ -3,7 +3,7 @@ import { createStore, StoreApi, useStore } from "zustand";
 import { immer } from "zustand/middleware/immer";
 
 // Başvuranlar için durum
-export type Status = "idle" | "loading" | "success" | "error";
+export type FetchStatus = "idle" | "loading" | "success" | "error";
 
 // Başvuran tipini tanımlayalım
 export interface Applicant {
@@ -14,7 +14,7 @@ export interface Applicant {
   phone: string;
   formType: string;
   formJson: string;
-  status: Status;
+  status: FetchStatus;
   createdAt: string;
   updatedAt: string;
 }
@@ -52,7 +52,7 @@ interface DataState {
   applicants: Applicant[];
   applicantsPagination: Pagination;
   applicantsFilters: ApplicantsFilters;
-  applicantsStatus: Status;
+  applicantsStatus: FetchStatus;
   applicantsError: string | null;
 
   setApplicantsFilters: (

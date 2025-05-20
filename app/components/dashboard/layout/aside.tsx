@@ -7,13 +7,26 @@ export const DashboardAside = () => {
   const { isPanelExpanded, togglePanel } = useDashboardLayout();
 
   const menuItems = [
-    { name: "Editör Paneli", href: "/dashboard", icon: Home },
+    {
+      name: "Editör Paneli",
+      href: "/dashboard",
+      icon: Home,
+    },
     {
       name: "Yeni İş Oluştur",
-      href: "/dashboard/create-new-job",
+      href: "/dashboard/job/create",
       icon: ClipboardPen,
     },
-    { name: "Başvurular", href: "/dashboard/applicants", icon: NotepadText },
+    {
+      name: "İş İlanları",
+      href: "/dashboard/job/list",
+      icon: ClipboardPen,
+    },
+    {
+      name: "Başvurular",
+      href: "/dashboard/applicants",
+      icon: NotepadText,
+    },
   ];
 
   return (
