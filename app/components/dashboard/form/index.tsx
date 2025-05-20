@@ -205,7 +205,7 @@ export function JobForm({
       {/* İş Detayları Kartı */}
       <div className="rounded-lg border border-zinc-200 bg-white p-6">
         <h2 className="mb-4 font-semibold text-zinc-800">İş Detayları</h2>
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
           {/* Lokasyon */}
           <div>
             <Controller
@@ -282,7 +282,7 @@ export function JobForm({
           </div>
 
           {/* Kategoriler */}
-          <div className="col-span-2">
+          <div className="sm:col-span-2">
             <Controller
               control={control}
               name="categories"
