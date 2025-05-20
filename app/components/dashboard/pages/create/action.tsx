@@ -2,56 +2,61 @@ import { useNavigate } from "@/i18n/navigate";
 import { useTiptapContext } from "../../tiptap/store";
 import { LoadingBlocker } from "../../form/ui/loading-blocker";
 import { JobForm } from "../../form";
-import { toast } from "sonner";
+import { useCreateJob } from "./store";
+import { useState } from "react";
 
 export const CreateNewJobAction = () => {
   const { editor } = useTiptapContext();
   const navigate = useNavigate();
+  const { createJob, formData, formStatus, setEditorContent } = useCreateJob();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // Editör içeriği değiştiğinde store'a kaydet
+  const handleEditorChange = () => {
+    if (editor) {
+      const html = editor.getHTML();
+      setEditorContent(html);
+    }
+  };
+
+  // Form gönderildiğinde
   const handleCreateForm = async (values: JobFormValues) => {
-    const html = editor.getHTML();
-    const json = JSON.stringify(editor.getJSON());
+    if (isSubmitting) return;
 
-    const fixedData: JobFormValues = {
-      ...values,
-      html,
-      json,
-    };
-
-    const APL_URL_BASE = import.meta.env.VITE_APP_BACKEND_URL;
-    const FETCH_URL = APL_URL_BASE + "/auth/create-new-job";
+    setIsSubmitting(true);
 
     try {
-      const response = await fetch(FETCH_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify(fixedData),
-      });
+      // Editör içeriğini al
+      const html = editor.getHTML();
+      const json = JSON.stringify(editor.getJSON());
 
-      const data = await response.json();
-      console.log(data);
+      // Verileri birleştir
+      const fixedData: JobFormValues = {
+        ...values,
+        html,
+        json,
+      };
 
-      if (!data.success) {
-        toast.error(data.message || "Bir hata oluştu. Lütfen tekrar deneyin.");
-        return;
+      // Yeni iş ilanı oluştur
+      const success = await createJob(fixedData);
+
+      if (success) {
+        // Başarılı olursa iş ilanları listesine yönlendir
+        navigate({ to: "/dashboard/job/list" });
       }
-
-      toast.success("İlan başarıyla oluşturuldu!");
-      navigate({ to: "/dashboard/" });
     } catch (error) {
-      toast.error("Bir hata oluştu. Lütfen tekrar deneyin.");
+      console.error("İş ilanı oluşturulurken hata:", error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   return (
     <>
-      <LoadingBlocker loading={false} label="İlan Oluşturuluyor..." />
+      <LoadingBlocker loading={isSubmitting} label="İlan Oluşturuluyor..." />
 
       <JobForm
-        initialData={undefined}
+        initialData={formData}
         submitLabel="İlanı Oluştur"
         onSubmit={(values: JobFormValues) => handleCreateForm(values)}
       />

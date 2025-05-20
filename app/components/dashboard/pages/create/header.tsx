@@ -3,11 +3,20 @@ import { ArrowLeft, FileText, PencilRuler } from "lucide-react";
 import { EditorRichMenu } from "../../tiptap/menu";
 import { useDashboard } from "../../store";
 import { twMerge } from "tailwind-merge";
+import { useTiptapContext } from "../../tiptap/store";
+import { useCreateJob } from "./store";
 
 export function CreateBlogHeader() {
   const { view, setView } = useDashboard();
+  const { editor } = useTiptapContext();
+  const { setEditorContent } = useCreateJob();
 
   const changeMode = (newMode: "form" | "editor") => {
+    // Editör içeriğini kaydet
+    if (newMode === "form" && editor) {
+      setEditorContent(editor.getHTML());
+    }
+
     setView({
       ...view,
       job: {

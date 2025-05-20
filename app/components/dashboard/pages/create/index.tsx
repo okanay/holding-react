@@ -2,22 +2,25 @@ import { Editor } from "../../tiptap";
 import { TiptapProvider } from "../../tiptap/store";
 import { DashboardProvider, useDashboard } from "../../store";
 import { CreateBlogHeader } from "./header";
-import DummyText from "../../tiptap/dummy";
 import { CreateNewJobAction } from "./action";
+import { CreateJobProvider, useCreateJob } from "./store";
 
 export const DashboardCreateNewJobPage = () => {
   return (
     <DashboardProvider>
-      <TiptapProvider initialContent={DummyText}>
-        <CreateBlogHeader />
-        <InnerElements />
-      </TiptapProvider>
+      <CreateJobProvider>
+        <TiptapProvider initialContent="">
+          <CreateBlogHeader />
+          <CreateJobContent />
+        </TiptapProvider>
+      </CreateJobProvider>
     </DashboardProvider>
   );
 };
 
-const InnerElements = () => {
+const CreateJobContent = () => {
   const { view } = useDashboard();
+  const { editorContent } = useCreateJob();
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -33,7 +36,7 @@ const InnerElements = () => {
           data-visible={view.job.create === "editor"}
           className="w-full transition-all duration-300 ease-in-out data-[visible=false]:invisible data-[visible=false]:absolute data-[visible=false]:opacity-0 data-[visible=true]:opacity-100"
         >
-          <Editor />
+          <Editor key={editorContent ? "loaded" : "loading"} />
         </div>
       </div>
     </div>
