@@ -1,4 +1,5 @@
 import { Loader2 } from "lucide-react";
+import { createPortal } from "react-dom";
 
 type LoadingProps = {
   loading: boolean;
@@ -6,10 +7,11 @@ type LoadingProps = {
 };
 
 export const LoadingBlocker = ({ loading, label }: LoadingProps) => {
-  return (
+  if (typeof window === "undefined") return null;
+  return createPortal(
     <div
       aria-disabled={loading}
-      className="pointer-events-none fixed inset-0 z-60 flex items-center justify-center bg-gray-950/10 opacity-0 backdrop-blur-sm aria-disabled:pointer-events-auto aria-disabled:opacity-100"
+      className="pointer-events-none fixed inset-0 z-[1000] flex items-center justify-center bg-gray-950/10 opacity-0 backdrop-blur-sm aria-disabled:pointer-events-auto aria-disabled:opacity-100"
     >
       {loading && (
         <div className="flex flex-col items-center">
@@ -19,6 +21,7 @@ export const LoadingBlocker = ({ loading, label }: LoadingProps) => {
           </span>
         </div>
       )}
-    </div>
+    </div>,
+    document.body,
   );
 };

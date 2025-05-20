@@ -4,12 +4,13 @@ import { DashboardProvider, useDashboard } from "../../store";
 import { CreateBlogHeader } from "./header";
 import { CreateNewJobAction } from "./action";
 import { CreateJobProvider, useCreateJob } from "./store";
+import dummy_tiptap_content from "../../tiptap/dummy";
 
 export const DashboardCreateNewJobPage = () => {
   return (
     <DashboardProvider>
       <CreateJobProvider>
-        <TiptapProvider initialContent="">
+        <TiptapProvider initialContent={dummy_tiptap_content}>
           <CreateBlogHeader />
           <CreateJobContent />
         </TiptapProvider>
