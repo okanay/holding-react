@@ -13,8 +13,8 @@ import {
   XCircle,
 } from "lucide-react";
 import React, { useState } from "react";
-import { Applicant } from "../../store";
 import { ApplicantFormView } from "./form-view";
+import { Applicant } from "./store";
 
 interface ApplicantRowProps {
   applicant: Applicant;

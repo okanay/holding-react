@@ -1,8 +1,7 @@
 import React from "react";
-import { Applicant } from "../../store";
 import { ApplicantRow } from "./table-row";
 import { SearchX, RefreshCw, Filter } from "lucide-react";
-import { useDashboard } from "../../store";
+import { Applicant, useDashboardApplicant } from "./store";
 
 interface TableProps {
   applicants: Applicant[];
@@ -26,7 +25,7 @@ export const ApplicantsTable: React.FC<TableProps> = ({ applicants }) => {
 
 export const EmptyState: React.FC = ({}) => {
   const { setApplicantsFilters, getApplicants, applicantsFilters } =
-    useDashboard();
+    useDashboardApplicant();
 
   const hasActiveFilters = () => {
     return (

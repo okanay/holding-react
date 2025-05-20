@@ -1,19 +1,23 @@
+import {
+  DashboardApplicantProvider,
+  useDashboardApplicant,
+} from "@/components/dashboard/pages/applicants/store";
 import { useEffect } from "react";
-import { DashboardProvider, useDashboard } from "../../store";
-import { ApplicantsTable } from "./table";
-import { Pagination } from "./pagination";
 import { Filter } from "./filter";
+import { Pagination } from "./pagination";
+import { ApplicantsTable } from "./table";
 
 export const DashboardApplicantsPage = () => {
   return (
-    <DashboardProvider>
+    <DashboardApplicantProvider>
       <ApplicantsPageContent />
-    </DashboardProvider>
+    </DashboardApplicantProvider>
   );
 };
 
 const ApplicantsPageContent = () => {
-  const { applicants, getApplicants, applicantsStatus } = useDashboard();
+  const { applicants, getApplicants, applicantsStatus } =
+    useDashboardApplicant();
 
   useEffect(() => {
     getApplicants();

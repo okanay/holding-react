@@ -1,6 +1,6 @@
 import React from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useDashboard } from "../../store";
+import { useDashboardApplicant } from "./store";
 
 interface Props {}
 
@@ -10,7 +10,7 @@ export const Pagination: React.FC<Props> = ({}) => {
     setApplicantsFilters,
     getApplicants,
     applicantsStatus,
-  } = useDashboard();
+  } = useDashboardApplicant();
 
   const handlePrevious = () => {
     if (applicantsPagination?.currentPage > 1) {

@@ -1,12 +1,12 @@
-import React, { useState } from "react";
 import {
-  Search,
   Calendar,
   Filter as FilterIcon,
-  X,
   RefreshCw,
+  Search,
+  X,
 } from "lucide-react";
-import { useDashboard } from "../../store";
+import React, { useState } from "react";
+import { useDashboardApplicant } from "./store";
 
 interface Props {}
 
@@ -16,7 +16,7 @@ export const Filter: React.FC<Props> = ({}) => {
     applicantsFilters,
     setApplicantsFilters,
     applicantsStatus,
-  } = useDashboard();
+  } = useDashboardApplicant();
 
   const [isOpen, setIsOpen] = useState(false);
 
