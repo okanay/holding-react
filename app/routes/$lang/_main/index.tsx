@@ -1,6 +1,5 @@
 import { Link } from "@/i18n/link";
 import { createFileRoute } from "@tanstack/react-router";
-import { Wrench } from "lucide-react";
 
 export const Route = createFileRoute("/$lang/_main/")({
   component: RouteComponent,
@@ -8,23 +7,26 @@ export const Route = createFileRoute("/$lang/_main/")({
 
 function RouteComponent() {
   return (
-    <div className="flex min-h-dvh flex-col items-center justify-center rounded-xl bg-gradient-to-br from-yellow-50 via-white to-blue-50 p-8 shadow-lg">
-      <div className="mb-6 flex items-center justify-center rounded-full bg-yellow-100 p-4 shadow-md">
-        <Wrench className="h-14 w-14 text-yellow-500" />
-      </div>
-      <h1 className="mb-3 text-center text-3xl font-extrabold tracking-tight text-gray-800">
-        Under Development
+    <div className="from-primary-50/40 via-primary-50 to-primary-700/40 flex min-h-[100dvh] flex-col items-center justify-center bg-gradient-to-br p-8">
+      {/* Title */}
+      <h1 className="text-primary-950 mb-3 text-center text-3xl font-extrabold tracking-tight">
+        Our Homepage is Under Construction
       </h1>
-      <p className="mb-4 max-w-md text-center text-lg text-gray-600">
-        This page is currently being built.
+      {/* Description */}
+      <p className="text-primary-900 mb-7 max-w-md text-center text-lg">
+        We're working to welcome you soon. Interested in joining us? See our job
+        postings.
         <br />
-        Please check back soon!
+        <span className="text-primary-500 text-sm">
+          (Bringing coffee is still allowed!)
+        </span>
       </p>
+      {/* Button */}
       <Link
         to="/jobs"
-        className="bg-primary text-color-primary rounded-md px-6 py-2 font-semibold shadow"
+        className="from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 focus-visible:ring-primary-400 rounded-lg bg-gradient-to-r px-7 py-3 text-base font-semibold text-white shadow-sm transition focus-visible:ring-2 focus-visible:outline-none"
       >
-        Go to Job page
+        Go to Job Postings
       </Link>
     </div>
   );
