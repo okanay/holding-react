@@ -15,10 +15,7 @@ const applicationSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
   phone: z.string().min(10, "Please enter a valid phone number"),
   currentLocation: z.string().optional(),
-  currentCompany: z
-    .string()
-    .min(2, "Company name must be at least 2 characters")
-    .optional(),
+  currentCompany: z.string().optional(),
   resumeUrl: z.string().min(1, "Please upload your resume"),
   linkedinUrl: z
     .string()
@@ -109,10 +106,7 @@ export const DefaultApplicationForm = ({ job }: { job: Job }) => {
 
       // Başarılı başvuru
       setSubmitSuccess(true);
-      toast.success("Başvurunuz başarıyla alındı", {
-        description:
-          "Başvurunuz için teşekkür ederiz. En kısa sürede değerlendirilecektir.",
-      });
+      // toast.success removed as per prompt
     } catch (error) {
       toast.error("Başvuru gönderilirken bir hata oluştu", {
         description:

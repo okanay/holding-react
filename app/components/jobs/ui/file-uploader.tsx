@@ -244,7 +244,6 @@ export const FileUploader: React.FC<FileUploaderProps> = ({
             {label}
             {isRequired && <span className="ml-1 text-red-500">*</span>}
           </label>
-          {error && <span className="text-xs text-red-500">{error}</span>}
         </div>
       )}
 
