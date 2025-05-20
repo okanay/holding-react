@@ -114,10 +114,10 @@ function LoginPage() {
 
   return (
     <AlreadyLoginCheck>
-      <main className="relative flex min-h-screen bg-gradient-to-br from-sky-50 to-zinc-100">
+      <main className="relative flex min-h-screen bg-white">
         {/* Sol Form Alanı */}
         <div
-          className={`z-20 order-1 flex min-h-screen w-full shrink-0 flex-col items-center justify-center gap-y-8 bg-gradient-to-br from-sky-50 via-zinc-50 to-rose-100 px-4 py-12 backdrop-blur-md transition-all duration-300 sm:px-6 md:mr-auto md:w-[512px] lg:px-4`}
+          className={`from-primary-50/40 via-primary-50 to-primary-700/40 z-20 order-1 flex min-h-screen w-full shrink-0 flex-col items-center justify-center gap-y-8 bg-gradient-to-br px-4 py-12 backdrop-blur-md transition-all duration-300 sm:px-6 md:mr-auto md:w-[512px] lg:px-4`}
         >
           <Link to="/">
             <img
@@ -128,9 +128,9 @@ function LoginPage() {
               height="40"
             />
           </Link>
-          <div className="w-full max-w-md bg-white">
+          <div className="border-cover relative w-full max-w-md overflow-hidden rounded-lg border bg-white">
             {/* Form Kartı */}
-            <div className="border-cover overflow-hidden rounded-sm border ring-1 ring-zinc-100">
+            <div className="">
               {/* Hata Mesajı */}
               {state.errorMessage && (
                 <div className="border-l-4 border-red-400 bg-red-50/80 px-5 py-3 text-sm text-red-700">
@@ -245,10 +245,10 @@ function LoginPage() {
         </div>
         {/* Sağ Manzara Alanı (Sadece md ve üzeri ekranlarda görünür) */}
         <div
-          className={`order-2 hidden bg-zinc-900/20 md:static md:flex md:w-full`}
+          className={`from-primary-50/40 via-primary-50 to-primary-700/40 order-2 hidden bg-gradient-to-br md:static md:flex md:w-full`}
         >
           <img
-            src="https://images.pexels.com/photos/3182773/pexels-photo-3182773.jpeg?cs=srgb&dl=pexels-fauxels-3182773.jpg&fm=jpg"
+            src="https://assets.hoi.com.tr/login-min.png"
             alt="Manzara"
             className="h-full w-full object-cover object-center opacity-80"
             loading="lazy"
