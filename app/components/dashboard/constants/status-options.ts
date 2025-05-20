@@ -1,5 +1,5 @@
 declare global {
-  type JobStatus = "published" | "draft" | "archived" | "deleted";
+  type JobStatus = "draft" | "published" | "closed" | "deleted";
 }
 
 export const STATUS_OPTIONS = [
@@ -24,13 +24,13 @@ export const STATUS_OPTIONS = [
     },
   },
   {
-    value: "archived",
-    actionLabel: "Arşivle",
-    statusLabel: "Arşivlendi",
-    buttonLabel: "Arşiv Olarak Beklet",
+    value: "closed",
+    actionLabel: "Kapat",
+    statusLabel: "Kapatıldı",
+    buttonLabel: "İlanı Kapat",
     config: {
-      label: "Arşivlenmiş",
-      color: "text-purple-600 bg-purple-50 border-purple-200",
+      label: "Kapalı",
+      color: "text-gray-600 bg-gray-50 border-gray-200",
     },
   },
 ];

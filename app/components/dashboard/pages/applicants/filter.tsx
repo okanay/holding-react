@@ -89,14 +89,14 @@ export const Filter: React.FC<Props> = ({}) => {
   ).length;
 
   return (
-    <div className="mt-10 mb-6 sm:mt-0">
+    <div className="mb-6">
       {/* Hızlı Arama ve Filtre Açma Butonu */}
       <div className="mb-4 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex w-full flex-col gap-2 sm:flex-row sm:items-center">
           <button
             type="button"
             onClick={() => setIsOpen(!isOpen)}
-            className={`inline-flex h-10 items-center gap-1 rounded-md border px-2 py-1 text-xs font-medium ${
+            className={`inline-flex h-10 w-fit items-center gap-1 rounded-md border px-2 py-1 text-xs font-medium ${
               activeFilterCount > 0
                 ? "border-blue-200 bg-blue-50 text-blue-700"
                 : "border-zinc-200 bg-white text-zinc-700 hover:bg-zinc-50"

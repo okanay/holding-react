@@ -1,10 +1,7 @@
-import {
-  FormInput,
-  FormMultiSelect,
-  FormSingleSelect,
-  FormTextarea,
-  SlugCreator,
-} from "./ui";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader } from "lucide-react";
+import { Controller, useForm } from "react-hook-form";
+import { toast } from "sonner";
 import {
   CATEGORY_OPTIONS,
   EMPLOYMENT_TYPE_OPTIONS,
@@ -13,17 +10,18 @@ import {
   STATUS_OPTIONS,
   WORK_MODE_OPTIONS,
 } from "./config";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Controller, useForm } from "react-hook-form";
-import { ModalDatePicker } from "./ui/date-picker";
-import { toast } from "sonner";
 import { extractErrorMessages } from "./helper";
-import { JobFormSchema } from "./validation";
-import { ImageUploader } from "@/components/ui/image-upload";
-import { useState } from "react";
+import {
+  FormInput,
+  FormMultiSelect,
+  FormSingleSelect,
+  FormTextarea,
+  SlugCreator,
+} from "./ui";
+import { ModalDatePicker } from "./ui/date-picker";
 import FormImageUploader from "./ui/image-upload";
 import { FormStatusPicker } from "./ui/status-picker";
-import { Loader } from "lucide-react";
+import { JobFormSchema } from "./validation";
 
 interface JobFormProps {
   initialData?: Partial<JobFormValues>;

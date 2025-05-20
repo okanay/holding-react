@@ -1,31 +1,30 @@
-// app/components/dashboard/layout/aside.tsx
 import { Link } from "@/i18n/link";
-import { ClipboardPen, Home, NotepadText } from "lucide-react";
 import { useDashboardLayout } from "./provider";
+import { List, LayoutDashboard, PlusSquare, Users } from "lucide-react";
 
 export const DashboardAside = () => {
-  const { isPanelExpanded, togglePanel } = useDashboardLayout();
+  const { isPanelExpanded } = useDashboardLayout();
 
   const menuItems = [
     {
-      name: "Editör Paneli",
+      name: "Panel",
       href: "/dashboard",
-      icon: Home,
+      icon: LayoutDashboard,
     },
     {
-      name: "Yeni İş Oluştur",
+      name: "Yeni İş",
       href: "/dashboard/job/create",
-      icon: ClipboardPen,
+      icon: PlusSquare,
     },
     {
-      name: "İş İlanları",
+      name: "İlanlar",
       href: "/dashboard/job/list",
-      icon: ClipboardPen,
+      icon: List,
     },
     {
       name: "Başvurular",
       href: "/dashboard/applicants",
-      icon: NotepadText,
+      icon: Users,
     },
   ];
 

@@ -8,5 +8,18 @@ export const Route = createFileRoute("/$lang/_auth/dashboard/job/edit/$id")({
       lang,
     };
   },
+  head: ({ loaderData: { lang } }) => {
+    return {
+      meta: [
+        {
+          title: "İş İlanını Düzenle | Dashboard",
+        },
+        {
+          name: "description",
+          content: "İş ilanınızı düzenleyin ve güncelleyin.",
+        },
+      ],
+    };
+  },
   component: DashboardEditJobPage,
 });

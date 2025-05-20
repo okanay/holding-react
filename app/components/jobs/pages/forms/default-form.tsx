@@ -17,7 +17,8 @@ const applicationSchema = z.object({
   currentLocation: z.string().optional(),
   currentCompany: z
     .string()
-    .min(2, "Company name must be at least 2 characters"),
+    .min(2, "Company name must be at least 2 characters")
+    .optional(),
   resumeUrl: z.string().min(1, "Please upload your resume"),
   linkedinUrl: z
     .string()
@@ -265,7 +266,6 @@ export const DefaultApplicationForm = ({ job }: { job: Job }) => {
                       <FormInput
                         id="currentCompany"
                         label="Current Company"
-                        isRequired={true}
                         placeholder="Your current company"
                         error={errors.currentCompany?.message}
                         {...field}

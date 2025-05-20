@@ -1,10 +1,11 @@
+// app/components/dashboard/pages/list/pagination.tsx
 import React from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useDashboardJob } from "./store";
 
 interface Props {}
 
-export const Pagination: React.FC<Props> = ({}) => {
+export const Pagination: React.FC<Props> = () => {
   const { jobsPagination, setJobsFilters, getJobs, jobsStatus } =
     useDashboardJob();
 
@@ -101,9 +102,9 @@ export const Pagination: React.FC<Props> = ({}) => {
 
   return (
     <div className="mt-6 flex flex-col justify-between gap-3 md:flex-row md:items-center">
-      {/* Toplam Başvuran ve Sayfa Bilgisi */}
+      {/* Toplam İlan ve Sayfa Bilgisi */}
       <div className="text-sm text-zinc-500">
-        {jobsPagination.totalItems} başvuran arasından{" "}
+        {jobsPagination.totalItems} iş ilanı arasından{" "}
         {(jobsPagination.currentPage - 1) * jobsPagination.pageSize + 1}-
         {Math.min(
           jobsPagination.currentPage * jobsPagination.pageSize,

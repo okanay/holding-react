@@ -9,7 +9,7 @@ export const JobSlugPage = () => {
   };
 
   return (
-    <article className="prose mx-auto max-w-3xl py-8">
+    <article className="prose mx-auto max-w-3xl px-4 py-8">
       <RenderJSON json={JSON.parse(data.details.json) || {}} />
     </article>
   );

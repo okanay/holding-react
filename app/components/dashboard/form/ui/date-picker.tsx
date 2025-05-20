@@ -1,6 +1,6 @@
 import React from "react";
 import { format } from "date-fns";
-import { CalendarDays, ChevronLeft, ChevronRight } from "lucide-react";
+import { CalendarDays, ChevronLeft, ChevronRight, X } from "lucide-react";
 import { createPortal } from "react-dom";
 import { twMerge } from "tailwind-merge";
 import { DayPicker } from "react-day-picker";
@@ -26,7 +26,7 @@ function Calendar({
         caption_label: "text-base font-semibold text-zinc-800",
         nav: "flex items-center gap-2",
         nav_button:
-          "h-8 w-8 bg-zinc-100 hover:bg-primary-100 transition-colors duration-150 p-0 rounded border border-zinc-200 shadow-sm focus:outline-none",
+          "h-8 w-8 bg-zinc-100 hover:bg-primary-100 transition-colors duration-150 p-0 rounded border border-zinc-200 focus:outline-none",
         nav_button_previous: "absolute left-2 flex items-center justify-center",
         nav_button_next: "absolute right-2 flex items-center justify-center",
         table: "w-full border-collapse",
@@ -118,10 +118,27 @@ export const ModalDatePicker: React.FC<ModalDatePickerProps> = ({
   // Modal içeriği
   const modalContent = (
     <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/30 transition-all">
+      {/* Modal kutusu */}
       <div
         ref={modalRef}
-        className="animate-in fade-in-0 zoom-in-95 w-full max-w-xs rounded-lg border border-zinc-100 bg-white p-6 shadow-2xl transition-all duration-200"
+        className={twMerge(
+          "w-full max-w-xs overflow-hidden rounded-xl border border-zinc-200 bg-white transition-all duration-200",
+          "flex flex-col",
+        )}
       >
+        <div className="border-cover flex items-center justify-between border-b bg-zinc-100 px-6 pt-6 pb-4">
+          <span className="text-base font-semibold text-zinc-800">
+            Tarih Seç
+          </span>
+          <button
+            type="button"
+            aria-label="Kapat"
+            className="rounded p-1 transition-colors hover:bg-zinc-100"
+            onClick={() => setOpen(false)}
+          >
+            <X className="h-5 w-5 text-zinc-400" />
+          </button>
+        </div>
         <Calendar
           mode="single"
           selected={value ?? undefined}
@@ -167,7 +184,7 @@ export const ModalDatePicker: React.FC<ModalDatePickerProps> = ({
           className={twMerge(
             "w-full rounded-md bg-transparent py-2 text-left outline-none",
             leftIcon ? "pl-10" : "pl-3",
-            rightIcon ? "pr-10" : "pr-3",
+            rightIcon || value ? "pr-10" : "pr-3",
           )}
           onClick={() => setOpen(true)}
         >
@@ -176,8 +193,25 @@ export const ModalDatePicker: React.FC<ModalDatePickerProps> = ({
           </span>
         </button>
 
+        {/* Sağ ikon */}
         {rightIcon && (
           <div className="absolute right-3 text-zinc-400">{rightIcon}</div>
+        )}
+
+        {/* Kaldır butonu */}
+        {value && (
+          <button
+            type="button"
+            aria-label="Tarihi kaldır"
+            className={twMerge(
+              "absolute right-3 flex items-center justify-center rounded p-1 transition-colors hover:bg-zinc-100",
+              rightIcon && "right-10",
+            )}
+            onClick={() => onChange(null)}
+            tabIndex={0}
+          >
+            <X className="h-4 w-4 text-zinc-400" />
+          </button>
         )}
       </div>
 

@@ -57,7 +57,7 @@ export const JobSlugHeader = () => {
     <nav className="bg-zinc-100 px-4">
       <div className="mx-auto flex max-w-3xl items-start justify-between gap-8 py-8">
         <div className="flex flex-col gap-6">
-          <h1 className="text-3xl font-semibold tracking-tight text-zinc-700">
+          <h1 className="line-clamp-2 text-2xl font-semibold tracking-tight text-zinc-700 sm:text-3xl">
             {data.details.title}
           </h1>
 
@@ -68,7 +68,7 @@ export const JobSlugHeader = () => {
                 <span className="font-medium">{location}</span>
               </div>
             )}
-            <div className="flex items-center gap-2 rounded-sm bg-zinc-100 px-3 py-1">
+            <div className="flex flex-wrap items-center gap-2 rounded-sm bg-zinc-100 py-1">
               {/* Combine the labels into an array, filter out falsy values (including void), and join with slashes */}
               {[categoryLabelEn, employmentTypeLabelEn, workModeLabelEn]
                 .filter((label): label is string => Boolean(label))
@@ -99,7 +99,7 @@ const JobActionButton: React.FC<{ data: Job }> = ({ data }) => {
     return (
       <Link
         to={`/jobs/${data.slug}`}
-        className="flex h-11 items-center justify-center rounded bg-zinc-200 px-4 text-sm font-semibold text-zinc-700 uppercase"
+        className="flex h-11 items-center justify-center rounded bg-zinc-200 px-4 text-sm font-semibold text-nowrap text-zinc-700 uppercase"
       >
         Job Details
       </Link>
@@ -109,7 +109,7 @@ const JobActionButton: React.FC<{ data: Job }> = ({ data }) => {
   return (
     <Link
       to={`/jobs/${data.slug}/apply`}
-      className="bg-primary flex h-11 items-center justify-center rounded px-4 text-sm font-semibold text-white uppercase"
+      className="bg-primary flex h-11 items-center justify-center rounded px-4 text-sm font-semibold text-nowrap text-white uppercase"
     >
       Apply Now
     </Link>

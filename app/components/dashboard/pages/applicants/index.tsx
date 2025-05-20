@@ -26,7 +26,7 @@ const ApplicantsPageContent = () => {
   if (applicantsStatus !== "success") return;
 
   return (
-    <div className="container mx-auto px-4 py-6">
+    <div className="container mx-auto mt-20 px-4 sm:mt-0">
       <Filter />
       <ApplicantsTable applicants={applicants} />
       <Pagination />
