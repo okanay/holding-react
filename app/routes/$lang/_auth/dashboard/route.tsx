@@ -1,5 +1,5 @@
-import { DashboardLayout } from "@/components/dashboard/layout/layout";
-import { DashboardProvider } from "@/components/dashboard/store";
+import { DashboardLayout } from "@/components/pages/dashboard/layout/layout";
+import { DashboardProvider } from "@/components/pages/dashboard/store";
 import { seoTranslations } from "@/i18n/languages";
 import { ProtectedRoute } from "@/providers/auth/session-control";
 import { createFileRoute, Outlet } from "@tanstack/react-router";

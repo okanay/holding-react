@@ -2,7 +2,7 @@ import {
   CATEGORY_OPTIONS,
   EMPLOYMENT_TYPE_OPTIONS,
   WORK_MODE_OPTIONS,
-} from "@/components/dashboard/form/config";
+} from "@/components/pages/dashboard/form/config";
 import { Link } from "@/i18n/link";
 import { Route } from "@/routes/$lang/_main/jobs/$slug/route";
 import { useMatches } from "@tanstack/react-router";

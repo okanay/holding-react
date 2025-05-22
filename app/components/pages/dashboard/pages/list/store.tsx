@@ -2,7 +2,6 @@
 import { createContext, PropsWithChildren, useContext, useState } from "react";
 import { createStore, StoreApi, useStore } from "zustand";
 import { immer } from "zustand/middleware/immer";
-import { toast } from "sonner";
 
 // Durum tipleri
 export type FetchStatus = "idle" | "loading" | "success" | "error";

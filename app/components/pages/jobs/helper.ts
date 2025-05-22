@@ -2,7 +2,7 @@ import {
   WORK_MODE_OPTIONS,
   EMPLOYMENT_TYPE_OPTIONS,
   CATEGORY_OPTIONS,
-} from "@/components/dashboard/form/config";
+} from "@/components/pages/dashboard/form/config";
 
 // Helper: İngilizce label'ı döndürür
 export function getLabelEnFromDictionary(

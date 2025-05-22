@@ -2,13 +2,6 @@ import { useEffect, useRef, RefObject } from "react";
 
 type Handler = (event: MouseEvent | TouchEvent) => void;
 
-/**
- * Bir element dışında tıklama algılamak için hook
- * @param handler Dış tıklama olayında çağrılacak fonksiyon
- * @param active Hook'un aktif olup olmadığı
- * @param excludeRefs Dikkate alınmayacak referanslar (bu elemanlar dışarıda sayılmaz)
- * @returns Element referansı
- */
 function useClickOutside<T extends HTMLElement = HTMLElement>(
   handler: Handler,
   active: boolean = true,

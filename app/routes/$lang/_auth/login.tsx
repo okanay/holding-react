@@ -120,7 +120,7 @@ function LoginPage() {
         >
           <Link to="/">
             <img
-              src="/images/brand.svg"
+              src="/images/brand/dark.svg"
               alt="Holding Sitesi Logo"
               className="h-10 w-auto drop-shadow-lg"
               width="120"

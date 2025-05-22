@@ -1,4 +1,4 @@
-import { JobSlugHeader } from "@/components/jobs/pages/headers";
+import { JobSlugHeader } from "@/components/pages/jobs/pages/headers";
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/$lang/_main/jobs/$slug")({

@@ -14,13 +14,13 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as LangNotFoundImport } from './routes/$lang/not-found'
-import { Route as LangMainRouteImport } from './routes/$lang/_main/route'
 import { Route as LangAuthRouteImport } from './routes/$lang/_auth/route'
-import { Route as LangMainIndexImport } from './routes/$lang/_main/index'
 import { Route as LangAuthLoginImport } from './routes/$lang/_auth/login'
 import { Route as LangMainJobsRouteImport } from './routes/$lang/_main/jobs/route'
+import { Route as LangMainStatikRouteImport } from './routes/$lang/_main/_statik/route'
 import { Route as LangAuthDashboardRouteImport } from './routes/$lang/_auth/dashboard/route'
 import { Route as LangMainJobsIndexImport } from './routes/$lang/_main/jobs/index'
+import { Route as LangMainStatikIndexImport } from './routes/$lang/_main/_statik/index'
 import { Route as LangAuthDashboardIndexImport } from './routes/$lang/_auth/dashboard/index'
 import { Route as LangAuthDashboardApplicantsImport } from './routes/$lang/_auth/dashboard/applicants'
 import { Route as LangMainJobsSlugRouteImport } from './routes/$lang/_main/jobs/$slug/route'
@@ -48,20 +48,9 @@ const LangNotFoundRoute = LangNotFoundImport.update({
   getParentRoute: () => LangRoute,
 } as any)
 
-const LangMainRouteRoute = LangMainRouteImport.update({
-  id: '/_main',
-  getParentRoute: () => LangRoute,
-} as any)
-
 const LangAuthRouteRoute = LangAuthRouteImport.update({
   id: '/_auth',
   getParentRoute: () => LangRoute,
-} as any)
-
-const LangMainIndexRoute = LangMainIndexImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => LangMainRouteRoute,
 } as any)
 
 const LangAuthLoginRoute = LangAuthLoginImport.update({
@@ -71,9 +60,14 @@ const LangAuthLoginRoute = LangAuthLoginImport.update({
 } as any)
 
 const LangMainJobsRouteRoute = LangMainJobsRouteImport.update({
-  id: '/jobs',
+  id: '/_main/jobs',
   path: '/jobs',
-  getParentRoute: () => LangMainRouteRoute,
+  getParentRoute: () => LangRoute,
+} as any)
+
+const LangMainStatikRouteRoute = LangMainStatikRouteImport.update({
+  id: '/_main/_statik',
+  getParentRoute: () => LangRoute,
 } as any)
 
 const LangAuthDashboardRouteRoute = LangAuthDashboardRouteImport.update({
@@ -86,6 +80,12 @@ const LangMainJobsIndexRoute = LangMainJobsIndexImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => LangMainJobsRouteRoute,
+} as any)
+
+const LangMainStatikIndexRoute = LangMainStatikIndexImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => LangMainStatikRouteRoute,
 } as any)
 
 const LangAuthDashboardIndexRoute = LangAuthDashboardIndexImport.update({
@@ -161,13 +161,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LangAuthRouteImport
       parentRoute: typeof LangRoute
     }
-    '/$lang/_main': {
-      id: '/$lang/_main'
-      path: ''
-      fullPath: '/$lang'
-      preLoaderRoute: typeof LangMainRouteImport
-      parentRoute: typeof LangImport
-    }
     '/$lang/not-found': {
       id: '/$lang/not-found'
       path: '/not-found'
@@ -182,12 +175,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LangAuthDashboardRouteImport
       parentRoute: typeof LangAuthRouteImport
     }
+    '/$lang/_main/_statik': {
+      id: '/$lang/_main/_statik'
+      path: ''
+      fullPath: '/$lang'
+      preLoaderRoute: typeof LangMainStatikRouteImport
+      parentRoute: typeof LangImport
+    }
     '/$lang/_main/jobs': {
       id: '/$lang/_main/jobs'
       path: '/jobs'
       fullPath: '/$lang/jobs'
       preLoaderRoute: typeof LangMainJobsRouteImport
-      parentRoute: typeof LangMainRouteImport
+      parentRoute: typeof LangImport
     }
     '/$lang/_auth/login': {
       id: '/$lang/_auth/login'
@@ -195,13 +195,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/$lang/login'
       preLoaderRoute: typeof LangAuthLoginImport
       parentRoute: typeof LangAuthRouteImport
-    }
-    '/$lang/_main/': {
-      id: '/$lang/_main/'
-      path: '/'
-      fullPath: '/$lang/'
-      preLoaderRoute: typeof LangMainIndexImport
-      parentRoute: typeof LangMainRouteImport
     }
     '/$lang/_main/jobs/$slug': {
       id: '/$lang/_main/jobs/$slug'
@@ -223,6 +216,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/$lang/dashboard/'
       preLoaderRoute: typeof LangAuthDashboardIndexImport
       parentRoute: typeof LangAuthDashboardRouteImport
+    }
+    '/$lang/_main/_statik/': {
+      id: '/$lang/_main/_statik/'
+      path: '/'
+      fullPath: '/$lang/'
+      preLoaderRoute: typeof LangMainStatikIndexImport
+      parentRoute: typeof LangMainStatikRouteImport
     }
     '/$lang/_main/jobs/': {
       id: '/$lang/_main/jobs/'
@@ -307,6 +307,17 @@ const LangAuthRouteRouteWithChildren = LangAuthRouteRoute._addFileChildren(
   LangAuthRouteRouteChildren,
 )
 
+interface LangMainStatikRouteRouteChildren {
+  LangMainStatikIndexRoute: typeof LangMainStatikIndexRoute
+}
+
+const LangMainStatikRouteRouteChildren: LangMainStatikRouteRouteChildren = {
+  LangMainStatikIndexRoute: LangMainStatikIndexRoute,
+}
+
+const LangMainStatikRouteRouteWithChildren =
+  LangMainStatikRouteRoute._addFileChildren(LangMainStatikRouteRouteChildren)
+
 interface LangMainJobsSlugRouteRouteChildren {
   LangMainJobsSlugIndexRoute: typeof LangMainJobsSlugIndexRoute
   LangMainJobsSlugApplyIndexRoute: typeof LangMainJobsSlugApplyIndexRoute
@@ -335,44 +346,32 @@ const LangMainJobsRouteRouteChildren: LangMainJobsRouteRouteChildren = {
 const LangMainJobsRouteRouteWithChildren =
   LangMainJobsRouteRoute._addFileChildren(LangMainJobsRouteRouteChildren)
 
-interface LangMainRouteRouteChildren {
-  LangMainJobsRouteRoute: typeof LangMainJobsRouteRouteWithChildren
-  LangMainIndexRoute: typeof LangMainIndexRoute
-}
-
-const LangMainRouteRouteChildren: LangMainRouteRouteChildren = {
-  LangMainJobsRouteRoute: LangMainJobsRouteRouteWithChildren,
-  LangMainIndexRoute: LangMainIndexRoute,
-}
-
-const LangMainRouteRouteWithChildren = LangMainRouteRoute._addFileChildren(
-  LangMainRouteRouteChildren,
-)
-
 interface LangRouteChildren {
   LangAuthRouteRoute: typeof LangAuthRouteRouteWithChildren
-  LangMainRouteRoute: typeof LangMainRouteRouteWithChildren
   LangNotFoundRoute: typeof LangNotFoundRoute
+  LangMainStatikRouteRoute: typeof LangMainStatikRouteRouteWithChildren
+  LangMainJobsRouteRoute: typeof LangMainJobsRouteRouteWithChildren
 }
 
 const LangRouteChildren: LangRouteChildren = {
   LangAuthRouteRoute: LangAuthRouteRouteWithChildren,
-  LangMainRouteRoute: LangMainRouteRouteWithChildren,
   LangNotFoundRoute: LangNotFoundRoute,
+  LangMainStatikRouteRoute: LangMainStatikRouteRouteWithChildren,
+  LangMainJobsRouteRoute: LangMainJobsRouteRouteWithChildren,
 }
 
 const LangRouteWithChildren = LangRoute._addFileChildren(LangRouteChildren)
 
 export interface FileRoutesByFullPath {
-  '/$lang': typeof LangMainRouteRouteWithChildren
+  '/$lang': typeof LangMainStatikRouteRouteWithChildren
   '/$lang/not-found': typeof LangNotFoundRoute
   '/$lang/dashboard': typeof LangAuthDashboardRouteRouteWithChildren
   '/$lang/jobs': typeof LangMainJobsRouteRouteWithChildren
   '/$lang/login': typeof LangAuthLoginRoute
-  '/$lang/': typeof LangMainIndexRoute
   '/$lang/jobs/$slug': typeof LangMainJobsSlugRouteRouteWithChildren
   '/$lang/dashboard/applicants': typeof LangAuthDashboardApplicantsRoute
   '/$lang/dashboard/': typeof LangAuthDashboardIndexRoute
+  '/$lang/': typeof LangMainStatikIndexRoute
   '/$lang/jobs/': typeof LangMainJobsIndexRoute
   '/$lang/dashboard/job/create': typeof LangAuthDashboardJobCreateRoute
   '/$lang/dashboard/job/list': typeof LangAuthDashboardJobListRoute
@@ -382,7 +381,7 @@ export interface FileRoutesByFullPath {
 }
 
 export interface FileRoutesByTo {
-  '/$lang': typeof LangMainIndexRoute
+  '/$lang': typeof LangMainStatikIndexRoute
   '/$lang/not-found': typeof LangNotFoundRoute
   '/$lang/login': typeof LangAuthLoginRoute
   '/$lang/dashboard/applicants': typeof LangAuthDashboardApplicantsRoute
@@ -399,15 +398,15 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/$lang': typeof LangRouteWithChildren
   '/$lang/_auth': typeof LangAuthRouteRouteWithChildren
-  '/$lang/_main': typeof LangMainRouteRouteWithChildren
   '/$lang/not-found': typeof LangNotFoundRoute
   '/$lang/_auth/dashboard': typeof LangAuthDashboardRouteRouteWithChildren
+  '/$lang/_main/_statik': typeof LangMainStatikRouteRouteWithChildren
   '/$lang/_main/jobs': typeof LangMainJobsRouteRouteWithChildren
   '/$lang/_auth/login': typeof LangAuthLoginRoute
-  '/$lang/_main/': typeof LangMainIndexRoute
   '/$lang/_main/jobs/$slug': typeof LangMainJobsSlugRouteRouteWithChildren
   '/$lang/_auth/dashboard/applicants': typeof LangAuthDashboardApplicantsRoute
   '/$lang/_auth/dashboard/': typeof LangAuthDashboardIndexRoute
+  '/$lang/_main/_statik/': typeof LangMainStatikIndexRoute
   '/$lang/_main/jobs/': typeof LangMainJobsIndexRoute
   '/$lang/_auth/dashboard/job/create': typeof LangAuthDashboardJobCreateRoute
   '/$lang/_auth/dashboard/job/list': typeof LangAuthDashboardJobListRoute
@@ -424,10 +423,10 @@ export interface FileRouteTypes {
     | '/$lang/dashboard'
     | '/$lang/jobs'
     | '/$lang/login'
-    | '/$lang/'
     | '/$lang/jobs/$slug'
     | '/$lang/dashboard/applicants'
     | '/$lang/dashboard/'
+    | '/$lang/'
     | '/$lang/jobs/'
     | '/$lang/dashboard/job/create'
     | '/$lang/dashboard/job/list'
@@ -451,15 +450,15 @@ export interface FileRouteTypes {
     | '__root__'
     | '/$lang'
     | '/$lang/_auth'
-    | '/$lang/_main'
     | '/$lang/not-found'
     | '/$lang/_auth/dashboard'
+    | '/$lang/_main/_statik'
     | '/$lang/_main/jobs'
     | '/$lang/_auth/login'
-    | '/$lang/_main/'
     | '/$lang/_main/jobs/$slug'
     | '/$lang/_auth/dashboard/applicants'
     | '/$lang/_auth/dashboard/'
+    | '/$lang/_main/_statik/'
     | '/$lang/_main/jobs/'
     | '/$lang/_auth/dashboard/job/create'
     | '/$lang/_auth/dashboard/job/list'
@@ -494,8 +493,9 @@ export const routeTree = rootRoute
       "filePath": "$lang/_auth",
       "children": [
         "/$lang/_auth",
-        "/$lang/_main",
-        "/$lang/not-found"
+        "/$lang/not-found",
+        "/$lang/_main/_statik",
+        "/$lang/_main/jobs"
       ]
     },
     "/$lang/_auth": {
@@ -504,14 +504,6 @@ export const routeTree = rootRoute
       "children": [
         "/$lang/_auth/dashboard",
         "/$lang/_auth/login"
-      ]
-    },
-    "/$lang/_main": {
-      "filePath": "$lang/_main/route.tsx",
-      "parent": "/$lang",
-      "children": [
-        "/$lang/_main/jobs",
-        "/$lang/_main/"
       ]
     },
     "/$lang/not-found": {
@@ -529,9 +521,16 @@ export const routeTree = rootRoute
         "/$lang/_auth/dashboard/job/edit/$id"
       ]
     },
+    "/$lang/_main/_statik": {
+      "filePath": "$lang/_main/_statik/route.tsx",
+      "parent": "/$lang",
+      "children": [
+        "/$lang/_main/_statik/"
+      ]
+    },
     "/$lang/_main/jobs": {
       "filePath": "$lang/_main/jobs/route.tsx",
-      "parent": "/$lang/_main",
+      "parent": "/$lang",
       "children": [
         "/$lang/_main/jobs/$slug",
         "/$lang/_main/jobs/"
@@ -540,10 +539,6 @@ export const routeTree = rootRoute
     "/$lang/_auth/login": {
       "filePath": "$lang/_auth/login.tsx",
       "parent": "/$lang/_auth"
-    },
-    "/$lang/_main/": {
-      "filePath": "$lang/_main/index.tsx",
-      "parent": "/$lang/_main"
     },
     "/$lang/_main/jobs/$slug": {
       "filePath": "$lang/_main/jobs/$slug/route.tsx",
@@ -560,6 +555,10 @@ export const routeTree = rootRoute
     "/$lang/_auth/dashboard/": {
       "filePath": "$lang/_auth/dashboard/index.tsx",
       "parent": "/$lang/_auth/dashboard"
+    },
+    "/$lang/_main/_statik/": {
+      "filePath": "$lang/_main/_statik/index.tsx",
+      "parent": "/$lang/_main/_statik"
     },
     "/$lang/_main/jobs/": {
       "filePath": "$lang/_main/jobs/index.tsx",

@@ -1,4 +1,4 @@
-import { DashboardCreateNewJobPage } from "@/components/dashboard/pages/create";
+import { DashboardCreateNewJobPage } from "@/components/pages/dashboard/pages/create";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/$lang/_auth/dashboard/job/create")({

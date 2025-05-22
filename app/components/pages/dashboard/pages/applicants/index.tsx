@@ -1,7 +1,7 @@
 import {
   DashboardApplicantProvider,
   useDashboardApplicant,
-} from "@/components/dashboard/pages/applicants/store";
+} from "@/components/pages/dashboard/pages/applicants/store";
 import { useEffect } from "react";
 import { Filter } from "./filter";
 import { Pagination } from "./pagination";

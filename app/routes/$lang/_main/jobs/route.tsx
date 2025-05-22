@@ -1,5 +1,5 @@
-import { JobFooter } from "@/components/jobs/pages/footers";
-import { JobHeader } from "@/components/jobs/pages/headers";
+import { JobFooter } from "@/components/pages/jobs/pages/footers";
+import { JobHeader } from "@/components/pages/jobs/pages/headers";
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/$lang/_main/jobs")({

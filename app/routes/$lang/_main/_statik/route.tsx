@@ -1,7 +1,9 @@
+import { RootFooter } from "@/components/footer";
+import { RootHeader } from "@/components/header";
 import { seoTranslations } from "@/i18n/languages";
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/$lang/_main")({
+export const Route = createFileRoute("/$lang/_main/_statik")({
   loader: async ({ params: { lang } }) => {
     return { lang };
   },
@@ -26,7 +28,9 @@ export const Route = createFileRoute("/$lang/_main")({
 function RouteComponent() {
   return (
     <>
+      <RootHeader />
       <Outlet />
+      <RootFooter />
     </>
   );
 }

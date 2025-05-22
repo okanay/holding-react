@@ -1,5 +1,5 @@
 // app/routes/$lang/_auth/dashboard/job.list.tsx
-import { DashboardJobsListPage } from "@/components/dashboard/pages/list";
+import { DashboardJobsListPage } from "@/components/pages/dashboard/pages/list";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/$lang/_auth/dashboard/job/list")({

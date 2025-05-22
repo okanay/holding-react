@@ -3,11 +3,11 @@ import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { toast } from "sonner";
-import { extractErrorMessages } from "@/components/dashboard/form/helper";
-import { FormInput, FormTextarea } from "@/components/dashboard/form/ui";
+import { extractErrorMessages } from "@/components/pages/dashboard/form/helper";
+import { FormInput, FormTextarea } from "@/components/pages/dashboard/form/ui";
 import { Check, Loader, Send } from "lucide-react";
 import { FileUploader } from "../../ui/file-uploader";
-import { PhoneInput } from "@/components/dashboard/form/ui/phone-input";
+import { PhoneInput } from "@/components/pages/dashboard/form/ui/phone-input";
 
 // Form veri tipi
 const applicationSchema = z.object({

@@ -14,7 +14,7 @@ import {
   WORK_MODE_OPTIONS,
   EMPLOYMENT_TYPE_OPTIONS,
   CATEGORY_OPTIONS,
-} from "@/components/dashboard/form/config";
+} from "@/components/pages/dashboard/form/config";
 import { getLabelEnFromDictionary } from "../helper";
 
 export const JobCard = ({ job }: { job: Job }) => {

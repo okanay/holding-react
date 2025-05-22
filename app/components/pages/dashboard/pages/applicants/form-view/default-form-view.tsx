@@ -11,11 +11,11 @@ import {
   User,
   Building,
 } from "lucide-react";
-import { FormSingleSelect } from "@/components/dashboard/form/ui";
+import { FormSingleSelect } from "@/components/pages/dashboard/form/ui";
 import {
   Applicant,
   useDashboardApplicant,
-} from "@/components/dashboard/pages/applicants/store";
+} from "@/components/pages/dashboard/pages/applicants/store";
 
 interface DefaultFormViewProps {
   applicant: Applicant;

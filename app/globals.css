@@ -64,6 +64,15 @@
     cursor: pointer;
   }
 
+  .scrollbar-x-hidden {
+    overflow-x: auto;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+  }
+  .scrollbar-x-hidden::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+
   * {
     @apply font-custom-sans appearance-none focus:outline-none;
   }

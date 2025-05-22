@@ -1,6 +1,6 @@
 import React from "react";
 import { DefaultFormView } from "./default-form-view";
-import { Applicant } from "@/components/dashboard/pages/applicants/store";
+import { Applicant } from "@/components/pages/dashboard/pages/applicants/store";
 
 type FormComponentProps = {
   applicant: Applicant;

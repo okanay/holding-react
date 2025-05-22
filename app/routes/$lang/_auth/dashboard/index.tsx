@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { DashboardIndexPage } from "@/components/dashboard/pages/index";
+import { DashboardIndexPage } from "@/components/pages/dashboard/pages/index/index";
 
 export const Route = createFileRoute("/$lang/_auth/dashboard/")({
   loader: async ({ params: { lang } }) => {

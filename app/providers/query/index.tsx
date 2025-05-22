@@ -36,11 +36,10 @@ export function TanStackQueryProvider({
   children: React.ReactNode;
 }) {
   return (
-    <QueryClientProvider client={queryClient}>
-      {children}
-      {import.meta.env.VITE_APP_MODE === "development" && (
-        <ReactQueryDevtools initialIsOpen={false} />
-      )}
-    </QueryClientProvider>
+    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
   );
 }
+
+// {import.meta.env.VITE_APP_MODE === "development" && (
+// <ReactQueryDevtools initialIsOpen={false} />
+// )}
