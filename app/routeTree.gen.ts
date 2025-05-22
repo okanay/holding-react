@@ -22,6 +22,10 @@ import { Route as LangAuthDashboardRouteImport } from './routes/$lang/_auth/dash
 import { Route as LangMainJobsIndexImport } from './routes/$lang/_main/jobs/index'
 import { Route as LangMainStatikIndexImport } from './routes/$lang/_main/_statik/index'
 import { Route as LangAuthDashboardIndexImport } from './routes/$lang/_auth/dashboard/index'
+import { Route as LangMainStatikTeamImport } from './routes/$lang/_main/_statik/team'
+import { Route as LangMainStatikPressImport } from './routes/$lang/_main/_statik/press'
+import { Route as LangMainStatikContactImport } from './routes/$lang/_main/_statik/contact'
+import { Route as LangMainStatikAboutImport } from './routes/$lang/_main/_statik/about'
 import { Route as LangAuthDashboardApplicantsImport } from './routes/$lang/_auth/dashboard/applicants'
 import { Route as LangMainJobsSlugRouteImport } from './routes/$lang/_main/jobs/$slug/route'
 import { Route as LangMainJobsSlugIndexImport } from './routes/$lang/_main/jobs/$slug/index'
@@ -92,6 +96,30 @@ const LangAuthDashboardIndexRoute = LangAuthDashboardIndexImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => LangAuthDashboardRouteRoute,
+} as any)
+
+const LangMainStatikTeamRoute = LangMainStatikTeamImport.update({
+  id: '/team',
+  path: '/team',
+  getParentRoute: () => LangMainStatikRouteRoute,
+} as any)
+
+const LangMainStatikPressRoute = LangMainStatikPressImport.update({
+  id: '/press',
+  path: '/press',
+  getParentRoute: () => LangMainStatikRouteRoute,
+} as any)
+
+const LangMainStatikContactRoute = LangMainStatikContactImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => LangMainStatikRouteRoute,
+} as any)
+
+const LangMainStatikAboutRoute = LangMainStatikAboutImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => LangMainStatikRouteRoute,
 } as any)
 
 const LangAuthDashboardApplicantsRoute =
@@ -210,6 +238,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LangAuthDashboardApplicantsImport
       parentRoute: typeof LangAuthDashboardRouteImport
     }
+    '/$lang/_main/_statik/about': {
+      id: '/$lang/_main/_statik/about'
+      path: '/about'
+      fullPath: '/$lang/about'
+      preLoaderRoute: typeof LangMainStatikAboutImport
+      parentRoute: typeof LangMainStatikRouteImport
+    }
+    '/$lang/_main/_statik/contact': {
+      id: '/$lang/_main/_statik/contact'
+      path: '/contact'
+      fullPath: '/$lang/contact'
+      preLoaderRoute: typeof LangMainStatikContactImport
+      parentRoute: typeof LangMainStatikRouteImport
+    }
+    '/$lang/_main/_statik/press': {
+      id: '/$lang/_main/_statik/press'
+      path: '/press'
+      fullPath: '/$lang/press'
+      preLoaderRoute: typeof LangMainStatikPressImport
+      parentRoute: typeof LangMainStatikRouteImport
+    }
+    '/$lang/_main/_statik/team': {
+      id: '/$lang/_main/_statik/team'
+      path: '/team'
+      fullPath: '/$lang/team'
+      preLoaderRoute: typeof LangMainStatikTeamImport
+      parentRoute: typeof LangMainStatikRouteImport
+    }
     '/$lang/_auth/dashboard/': {
       id: '/$lang/_auth/dashboard/'
       path: '/'
@@ -308,10 +364,18 @@ const LangAuthRouteRouteWithChildren = LangAuthRouteRoute._addFileChildren(
 )
 
 interface LangMainStatikRouteRouteChildren {
+  LangMainStatikAboutRoute: typeof LangMainStatikAboutRoute
+  LangMainStatikContactRoute: typeof LangMainStatikContactRoute
+  LangMainStatikPressRoute: typeof LangMainStatikPressRoute
+  LangMainStatikTeamRoute: typeof LangMainStatikTeamRoute
   LangMainStatikIndexRoute: typeof LangMainStatikIndexRoute
 }
 
 const LangMainStatikRouteRouteChildren: LangMainStatikRouteRouteChildren = {
+  LangMainStatikAboutRoute: LangMainStatikAboutRoute,
+  LangMainStatikContactRoute: LangMainStatikContactRoute,
+  LangMainStatikPressRoute: LangMainStatikPressRoute,
+  LangMainStatikTeamRoute: LangMainStatikTeamRoute,
   LangMainStatikIndexRoute: LangMainStatikIndexRoute,
 }
 
@@ -370,6 +434,10 @@ export interface FileRoutesByFullPath {
   '/$lang/login': typeof LangAuthLoginRoute
   '/$lang/jobs/$slug': typeof LangMainJobsSlugRouteRouteWithChildren
   '/$lang/dashboard/applicants': typeof LangAuthDashboardApplicantsRoute
+  '/$lang/about': typeof LangMainStatikAboutRoute
+  '/$lang/contact': typeof LangMainStatikContactRoute
+  '/$lang/press': typeof LangMainStatikPressRoute
+  '/$lang/team': typeof LangMainStatikTeamRoute
   '/$lang/dashboard/': typeof LangAuthDashboardIndexRoute
   '/$lang/': typeof LangMainStatikIndexRoute
   '/$lang/jobs/': typeof LangMainJobsIndexRoute
@@ -385,6 +453,10 @@ export interface FileRoutesByTo {
   '/$lang/not-found': typeof LangNotFoundRoute
   '/$lang/login': typeof LangAuthLoginRoute
   '/$lang/dashboard/applicants': typeof LangAuthDashboardApplicantsRoute
+  '/$lang/about': typeof LangMainStatikAboutRoute
+  '/$lang/contact': typeof LangMainStatikContactRoute
+  '/$lang/press': typeof LangMainStatikPressRoute
+  '/$lang/team': typeof LangMainStatikTeamRoute
   '/$lang/dashboard': typeof LangAuthDashboardIndexRoute
   '/$lang/jobs': typeof LangMainJobsIndexRoute
   '/$lang/dashboard/job/create': typeof LangAuthDashboardJobCreateRoute
@@ -405,6 +477,10 @@ export interface FileRoutesById {
   '/$lang/_auth/login': typeof LangAuthLoginRoute
   '/$lang/_main/jobs/$slug': typeof LangMainJobsSlugRouteRouteWithChildren
   '/$lang/_auth/dashboard/applicants': typeof LangAuthDashboardApplicantsRoute
+  '/$lang/_main/_statik/about': typeof LangMainStatikAboutRoute
+  '/$lang/_main/_statik/contact': typeof LangMainStatikContactRoute
+  '/$lang/_main/_statik/press': typeof LangMainStatikPressRoute
+  '/$lang/_main/_statik/team': typeof LangMainStatikTeamRoute
   '/$lang/_auth/dashboard/': typeof LangAuthDashboardIndexRoute
   '/$lang/_main/_statik/': typeof LangMainStatikIndexRoute
   '/$lang/_main/jobs/': typeof LangMainJobsIndexRoute
@@ -425,6 +501,10 @@ export interface FileRouteTypes {
     | '/$lang/login'
     | '/$lang/jobs/$slug'
     | '/$lang/dashboard/applicants'
+    | '/$lang/about'
+    | '/$lang/contact'
+    | '/$lang/press'
+    | '/$lang/team'
     | '/$lang/dashboard/'
     | '/$lang/'
     | '/$lang/jobs/'
@@ -439,6 +519,10 @@ export interface FileRouteTypes {
     | '/$lang/not-found'
     | '/$lang/login'
     | '/$lang/dashboard/applicants'
+    | '/$lang/about'
+    | '/$lang/contact'
+    | '/$lang/press'
+    | '/$lang/team'
     | '/$lang/dashboard'
     | '/$lang/jobs'
     | '/$lang/dashboard/job/create'
@@ -457,6 +541,10 @@ export interface FileRouteTypes {
     | '/$lang/_auth/login'
     | '/$lang/_main/jobs/$slug'
     | '/$lang/_auth/dashboard/applicants'
+    | '/$lang/_main/_statik/about'
+    | '/$lang/_main/_statik/contact'
+    | '/$lang/_main/_statik/press'
+    | '/$lang/_main/_statik/team'
     | '/$lang/_auth/dashboard/'
     | '/$lang/_main/_statik/'
     | '/$lang/_main/jobs/'
@@ -525,6 +613,10 @@ export const routeTree = rootRoute
       "filePath": "$lang/_main/_statik/route.tsx",
       "parent": "/$lang",
       "children": [
+        "/$lang/_main/_statik/about",
+        "/$lang/_main/_statik/contact",
+        "/$lang/_main/_statik/press",
+        "/$lang/_main/_statik/team",
         "/$lang/_main/_statik/"
       ]
     },
@@ -551,6 +643,22 @@ export const routeTree = rootRoute
     "/$lang/_auth/dashboard/applicants": {
       "filePath": "$lang/_auth/dashboard/applicants.tsx",
       "parent": "/$lang/_auth/dashboard"
+    },
+    "/$lang/_main/_statik/about": {
+      "filePath": "$lang/_main/_statik/about.tsx",
+      "parent": "/$lang/_main/_statik"
+    },
+    "/$lang/_main/_statik/contact": {
+      "filePath": "$lang/_main/_statik/contact.tsx",
+      "parent": "/$lang/_main/_statik"
+    },
+    "/$lang/_main/_statik/press": {
+      "filePath": "$lang/_main/_statik/press.tsx",
+      "parent": "/$lang/_main/_statik"
+    },
+    "/$lang/_main/_statik/team": {
+      "filePath": "$lang/_main/_statik/team.tsx",
+      "parent": "/$lang/_main/_statik"
     },
     "/$lang/_auth/dashboard/": {
       "filePath": "$lang/_auth/dashboard/index.tsx",

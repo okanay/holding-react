@@ -1,4 +1,6 @@
 import globals from "@/globals.css?url";
+import leaflet from "../../public/leaflet.css?url";
+
 import { detectLanguage } from "@/i18n/action";
 import { ACTIVE_LANGUAGE_DICTONARY } from "@/i18n/config";
 import LanguageProvider from "@/i18n/provider";
@@ -65,6 +67,13 @@ export const Route = createRootRouteWithContext<Context>()({
           type: "text/css",
           crossOrigin: "anonymous",
           href: globals,
+        },
+        {
+          rel: "preload stylesheet",
+          as: "style",
+          type: "text/css",
+          crossOrigin: "anonymous",
+          href: leaflet,
         },
         {
           rel: "icon",
