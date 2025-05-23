@@ -2,7 +2,7 @@
 import { DashboardJobsListPage } from "@/components/pages/dashboard/pages/list";
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/$lang/_auth/dashboard/job/list")({
+export const Route = createFileRoute("/$lang/_auth/dashboard/jobs/")({
   loader: async ({ params: { lang } }) => {
     return { lang };
   },

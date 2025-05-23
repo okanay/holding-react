@@ -180,7 +180,7 @@ export const JobRow: React.FC<{ job: JobView }> = ({ job }) => {
           </a>
 
           <Link
-            to={`/dashboard/job/edit/${job.id}`}
+            to={`/dashboard/jobs/edit/${job.id}`}
             className="shrink-0 items-center justify-center rounded-md border border-blue-200 bg-white p-2 text-blue-600 hover:bg-blue-50 hover:text-blue-700"
           >
             <Edit className="h-4 w-4" />

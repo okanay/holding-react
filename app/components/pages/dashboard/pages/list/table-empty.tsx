@@ -35,7 +35,7 @@ export const EmptyState: React.FC = () => {
 
         <div className="flex flex-wrap justify-center gap-3">
           <Link
-            to="/dashboard/job/create"
+            to="/dashboard/jobs/create"
             className="inline-flex items-center gap-2 rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700"
           >
             <svg

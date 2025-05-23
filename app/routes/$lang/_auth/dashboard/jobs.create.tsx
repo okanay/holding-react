@@ -1,7 +1,7 @@
 import { DashboardCreateNewJobPage } from "@/components/pages/dashboard/pages/create";
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/$lang/_auth/dashboard/job/create")({
+export const Route = createFileRoute("/$lang/_auth/dashboard/jobs/create")({
   loader: async ({ params: { lang } }) => {
     return {
       lang,

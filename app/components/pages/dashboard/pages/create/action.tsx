@@ -42,7 +42,7 @@ export const CreateNewJobAction = () => {
 
       if (success) {
         // Başarılı olursa iş ilanları listesine yönlendir
-        navigate({ to: "/dashboard/job/list" });
+        navigate({ to: "/dashboard/jobs/" });
       }
     } catch (error) {
       console.error("İş ilanı oluşturulurken hata:", error);

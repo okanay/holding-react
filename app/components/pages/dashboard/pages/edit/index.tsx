@@ -4,7 +4,7 @@ import { TiptapProvider } from "../../tiptap/store";
 import { DashboardProvider, useDashboard } from "../../store";
 import { EditBlogHeader } from "./header";
 import { EditJobAction } from "./action";
-import { Route } from "@/routes/$lang/_auth/dashboard/job.edit.$id";
+import { Route } from "@/routes/$lang/_auth/dashboard/jobs.edit.$id";
 import { EditJobProvider, useEditJob } from "./store";
 
 export const DashboardEditJobPage = () => {

@@ -64,7 +64,7 @@ export const EditJobAction = ({ jobId }: { jobId: string }) => {
       const success = await updateJob(jobId, fixedData);
 
       if (success) {
-        navigate({ to: "/dashboard/job/list" });
+        navigate({ to: "/dashboard/jobs/" });
       }
     } catch (error) {
       toast.error("İş ilanı güncellenirken bir hata oluştu");

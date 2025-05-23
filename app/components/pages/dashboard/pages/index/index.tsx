@@ -19,7 +19,7 @@ export function DashboardIndexPage() {
       <div className="mb-8 grid grid-cols-[repeat(auto-fit,minmax(320px,1fr))] gap-8">
         {/* Yeni İlan Oluştur Kartı */}
         <Link
-          to="/dashboard/job/create"
+          to="/dashboard/jobs/create"
           className="group block overflow-hidden rounded-xl border border-blue-200 bg-gradient-to-br from-blue-50 via-white/80 to-blue-50 p-7 transition-all hover:border-blue-400 focus-visible:ring-2 focus-visible:ring-blue-300"
         >
           <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-blue-100 text-blue-600 transition-colors group-hover:bg-blue-200">
@@ -39,7 +39,7 @@ export function DashboardIndexPage() {
 
         {/* Tüm İlanlar Kartı */}
         <Link
-          to="/dashboard/job/list"
+          to="/dashboard/jobs/"
           className="group block overflow-hidden rounded-xl border border-zinc-200 bg-gradient-to-br from-zinc-50 via-white/80 to-zinc-50 p-7 transition-all hover:border-zinc-400 focus-visible:ring-2 focus-visible:ring-zinc-300"
         >
           <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-zinc-100 text-zinc-600 transition-colors group-hover:bg-zinc-200">
