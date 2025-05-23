@@ -8,16 +8,8 @@ import { useState } from "react";
 export const CreateNewJobAction = () => {
   const { editor } = useTiptapContext();
   const navigate = useNavigate();
-  const { createJob, formData, formStatus, setEditorContent } = useCreateJob();
+  const { createJob, formData } = useCreateJob();
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  // Editör içeriği değiştiğinde store'a kaydet
-  const handleEditorChange = () => {
-    if (editor) {
-      const html = editor.getHTML();
-      setEditorContent(html);
-    }
-  };
 
   // Form gönderildiğinde
   const handleCreateForm = async (values: JobFormValues) => {

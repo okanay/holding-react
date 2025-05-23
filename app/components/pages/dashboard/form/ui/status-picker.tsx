@@ -132,7 +132,7 @@ export const FormStatusPicker = ({
         type="button"
         onClick={() => setIsOpen(true)}
         className={twMerge(
-          "flex h-10 w-full items-center justify-between rounded-md border bg-white px-3 py-2 text-left text-sm transition-all focus:outline-none",
+          "flex h-10 w-full items-center justify-between rounded-md border bg-white px-3 py-2 text-left transition-all focus:outline-none",
           currentOption
             ? `${currentBorderColor} ${currentBgColor}`
             : "border-zinc-300",

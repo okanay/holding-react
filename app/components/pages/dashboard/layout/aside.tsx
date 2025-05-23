@@ -74,7 +74,7 @@ export const DashboardAside = () => {
         <div className="mt-4 w-full space-y-4">
           {menuGroups.map((group, groupIndex) => (
             <div key={groupIndex} className="border-cover border-b pb-2">
-              <div className="flex items-center gap-2 px-5 pb-1">
+              <div className="flex items-center gap-2 px-5 pb-2">
                 <div className={`bg-primary-500 h-2 w-2 rounded-full`} />
                 <h3
                   className={`text-primary-500 text-xs font-semibold tracking-wider uppercase`}
@@ -82,7 +82,7 @@ export const DashboardAside = () => {
                   {group.label}
                 </h3>
               </div>
-              <nav className="space-y-1">
+              <nav className="flex flex-col gap-0.5">
                 {group.items.map((item, itemIndex) => (
                   <Link
                     key={itemIndex}

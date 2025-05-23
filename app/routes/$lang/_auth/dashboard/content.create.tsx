@@ -1,3 +1,4 @@
+import { ContentForm } from "@/components/pages/dashboard/pages/contents/form";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/$lang/_auth/dashboard/content/create")({
@@ -18,6 +19,14 @@ export const Route = createFileRoute("/$lang/_auth/dashboard/content/create")({
     };
   },
   component: () => {
-    return <div>İçerik Oluştur | Dashboard</div>;
+    return (
+      <div>
+        <ContentForm
+          isEditing={false}
+          initialData={undefined}
+          onSubmit={() => {}}
+        />
+      </div>
+    );
   },
 });

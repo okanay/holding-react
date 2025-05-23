@@ -15,6 +15,7 @@ import {
   Newspaper,
   PenSquare,
   Image,
+  ChartPie,
 } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
@@ -26,8 +27,9 @@ import { ImageType } from "./types";
 const CATEGORY_OPTIONS = [
   { value: "general", label: "Genel", icon: Image },
   { value: "job_posts", label: "İş İlanları", icon: Briefcase },
+  { value: "content", label: "İçerik", icon: PenSquare },
   { value: "press", label: "Basın", icon: Newspaper },
-  { value: "blog", label: "Blog", icon: PenSquare },
+  { value: "report", label: "Rapor", icon: ChartPie },
 ];
 
 interface ImageModalProps {

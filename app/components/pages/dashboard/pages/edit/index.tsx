@@ -28,7 +28,7 @@ const EditJobContent = ({ jobId }: { jobId: string }) => {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <div className="relative overflow-hidden bg-white pb-8">
+      <div className="border-cover relative overflow-hidden border border-t-0 bg-zinc-50 pb-8">
         <div
           data-visible={view.job.create === "form"}
           className="w-full px-4 transition-all duration-300 ease-in-out data-[visible=false]:invisible data-[visible=false]:absolute data-[visible=false]:opacity-0 data-[visible=true]:opacity-100"

@@ -155,7 +155,7 @@ export const FormSingleSelect = ({
         <button
           type="button"
           className={twMerge(
-            "flex h-10 w-full items-center justify-between rounded-md border border-zinc-300 bg-white px-3 py-2 text-left text-sm transition-all focus:outline-none",
+            "flex h-10 w-full items-center justify-between rounded-md border border-zinc-300 bg-white px-3 py-2 text-left transition-all focus:outline-none",
             error && "border-red-300 bg-red-50/30",
             className,
           )}
