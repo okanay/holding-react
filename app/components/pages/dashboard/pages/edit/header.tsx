@@ -20,8 +20,8 @@ export function EditBlogHeader() {
   return (
     <header
       className={twMerge(
-        "top-0 z-40 mt-14 border border-zinc-200 bg-zinc-50 sm:mt-auto",
-        view.job.create === "editor" ? "sticky" : "relative",
+        "bg-primary-50 z-40 mt-14 border border-zinc-200 sm:mt-auto",
+        view.job.create === "editor" ? "sticky top-0" : "relative",
       )}
     >
       {/* Ana header kısmı - her zaman görünür */}

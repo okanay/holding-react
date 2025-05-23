@@ -1,5 +1,4 @@
-// app/components/dashboard/layout/provider.tsx
-import { useState, useEffect, createContext, useContext } from "react";
+import { useState, createContext, useContext } from "react";
 
 // Context türünü tanımla
 type ContextType = {
