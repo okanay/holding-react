@@ -1,6 +1,7 @@
+import ListContentPage from "@/components/pages/dashboard/pages/contents/list";
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/$lang/_auth/dashboard/content/")({
+export const Route = createFileRoute("/$lang/_auth/dashboard/contents/")({
   loader: async ({ params: { lang } }) => {
     return { lang };
   },
@@ -17,7 +18,5 @@ export const Route = createFileRoute("/$lang/_auth/dashboard/content/")({
       ],
     };
   },
-  component: () => {
-    return <div>İçerik Listesi | Dashboard</div>;
-  },
+  component: ListContentPage,
 });

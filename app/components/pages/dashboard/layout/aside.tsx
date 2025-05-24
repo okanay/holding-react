@@ -51,13 +51,13 @@ export const DashboardAside = () => {
       items: [
         {
           name: "Oluştur",
-          href: "/dashboard/content/create",
+          href: "/dashboard/contents/create",
           icon: PlusSquare,
           description: "Yeni içerik oluştur",
         },
         {
           name: "İçerikler",
-          href: "/dashboard/content",
+          href: "/dashboard/contents",
           icon: Newspaper,
           description: "Tüm içerikleri görüntüle",
         },

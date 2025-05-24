@@ -53,18 +53,3 @@ export const LANGUAGE_OPTIONS: ContentFormSelectOption[] = [
   { name: "tr", label: "Türkçe", labelEn: "Turkish" },
   { name: "en", label: "İngilizce", labelEn: "English" },
 ];
-
-// Varsayılan form değerleri
-export const DEFAULT_CONTENT_VALUES = {
-  title: "",
-  description: "",
-  slug: "",
-  status: "draft" as const,
-  category: "",
-  language: "tr",
-  identifier: "",
-  image: "",
-  contentHtml: "",
-  contentJson: {},
-  detailsJson: {},
-};

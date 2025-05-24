@@ -38,7 +38,7 @@ const EditJobContent = ({ jobId }: { jobId: string }) => {
 
         <div
           data-visible={view.job.create === "editor"}
-          className="w-full transition-all duration-300 ease-in-out data-[visible=false]:invisible data-[visible=false]:absolute data-[visible=false]:opacity-0 data-[visible=true]:opacity-100"
+          className="mx-auto w-full max-w-3xl transition-all duration-300 ease-in-out data-[visible=false]:invisible data-[visible=false]:absolute data-[visible=false]:opacity-0 data-[visible=true]:opacity-100"
         >
           <Editor key={editorContent ? "loaded" : "loading"} />
         </div>

@@ -32,27 +32,12 @@ export const ContentFormSchema = z.object({
     ),
 
   // Görsel
-  image: z.string().optional().nullable(),
+  imageUrl: z.string().url("Geçerli bir URL giriniz").optional().nullable(),
 
   // İçerik (editörden gelecek)
   contentHtml: z.string().min(1, "İçerik HTML'i zorunludur"),
-  contentJson: z.record(z.any()).default({}),
+  contentJson: z.string().min(1, "İçerik JSON'i zorunludur"),
 
   // Kategori bazlı ekstra alanlar
-  detailsJson: z.record(z.any()).default({}),
+  detailsJson: z.string().optional().nullable(),
 });
-
-// Varsayılan form değerleri
-export const DEFAULT_CONTENT_VALUES = {
-  title: "",
-  description: "",
-  slug: "",
-  status: "draft" as const,
-  category: "",
-  language: "tr",
-  identifier: "",
-  image: "",
-  contentHtml: "",
-  contentJson: {},
-  detailsJson: {},
-};

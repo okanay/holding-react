@@ -7,6 +7,11 @@ interface DataState {
   view: {
     job: {
       create: "editor" | "form";
+      edit: "editor" | "form";
+    };
+    content: {
+      create: "editor" | "form";
+      edit: "editor" | "form";
     };
   };
   setView: (view: DataState["view"]) => void;
@@ -19,6 +24,11 @@ export function DashboardProvider({ children }: PropsWithChildren) {
         view: {
           job: {
             create: "form",
+            edit: "form",
+          },
+          content: {
+            create: "form",
+            edit: "form",
           },
         },
         setView: (view) =>
