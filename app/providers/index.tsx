@@ -10,6 +10,11 @@ export const RootProviders = (props: PropsWithChildren) => {
         closeButton={true}
         expand={true}
         richColors={true}
+        toastOptions={{
+          classNames: {
+            toast: "!items-start",
+          },
+        }}
       />
       {props.children}
     </TanStackQueryProvider>

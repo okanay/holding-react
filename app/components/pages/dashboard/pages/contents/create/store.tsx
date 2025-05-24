@@ -102,7 +102,6 @@ export function CreateContentProvider({ children }: PropsWithChildren) {
             toast.success("Content başarıyla oluşturuldu!");
             return true;
           } catch (error) {
-            console.error("Content oluşturulamadı:", error);
             set((state) => {
               state.formStatus = "error";
               state.formError =
@@ -111,7 +110,9 @@ export function CreateContentProvider({ children }: PropsWithChildren) {
                   : "Bilinmeyen bir hata oluştu";
             });
 
-            toast.error("Content oluşturulurken bir hata oluştu");
+            toast.error(`Content oluşturulurken bir hata oluştu`, {
+              description: error.message,
+            });
             return false;
           }
         },

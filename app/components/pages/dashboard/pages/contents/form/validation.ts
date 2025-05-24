@@ -32,7 +32,20 @@ export const ContentFormSchema = z.object({
     ),
 
   // Görsel
-  imageUrl: z.string().url("Geçerli bir URL giriniz").optional().nullable(),
+  imageUrl: z
+    .string()
+    .optional()
+    .nullable()
+    .refine(
+      (val) =>
+        val === undefined ||
+        val === null ||
+        val === "" ||
+        /^https?:\/\/.+\..+/.test(val),
+      {
+        message: "Geçerli bir URL giriniz",
+      },
+    ),
 
   // İçerik (editörden gelecek)
   contentHtml: z.string().min(1, "İçerik HTML'i zorunludur"),
